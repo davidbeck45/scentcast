@@ -495,6 +495,47 @@ h1, h2, h3, h4, p { margin: 0; }
 .error { margin-top: 12px; color: var(--bad); font-size: 13.5px; }
 .muted { color: var(--muted); }
 
+/* Manage collection */
+.ghost-btn.quiet { color: var(--muted); }
+.ghost-btn.quiet:hover { color: var(--text); }
+.manage-list { display: grid; gap: 2px; margin: 4px 0 0; padding: 0; list-style: none; }
+.manage-list li { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 10px; padding: 6px 4px; border-radius: 12px; }
+.manage-list li.off img, .manage-list li.off .manage-name { opacity: 0.4; }
+.manage-list img { width: 34px; height: 38px; object-fit: contain; }
+.manage-name { display: grid; min-width: 0; }
+.manage-name b { overflow: hidden; font-size: 14px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.manage-name small { color: var(--muted); font-size: 12px; }
+.switch { position: relative; width: 44px; height: 26px; flex: none; border-radius: 999px; background: rgba(255, 255, 255, 0.14); transition: background 0.15s; }
+.switch span { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.15s; }
+.switch[aria-checked='true'] { background: var(--good); }
+.switch[aria-checked='true'] span { transform: translateX(18px); }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: calc(100vw - 32px);
+  padding: 10px 10px 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.toast button { flex: none; padding: 6px 12px; border-radius: 999px; background: var(--text); color: var(--bg); font-weight: 600; font-size: 13px; }
+
+.link-btn { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.link-btn:hover { color: var(--text); }
+
 /* ---------- States & footer ---------- */
 
 .message { max-width: 420px; margin: 0 auto; padding: 32px 20px; border-radius: 24px; border: 1px solid var(--line); background: var(--panel); text-align: center; }

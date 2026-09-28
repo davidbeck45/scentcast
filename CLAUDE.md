@@ -4,7 +4,7 @@ Picks fragrances from David's own Fragrantica wardrobe for the weather, time of 
 
 ## Answering "what should I wear…"
 
-1. Get live picks from the engine: `node scripts/recommend.mjs --city "<city>" [--occasion <id>] [--slot day|night] --json`. Occasion ids are in `src/occasions.js`. Ask David for his city if he hasn't given it.
+1. Get live picks from the engine: `node scripts/recommend.mjs --city "<city>" [--occasion <id>] [--slot day|night] --json`. Occasion ids are in `src/occasions.js`. Ask David for his city if he hasn't given it. Bottles he switched off in the app ("Manage") are stored on his phone only; pass any he mentions as `--exclude "Name,Name"`.
 2. For an occasion no preset covers (job interview, outdoor wedding, a flight), run the nearest preset(s), then adjust using `data/collection.json`: accord strengths (0–100), note pyramid, season and day/night vote shares.
 3. Reply with a short ranked shortlist drawn only from `data/collection.json`: each pick with its reason (weather, votes, accords), plus a runner-up.
 

@@ -16,6 +16,7 @@ export const icon = {
   external: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   spray: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9h6v11a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9Zm1-4h4v4H9zM15 6h2M18 4l1-1M18 8l1 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  hide: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.4 5.2A9.7 9.7 0 0 1 12 5c5 0 8.5 4.3 9.5 7-.4 1-1.2 2.4-2.4 3.7M6.1 6.2C4.2 7.5 3 9.4 2.5 12c1 2.7 4.5 7 9.5 7 1.6 0 3-.4 4.3-1.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
 };
 
@@ -224,6 +225,7 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId) {
       <div class="sheet-actions">
         ${wearButton(entry, ctx, wornId)}
         <a class="ghost-btn" href="${esc(f.url)}" target="_blank" rel="noopener">Fragrantica ${icon.external}</a>
+        <button class="ghost-btn quiet" data-toggle-hidden="${f.id}">${icon.hide}Hide from picks</button>
       </div>
       <section><h4>Main accords</h4><div class="bars accords">${accordBars}</div></section>
       <section class="two-col">
@@ -231,6 +233,26 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId) {
         <div><h4>Time of day</h4><div class="bars">${dnBars}</div></div>
       </section>
       <section><h4>Notes</h4><div class="pyramid">${layers}</div></section>
+    </div>`;
+}
+
+export function manageSheetHTML(fragrances, hidden) {
+  const on = fragrances.length - hidden.size;
+  const rows = fragrances.map(f => {
+    const active = !hidden.has(f.id);
+    return `<li class="${active ? '' : 'off'}">
+      <img src="${esc(f.thumb)}" alt="" loading="lazy" width="150" height="170">
+      <span class="manage-name"><b>${esc(f.name)}</b><small>${esc(f.brand)}</small></span>
+      <button class="switch" role="switch" aria-checked="${active}" data-toggle-hidden="${f.id}" aria-label="Include ${esc(f.name)} in picks"><span></span></button>
+    </li>`;
+  }).join('');
+  return `
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-labelledby="manage-title">
+      <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
+      <h2 id="manage-title">Your collection</h2>
+      <p class="muted">${on} of ${fragrances.length} in rotation. Switch a bottle off to leave it out of picks on this device.</p>
+      <ul class="manage-list">${rows}</ul>
     </div>`;
 }
 
