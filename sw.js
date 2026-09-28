@@ -1,7 +1,7 @@
 // Offline support. App files: network first so edits show up immediately,
 // cache as fallback. Bottle images and fonts: cache first. Weather is never
 // cached here; the app keeps its own last forecast in localStorage.
-const CACHE = 'scentcast-v2';
+const CACHE = 'scentcast-v3';
 const SHELL = [
   './',
   'index.html',
@@ -19,9 +19,12 @@ const SHELL = [
   'src/location.js',
   'src/history.js',
   'src/hidden.js',
+  'src/collections.js',
+  'src/api.js',
+  'src/fragella.js',
   'icons/icon.svg',
 ];
-const CACHE_FIRST_HOSTS = ['fimgs.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
+const CACHE_FIRST_HOSTS = ['fimgs.net', 'cdn.fragella.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
