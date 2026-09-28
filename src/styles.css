@@ -599,6 +599,7 @@ h1, h2, h3, h4, p { margin: 0; }
   resize: vertical;
 }
 .sheet-footer { display: flex; justify-content: flex-end; margin-top: 14px; }
+.more-search { display: block; margin: 12px auto 0; font-size: 13.5px; }
 .performance { margin-top: 3px; color: var(--muted); font-size: 12.5px; }
 .message-actions { display: grid; justify-items: center; gap: 10px; margin-top: 18px; }
 .message-actions .primary-btn { margin: 0; }

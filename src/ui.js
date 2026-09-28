@@ -299,7 +299,7 @@ function resultRow(r, i, added) {
   </li>`;
 }
 
-export function addSheetHTML({ query = '', results = null, busy = false, error = '', notice = '' }, ownedIds) {
+export function addSheetHTML({ query = '', results = null, more = false, busy = false, error = '', notice = '' }, ownedIds) {
   const list = results === null ? ''
     : results.length === 0 ? `<p class="muted">No matches for “${esc(query)}”. Try the brand plus the name, like “Dior Sauvage”.</p>`
     : `<ul class="manage-list results">${results.map((r, i) => resultRow(r, i, ownedIds.has(r.id))).join('')}</ul>`;
@@ -316,6 +316,7 @@ export function addSheetHTML({ query = '', results = null, busy = false, error =
       ${error ? `<p class="error">${esc(error)}</p>` : ''}
       ${notice ? `<p class="muted small">${esc(notice)}</p>` : ''}
       ${list}
+      ${more && !busy ? '<button class="link-btn more-search" data-action="search-more">Not it? Search all fragrances</button>' : ''}
       <div class="sheet-footer"><button class="link-btn" data-action="collection">Done</button></div>
     </div>`;
 }
