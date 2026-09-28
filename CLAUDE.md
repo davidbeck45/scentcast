@@ -31,6 +31,10 @@ Fragrantica gotchas:
 
 Season and time fit are half "within its comfort zone" and half "its specialty" (lift over an even vote split). The specialty half keeps flat all-rounders from winning every mild day.
 
+## Deploy
+
+GitHub Pages serves `main` at https://davidbeck45.github.io/scentcast/, so pushing to `main` publishes. Commit data refreshes (`data/collection.json`) for the live site to see them.
+
 ## Checking the UI
 
 `npm run dev` serves http://127.0.0.1:5173. `?loc=lat,lon,Name` pins a location and skips the location prompt, which makes headless screenshots possible. `dev/scenes.html` renders every weather and time-of-day scene for tuning `src/scene.js`. The service worker is network-first for app files, so a reload shows edits.
