@@ -17,6 +17,8 @@ To add or refresh a bottle (David is logged in to Fragrantica in Chrome as @does
 2. Run `scripts/fragrantica-extract.js` on the rendered page with the javascript tool; it returns one JSON line.
 3. Append or replace that line in `data/collection.jsonl`, then `npm run build:data` and `npm test`.
 
+Bottles a first-time visitor never sees (demo-safe) are `DEFAULT_HIDDEN` in `src/hidden.js`; a device's own Manage choices override it.
+
 The full owned list is the "Perfumes I Have" shelf at `https://www.fragrantica.com/@doeszen#wardrobe`. The profile home mixes in his Want list.
 
 Fragrantica gotchas:
