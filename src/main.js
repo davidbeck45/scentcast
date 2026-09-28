@@ -311,21 +311,24 @@ function hideToast() {
 
 // ---------- Finding bottles ----------
 
-// Demo-catalog matches first (free, and they carry real vote data), then Fragella.
-async function findBottles(query) {
+// Demo-catalog matches come first: they're free and carry real vote data.
+// Fragella (which spends a lookup unless cached) runs only when the demo has no
+// match or the user asks for more.
+async function findBottles(query, { everywhere = false } = {}) {
   const local = localMatches(query, state.demo?.fragrances ?? []);
-  if (!apiReady()) return { results: local, notice: local.length ? '' : 'Online search isn’t set up yet, so only the demo collection was searched.' };
+  if (!apiReady()) return { results: local, more: false, notice: local.length ? '' : 'Online search isn’t set up yet, so only the demo collection was searched.' };
+  if (local.length && !everywhere) return { results: local, more: true, notice: '' };
   // Fragella sometimes lists one bottle twice; keep the first of each name + brand.
   const results = [...local];
   for (const r of await searchFragrances(query)) if (!results.some(x => sameBottle(x, r))) results.push(r);
-  return { results, notice: '' };
+  return { results, more: false, notice: '' };
 }
 
-async function runSearch(query) {
+async function runSearch(query, opts) {
   updateSheet({ query, busy: true, error: '', notice: '' });
   try {
-    const { results, notice } = await findBottles(query);
-    updateSheet({ results, notice, busy: false });
+    const { results, more, notice } = await findBottles(query, opts);
+    updateSheet({ results, more, notice, busy: false });
   } catch (err) {
     const local = localMatches(query, state.demo?.fragrances ?? []);
     updateSheet({ results: local.length ? local : null, busy: false, error: err.message });
@@ -477,6 +480,8 @@ document.addEventListener('click', async e => {
     showToast(`<span>${ui.esc(record.name)} added to your collection</span>`);
   } else if (d.action === 'import') {
     openSheet({ kind: 'import', text: state.sheet?.kind === 'import' ? state.sheet.text : '' });
+  } else if (d.action === 'search-more') {
+    await runSearch(state.sheet.query, { everywhere: true });
   } else if (d.importToggle !== undefined) {
     const rows = state.sheet.rows.map((r, i) => (i === +d.importToggle ? { ...r, checked: !r.checked } : r));
     updateSheet({ rows });
