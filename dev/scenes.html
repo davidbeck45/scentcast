@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scene gallery</title>
+  <link rel="stylesheet" href="../src/styles.css">
+  <style>
+    body { padding: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+    figure { margin: 0; }
+    .frame { height: 170px; border-radius: 14px; overflow: hidden; }
+    .frame svg { width: 100%; height: 100%; }
+    figcaption { margin-top: 4px; color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1 style="font-family: var(--display); margin-bottom: 12px">Scene gallery</h1>
+  <div class="grid" id="grid"></div>
+  <script type="module">
+    // Every phase x condition, for tuning the art. Not linked from the app.
+    import { renderScene } from '../src/scene.js';
+    const combos = [
+      ['dawn', 'clear', 'spring', false, 0.03], ['day', 'clear', 'summer', false, 0.5], ['day', 'partly', 'fall', false, 0.35],
+      ['day', 'cloudy', 'fall', false, 0.5], ['day', 'rain', 'spring', false, 0.5], ['day', 'fog', 'fall', false, 0.3],
+      ['day', 'snow', 'winter', true, 0.5], ['dusk', 'partly', 'summer', false, 0.97], ['dusk', 'clear', 'fall', true, 0.98],
+      ['night', 'clear', 'winter', true, 0], ['night', 'rain', 'fall', false, 0], ['night', 'storm', 'summer', false, 0],
+      ['day', 'storm', 'summer', false, 0.6], ['night', 'snow', 'winter', true, 0], ['day', 'drizzle', 'spring', false, 0.4],
+    ];
+    document.getElementById('grid').innerHTML = combos.map(([phase, category, season, cold, sunProgress]) => `
+      <figure><div class="frame">${renderScene({ phase, category, season, cold, sunProgress, aspect: 300 / 170 })}</div>
+      <figcaption>${phase} · ${category} · ${season}${cold ? ' · cold' : ''}</figcaption></figure>`).join('');
+  </script>
+</body>
+</html>
