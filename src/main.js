@@ -315,8 +315,10 @@ function hideToast() {
 async function findBottles(query) {
   const local = localMatches(query, state.demo?.fragrances ?? []);
   if (!apiReady()) return { results: local, notice: local.length ? '' : 'Online search isn’t set up yet, so only the demo collection was searched.' };
-  const remote = await searchFragrances(query);
-  return { results: [...local, ...remote.filter(r => !local.some(l => sameBottle(l, r)))], notice: '' };
+  // Fragella sometimes lists one bottle twice; keep the first of each name + brand.
+  const results = [...local];
+  for (const r of await searchFragrances(query)) if (!results.some(x => sameBottle(x, r))) results.push(r);
+  return { results, notice: '' };
 }
 
 async function runSearch(query) {
