@@ -5,6 +5,7 @@ A quick look at what to wear from my own collection, based on today's weather, t
 - **Today** — live local weather (Open-Meteo, no key), a scene drawn for the conditions, and S/A/B/C tiers for daytime and tonight.
 - **Occasion** — Everyday, Office, Date Night, Night Out, Formal, Outdoors, Cozy, for daytime or tonight.
 - **Wear this** — logs what you wore so picks rotate over the next couple of days.
+- **Your own collection** — search 80k+ fragrances (via [Fragella](https://api.fragella.com)) or paste a list, then share it as a link. The demo shows my wardrobe.
 
 Picks come from Fragrantica community votes (season, day/night), each bottle's main accords, how heavy they wear versus the temperature and humidity, and the occasion's accord profile.
 
@@ -13,6 +14,7 @@ Picks come from Fragrantica community votes (season, day/night), each bottle's m
 ```sh
 npm run dev      # http://127.0.0.1:5173
 npm test
+MOCK=1 node worker/dev.mjs   # local API on :8787 from saved responses
 node scripts/recommend.mjs --city "New York" --occasion date
 ```
 

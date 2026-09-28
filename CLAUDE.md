@@ -27,6 +27,19 @@ Fragrantica gotchas:
 - Tool output that includes raw page HTML can trip a cookie/query-string filter; return parsed fields only.
 - Bottle images hotlink `fimgs.net/mdimg/perfume-thumbs/dark-m.<id>.2x.webp` (transparent background).
 
+## Other people's collections (Fragella)
+
+The app ranks one of three lists: `demo` (David's wardrobe, `data/collection.json`), `mine` (bottles a visitor adds; full records stored in their localStorage) or a shared link (`?c=id,id&n=Name`, opened as a temporary view). Logic lives in `src/collections.js` and `src/main.js`.
+
+Bottles outside the demo come from the Fragella API through the Cloudflare Worker in `worker/`, which keeps the key server-side, caches each bottle and search in KV for 30 days, and caps upstream lookups per IP per day. Fragella ids are `fg:<slug>`; demo ids are Fragrantica numbers, all compared as strings.
+
+Fragella's free plan is 20 requests a month, so:
+- Develop against `MOCK=1 node worker/dev.mjs` (port 8787), which answers from saved responses in `.cache/fragella/`. Spend real requests only on purpose, save the raw response under `.cache/fragella/`, and check usage on the Fragella dashboard.
+- Keep Fragella responses out of git (`.cache/` is ignored): their terms bar storing or redistributing bulk data. Tests use synthetic records.
+- `src/fragella.js` converts records to the engine shape. Its season smoothing and night-lean constants were fitted on bottles present in both sources (Sauvage, Liquid Brun, Cream Velvet, Essence de Blanc); refit if more overlaps are fetched.
+
+The key lives in `worker/.dev.vars` (ignored) and as the Worker secret `FRAGELLA_KEY`. Deploy with `cd worker && npx wrangler deploy`; the resulting URL is `DEPLOYED` in `src/api.js`.
+
 ## Engine
 
 `src/engine.js` is pure: fragrances + conditions in, ranked tiers with reasons out. Tiers are by rank (3 S, 5 A, 6 B, rest C). `test/engine.test.js` pins behaviour on the real collection (hot humid day puts fresh scents on top, cold night puts heavy ones on top, occasion sanity), so run `npm test` after any tuning. Accord heaviness and chip colors live in `src/accords.js`; occasion profiles in `src/occasions.js`.

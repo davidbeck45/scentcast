@@ -8,6 +8,9 @@ export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;'
 export const deg = f => `${Math.round(f)}°`;
 const TIERS = ['S', 'A', 'B', 'C'];
 
+const FALLBACK_THUMB = `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 170"><rect x="62" y="20" width="26" height="22" rx="4" fill="#3a3f4e"/><rect x="40" y="46" width="70" height="104" rx="18" fill="#2a2e3a" stroke="#4a5063" stroke-width="3"/></svg>')}`;
+export const thumbSrc = f => (f.thumb ? esc(f.thumb) : FALLBACK_THUMB);
+
 export const icon = {
   pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></svg>',
   sun: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>',
@@ -17,6 +20,11 @@ export const icon = {
   check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   spray: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9h6v11a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9Zm1-4h4v4H9zM15 6h2M18 4l1-1M18 8l1 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   hide: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.4 5.2A9.7 9.7 0 0 1 12 5c5 0 8.5 4.3 9.5 7-.4 1-1.2 2.4-2.4 3.7M6.1 6.2C4.2 7.5 3 9.4 2.5 12c1 2.7 4.5 7 9.5 7 1.6 0 3-.4 4.3-1.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  paste: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v3H9zM7 5.5H6a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1h-1M9 12h6M9 16h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  bottle: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2h4v3h-4zM9 5h6v2.5a4 4 0 0 1 3 3.9V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-8.6a4 4 0 0 1 3-3.9Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  remove: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 11v6M14 11v6M9 7V4h6v3M7 7l1 13h8l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
 };
 
@@ -42,12 +50,12 @@ export function heroPicksHTML(picks) {
   if (!picks) return '';
   return `<div class="hero-picks">${picks.map(({ slot, label, entry }) => `
     <button class="hero-pick" data-jump="${slot}">
-      <img src="${esc(entry.fragrance.thumb)}" alt="" width="150" height="170">
+      <img src="${thumbSrc(entry.fragrance)}" alt="" width="150" height="170">
       <span><small>${slot === 'day' ? icon.sun : icon.moon}${esc(label)}</small><b>${esc(entry.fragrance.name)}</b></span>
     </button>`).join('')}</div>`;
 }
 
-export function heroHTML({ loc, wx, loading, error }, aspect, picks) {
+export function heroHTML({ loc, wx, loading, error }, aspect, picks, collectionLabel) {
   const now = wx?.now;
   const phase = now?.phase ?? 'day';
   const scene = renderScene({
@@ -76,7 +84,7 @@ export function heroHTML({ loc, wx, loading, error }, aspect, picks) {
   return `
     <div class="hero-scene">${scene}</div>
     <div class="hero-shade"></div>
-    <div class="hero-top">${locBtn}<span class="wordmark">Scentcast</span></div>
+    <div class="hero-top">${locBtn}<button class="loc-btn" data-action="collection">${icon.bottle}<span>${esc(collectionLabel)}</span></button></div>
     <div class="hero-bottom">${body}</div>
     ${heroPicksHTML(picks)}`;
 }
@@ -134,7 +142,7 @@ export function pickHTML(entry, ctx, wornId, kicker) {
   return `
     <article class="pick" style="--accent:${accordColor(top)}">
       <button class="pick-bottle" data-open data-ctx="${ctx}" data-id="${f.id}" aria-label="Details for ${esc(f.name)}">
-        <img src="${esc(f.thumb)}" alt="" width="150" height="170">
+        <img src="${thumbSrc(f)}" alt="" width="150" height="170">
       </button>
       <div class="pick-info">
         <div class="kicker"><span class="tier-chip" data-tier="${entry.tier}">${entry.tier}</span>${esc(kicker)}</div>
@@ -152,7 +160,7 @@ export function tierListHTML(ranked, ctx, wornId, expanded) {
     const items = ranked.filter(r => r.tier === t).map(r => {
       const f = r.fragrance;
       return `<button class="bottle${wornId === f.id ? ' worn' : ''}" data-open data-ctx="${ctx}" data-id="${f.id}" title="${esc(f.name)} · ${esc(f.brand)}">
-        <img src="${esc(f.thumb)}" alt="" loading="lazy" width="150" height="170">
+        <img src="${thumbSrc(f)}" alt="" loading="lazy" width="150" height="170">
         <span>${esc(f.name)}</span>
       </button>`;
     }).join('');
@@ -208,52 +216,153 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId) {
     .map(([k, label]) => `<div class="layer"><span class="layer-label">${label}</span><div class="notes">${f.notes[k].map(n => `<span class="note">${esc(n)}</span>`).join('')}</div></div>`)
     .join('');
   const meta = [f.brand, f.year, GENDER[f.gender]].filter(Boolean).map(esc).join(' · ');
+  const fromFragella = f.source === 'fragella';
+  const ratingNote = fromFragella ? 'Fragella rating' : `${f.ratingVotes.toLocaleString()} votes on Fragrantica`;
+  const performance = [f.longevity, f.sillage && `${f.sillage} sillage`].filter(Boolean).map(esc).join(' · ');
   return `
     <div class="sheet-backdrop" data-close></div>
     <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
       <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
       <div class="sheet-head">
-        <img src="${esc(f.thumb)}" alt="" width="150" height="170">
+        <img src="${thumbSrc(f)}" alt="" width="150" height="170">
         <div>
           <div class="kicker"><span class="tier-chip" data-tier="${entry.tier}">${entry.tier}</span>${esc(ctxLabel)}</div>
           <h2 id="sheet-title">${esc(f.name)}</h2>
           <div class="brand">${meta}</div>
-          <div class="rating">★ ${f.rating.toFixed(2)} <span>${f.ratingVotes.toLocaleString()} votes on Fragrantica</span></div>
+          <div class="rating">★ ${f.rating.toFixed(2)} <span>${esc(ratingNote)}</span></div>
+          ${performance ? `<div class="performance">${performance}</div>` : ''}
         </div>
       </div>
       ${reasonsList(entry.reasons, 'full')}
       <div class="sheet-actions">
         ${wearButton(entry, ctx, wornId)}
-        <a class="ghost-btn" href="${esc(f.url)}" target="_blank" rel="noopener">Fragrantica ${icon.external}</a>
+        ${f.url ? `<a class="ghost-btn" href="${esc(f.url)}" target="_blank" rel="noopener">Fragrantica ${icon.external}</a>` : ''}
         <button class="ghost-btn quiet" data-toggle-hidden="${f.id}">${icon.hide}Hide from picks</button>
       </div>
       <section><h4>Main accords</h4><div class="bars accords">${accordBars}</div></section>
       <section class="two-col">
-        <div><h4>Seasons voted</h4><div class="bars">${seasonBars}</div></div>
-        <div><h4>Time of day</h4><div class="bars">${dnBars}</div></div>
+        <div><h4>${fromFragella ? 'Season fit' : 'Seasons voted'}</h4><div class="bars">${seasonBars}</div></div>
+        <div><h4>${fromFragella ? 'Time of day (est.)' : 'Time of day'}</h4><div class="bars">${dnBars}</div></div>
       </section>
       <section><h4>Notes</h4><div class="pyramid">${layers}</div></section>
     </div>`;
 }
 
-export function manageSheetHTML(fragrances, hidden) {
-  const on = fragrances.length - hidden.size;
-  const rows = fragrances.map(f => {
-    const active = !hidden.has(f.id);
-    return `<li class="${active ? '' : 'off'}">
-      <img src="${esc(f.thumb)}" alt="" loading="lazy" width="150" height="170">
-      <span class="manage-name"><b>${esc(f.name)}</b><small>${esc(f.brand)}</small></span>
-      <button class="switch" role="switch" aria-checked="${active}" data-toggle-hidden="${f.id}" aria-label="Include ${esc(f.name)} in picks"><span></span></button>
-    </li>`;
-  }).join('');
+// ---------- Collection sheets ----------
+
+function bottleRow(f, { hidden, removable }) {
+  const active = !hidden.has(f.id);
+  return `<li class="${active ? '' : 'off'}">
+    <img src="${thumbSrc(f)}" alt="" loading="lazy" width="150" height="170">
+    <span class="manage-name"><b>${esc(f.name)}</b><small>${esc(f.brand)}</small></span>
+    ${removable ? `<button class="icon-btn small ghosted" data-remove="${esc(f.id)}" aria-label="Remove ${esc(f.name)}">${icon.remove}</button>` : ''}
+    <button class="switch" role="switch" aria-checked="${active}" data-toggle-hidden="${esc(f.id)}" aria-label="Include ${esc(f.name)} in picks"><span></span></button>
+  </li>`;
+}
+
+export function collectionSheetHTML({ tab, demo, mine, hidden, shared }) {
+  const list = tab === 'mine' ? mine.records : demo;
+  const on = list.filter(f => !hidden.has(f.id)).length;
+  const tabBtn = (id, label) => `<button data-collection-tab="${id}" aria-pressed="${tab === id}">${esc(label)}</button>`;
+  const actions = tab === 'mine'
+    ? `<div class="sheet-actions">
+        <button class="wear-btn" data-action="add">${icon.plus}<span>Add bottles</span></button>
+        <button class="ghost-btn" data-action="import">${icon.paste}Paste a list</button>
+        ${mine.records.length ? `<button class="ghost-btn" data-action="share">${icon.share}Share</button>` : ''}
+      </div>
+      <label class="name-field">Name on share links
+        <input type="text" data-field="mine-name" value="${esc(mine.name)}" placeholder="e.g. Alex" maxlength="40" autocomplete="off">
+      </label>`
+    : `<div class="sheet-actions"><button class="ghost-btn" data-action="share">${icon.share}Share this collection</button></div>`;
+  const body = list.length
+    ? `<p class="muted">${on} of ${list.length} in rotation. Switch a bottle off to leave it out of picks on this device.</p>
+       <ul class="manage-list">${list.map(f => bottleRow(f, { hidden, removable: tab === 'mine' })).join('')}</ul>`
+    : `<p class="muted empty">No bottles yet. Search for what you own, or paste a list.</p>`;
   return `
     <div class="sheet-backdrop" data-close></div>
-    <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-labelledby="manage-title">
+    <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-labelledby="coll-title">
       <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
-      <h2 id="manage-title">Your collection</h2>
-      <p class="muted">${on} of ${fragrances.length} in rotation. Switch a bottle off to leave it out of picks on this device.</p>
-      <ul class="manage-list">${rows}</ul>
+      <h2 id="coll-title">Collections</h2>
+      ${shared ? `<p class="note">Picking a collection below closes the shared one you're viewing.</p>` : ''}
+      <div class="seg wide">${tabBtn('demo', 'Demo (David’s)')}${tabBtn('mine', `Mine · ${mine.records.length}`)}</div>
+      ${actions}
+      ${body}
     </div>`;
+}
+
+function resultRow(r, i, added) {
+  const meta = [r.brand, r.year].filter(Boolean).map(esc).join(' · ');
+  return `<li>
+    <img src="${thumbSrc(r)}" alt="" loading="lazy" width="150" height="170">
+    <span class="manage-name"><b>${esc(r.name)}</b><small>${meta}</small></span>
+    <button class="add-btn${added ? ' on' : ''}" data-add="${i}" ${added ? 'disabled' : ''}>${added ? `${icon.check}Added` : `${icon.plus}Add`}</button>
+  </li>`;
+}
+
+export function addSheetHTML({ query = '', results = null, busy = false, error = '', notice = '' }, ownedIds) {
+  const list = results === null ? ''
+    : results.length === 0 ? `<p class="muted">No matches for “${esc(query)}”. Try the brand plus the name, like “Dior Sauvage”.</p>`
+    : `<ul class="manage-list results">${results.map((r, i) => resultRow(r, i, ownedIds.has(r.id))).join('')}</ul>`;
+  return `
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-labelledby="add-title">
+      <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
+      <h2 id="add-title">Add bottles</h2>
+      <p class="muted">Search 80,000+ fragrances. Brand plus name works best.</p>
+      <form class="city-form" data-form="search">
+        <input type="search" name="q" placeholder="e.g. Dior Sauvage" autocomplete="off" value="${esc(query)}" aria-label="Fragrance">
+        <button type="submit" ${busy ? 'disabled' : ''}>${busy ? 'Searching…' : 'Search'}</button>
+      </form>
+      ${error ? `<p class="error">${esc(error)}</p>` : ''}
+      ${notice ? `<p class="muted small">${esc(notice)}</p>` : ''}
+      ${list}
+      <div class="sheet-footer"><button class="link-btn" data-action="collection">Done</button></div>
+    </div>`;
+}
+
+export function importSheetHTML({ text = '', rows = null, busy = false, error = '' }, maxLines) {
+  let body;
+  if (!rows) {
+    body = `<form class="import-form" data-form="import">
+        <textarea name="text" rows="8" placeholder="Dior Sauvage&#10;Liquid Brun&#10;Khadlaj Cream Velvet" aria-label="Fragrance list">${esc(text)}</textarea>
+        <button class="primary-btn" type="submit">Find matches</button>
+      </form>`;
+  } else {
+    const picked = rows.filter(r => r.match && r.checked).length;
+    body = `<ul class="manage-list import-rows">${rows.map((r, i) => {
+      if (r.status === 'pending') return `<li class="pending"><span class="spinner" aria-hidden="true"></span><span class="manage-name"><b>${esc(r.line)}</b><small>Looking…</small></span></li>`;
+      if (!r.match) return `<li class="off"><span class="miss">?</span><span class="manage-name"><b>${esc(r.line)}</b><small>${esc(r.note || 'No match. Try Add bottles with the brand name.')}</small></span></li>`;
+      return `<li>
+        <img src="${thumbSrc(r.match)}" alt="" loading="lazy" width="150" height="170">
+        <span class="manage-name"><b>${esc(r.match.name)}</b><small>${esc(r.match.brand)} · for “${esc(r.line)}”</small></span>
+        <button class="check${r.checked ? ' on' : ''}" role="checkbox" aria-checked="${r.checked}" data-import-toggle="${i}" aria-label="Add ${esc(r.match.name)}">${icon.check}</button>
+      </li>`;
+    }).join('')}</ul>
+    <div class="sheet-actions">
+      <button class="wear-btn" data-action="import-confirm" ${busy || !picked ? 'disabled' : ''}>${icon.plus}<span>Add ${picked} bottle${picked === 1 ? '' : 's'}</span></button>
+      <button class="ghost-btn" data-action="import" ${busy ? 'disabled' : ''}>Start over</button>
+    </div>`;
+  }
+  return `
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-labelledby="import-title">
+      <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
+      <h2 id="import-title">Paste a list</h2>
+      <p class="muted">One fragrance per line, up to ${maxLines} at a time. Copy it from your notes or your Fragrantica wardrobe page.</p>
+      ${error ? `<p class="error">${esc(error)}</p>` : ''}
+      ${body}
+    </div>`;
+}
+
+export function sharedBannerHTML(shared, mineCount) {
+  const who = shared.name ? `${esc(shared.name)}’s` : 'A shared';
+  const status = shared.loading ? 'Loading…' : `${shared.records.length} bottle${shared.records.length === 1 ? '' : 's'}${shared.missing.length ? ` · ${shared.missing.length} couldn’t load` : ''}`;
+  const save = shared.confirmReplace ? `Replace my ${mineCount}?` : 'Save as mine';
+  return `<div class="banner" role="status">
+    <span><b>${who} collection</b><small>${status}</small></span>
+    <button class="wear-btn" data-action="shared-save" ${shared.loading || !shared.records.length ? 'disabled' : ''}>${save}</button>
+    <button class="icon-btn small" data-action="shared-close" aria-label="Close shared collection">${icon.close}</button>
+  </div>`;
 }
 
 export function locationSheetHTML({ busy = false, error = '', results = null, query = '' } = {}) {

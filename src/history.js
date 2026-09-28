@@ -3,7 +3,11 @@ const KEY = 'scentcast.history';
 const MAX_ENTRIES = 120;
 
 export function loadHistory() {
-  try { return JSON.parse(localStorage.getItem(KEY)) ?? []; } catch { return []; }
+  try {
+    return (JSON.parse(localStorage.getItem(KEY)) ?? []).map(h => ({ ...h, id: String(h.id) }));
+  } catch {
+    return [];
+  }
 }
 
 function save(history) {
