@@ -38,7 +38,7 @@ Fragella's free plan is 20 requests a month, so:
 - Keep Fragella responses out of git (`.cache/` is ignored): their terms bar storing or redistributing bulk data. Tests use synthetic records.
 - `src/fragella.js` converts records to the engine shape. Its season smoothing and night-lean constants were fitted on bottles present in both sources (Sauvage, Liquid Brun, Cream Velvet, Essence de Blanc); refit if more overlaps are fetched.
 
-The key lives in `worker/.dev.vars` (ignored) and as the Worker secret `FRAGELLA_KEY`. Deploy with `cd worker && npx wrangler deploy`; the resulting URL is `DEPLOYED` in `src/api.js`.
+The key lives in `worker/.dev.vars` (ignored) and as the Worker secret `FRAGELLA_KEY`. Deploy with `cd worker && npx wrangler deploy` (Cloudflare account davidbeck45, KV namespace `CACHE`); it serves https://scentcast-api.davidbeck45.workers.dev, which is `DEPLOYED` in `src/api.js`.
 
 ## Engine
 
