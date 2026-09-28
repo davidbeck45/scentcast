@@ -1,6 +1,8 @@
 name = "scentcast-api"
 main = "index.js"
 compatibility_date = "2026-09-01"
+workers_dev = true
+preview_urls = false
 
 # The Fragella key is a secret: `npx wrangler secret put FRAGELLA_KEY`
 [vars]
@@ -9,4 +11,4 @@ DAILY_LOOKUPS_PER_IP = "15"
 
 [[kv_namespaces]]
 binding = "CACHE"
-id = "set-by-npx-wrangler-kv-namespace-create"
+id = "dbf97da4070e4677a38bf5bc5a15d77a"

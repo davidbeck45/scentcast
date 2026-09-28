@@ -1,6 +1,6 @@
 // Client for the Scentcast API (worker/): Fragella search behind a shared cache.
 // DEPLOYED is the workers.dev URL printed by `npx wrangler deploy`.
-const DEPLOYED = '';
+const DEPLOYED = 'https://scentcast-api.davidbeck45.workers.dev';
 const LOCAL = ['127.0.0.1', 'localhost'].includes(location.hostname);
 
 export const API_BASE = LOCAL ? 'http://127.0.0.1:8787' : DEPLOYED;
