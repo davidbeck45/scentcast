@@ -1,0 +1,1538 @@
+{
+  "source": "fragrantica.com/@doeszen wardrobe (Have)",
+  "fetched": "2026-09-28",
+  "fragrances": [
+    {
+      "id": 98689,
+      "name": "Supremacy Collector's Edition Pour Homme",
+      "brand": "Afnan",
+      "year": 2024,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Afnan/Supremacy-Collector-s-Edition-Pour-Homme-98689.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.98689.2x.webp",
+      "rating": 4.49,
+      "ratingVotes": 10377,
+      "accords": {
+        "fruity": 100,
+        "sweet": 91,
+        "white floral": 85,
+        "citrus": 83,
+        "amber": 71,
+        "mossy": 65,
+        "tropical": 61,
+        "animalic": 61,
+        "fresh": 57,
+        "musky": 56
+      },
+      "seasonVotes": {
+        "winter": 5500,
+        "spring": 6600,
+        "summer": 6400,
+        "fall": 6200
+      },
+      "timeVotes": {
+        "day": 6500,
+        "night": 6000
+      },
+      "season": {
+        "winter": 0.223,
+        "spring": 0.267,
+        "summer": 0.259,
+        "fall": 0.251
+      },
+      "dayNight": {
+        "day": 0.52,
+        "night": 0.48
+      },
+      "sentiment": {
+        "love": 7200,
+        "like": 1900,
+        "ok": 678,
+        "dislike": 339,
+        "hate": 243
+      },
+      "notes": {
+        "top": [
+          "Pineapple",
+          "Bergamot",
+          "White Flowers",
+          "Apple"
+        ],
+        "mid": [
+          "Orange Blossom",
+          "Birch",
+          "Amber"
+        ],
+        "base": [
+          "oak moss",
+          "Musk",
+          "Ambergris"
+        ]
+      }
+    },
+    {
+      "id": 70748,
+      "name": "Détour Noir",
+      "brand": "Al Haramain Perfumes",
+      "year": 2021,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Al-Haramain-Perfumes/Detour-Noir-70748.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.70748.2x.webp",
+      "rating": 4.28,
+      "ratingVotes": 5276,
+      "accords": {
+        "vanilla": 100,
+        "woody": 98,
+        "warm spicy": 91,
+        "fresh spicy": 84,
+        "powdery": 81,
+        "aromatic": 75,
+        "fruity": 67,
+        "lavender": 58,
+        "fresh": 56,
+        "citrus": 53
+      },
+      "seasonVotes": {
+        "winter": 3400,
+        "spring": 2900,
+        "summer": 971,
+        "fall": 3400
+      },
+      "timeVotes": {
+        "day": 2800,
+        "night": 3100
+      },
+      "season": {
+        "winter": 0.319,
+        "spring": 0.272,
+        "summer": 0.091,
+        "fall": 0.319
+      },
+      "dayNight": {
+        "day": 0.475,
+        "night": 0.525
+      },
+      "sentiment": {
+        "love": 2900,
+        "like": 1500,
+        "ok": 512,
+        "dislike": 254,
+        "hate": 134
+      },
+      "notes": {
+        "top": [
+          "Apple",
+          "Lavender",
+          "Jasmine",
+          "Violet"
+        ],
+        "mid": [
+          "Vanilla",
+          "Patchouli",
+          "Bergamot",
+          "Mandarin Orange"
+        ],
+        "base": [
+          "Sandalwood",
+          "Cardamom",
+          "Pepper",
+          "Guaiac Wood",
+          "Geranium"
+        ]
+      }
+    },
+    {
+      "id": 125391,
+      "name": "Aristo",
+      "brand": "Arabiyat Prestige",
+      "year": 2025,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Arabiyat-Prestige/Aristo-125391.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.125391.2x.webp",
+      "rating": 4.48,
+      "ratingVotes": 390,
+      "accords": {
+        "citrus": 100,
+        "vanilla": 65,
+        "fresh spicy": 64,
+        "powdery": 60,
+        "fresh": 54,
+        "woody": 53,
+        "musky": 51,
+        "sweet": 47
+      },
+      "seasonVotes": {
+        "winter": 66,
+        "spring": 283,
+        "summer": 293,
+        "fall": 204
+      },
+      "timeVotes": {
+        "day": 261,
+        "night": 145
+      },
+      "season": {
+        "winter": 0.078,
+        "spring": 0.335,
+        "summer": 0.346,
+        "fall": 0.241
+      },
+      "dayNight": {
+        "day": 0.643,
+        "night": 0.357
+      },
+      "sentiment": {
+        "love": 274,
+        "like": 64,
+        "ok": 26,
+        "dislike": 18,
+        "hate": 8
+      },
+      "notes": {
+        "top": [
+          "Ginger flower",
+          "Mandarin",
+          "Lemon",
+          "Orange"
+        ],
+        "mid": [
+          "Patchouli",
+          "Jasmine",
+          "Magnolia"
+        ],
+        "base": [
+          "Vanilla",
+          "Musk",
+          "Sandalwood"
+        ]
+      }
+    },
+    {
+      "id": 111352,
+      "name": "Sandalwood & Musk",
+      "brand": "Banana Republic",
+      "year": 2025,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Banana-Republic/Sandalwood-Musk-111352.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.111352.2x.webp",
+      "rating": 3.75,
+      "ratingVotes": 71,
+      "accords": {
+        "powdery": 100,
+        "floral": 82,
+        "musky": 80,
+        "woody": 75,
+        "iris": 73,
+        "amber": 57,
+        "citrus": 55,
+        "fresh": 52,
+        "earthy": 47,
+        "green": 46
+      },
+      "seasonVotes": {
+        "winter": 36,
+        "spring": 35,
+        "summer": 12,
+        "fall": 39
+      },
+      "timeVotes": {
+        "day": 28,
+        "night": 35
+      },
+      "season": {
+        "winter": 0.295,
+        "spring": 0.287,
+        "summer": 0.098,
+        "fall": 0.32
+      },
+      "dayNight": {
+        "day": 0.444,
+        "night": 0.556
+      },
+      "sentiment": {
+        "love": 22,
+        "like": 23,
+        "ok": 15,
+        "dislike": 8,
+        "hate": 3
+      },
+      "notes": {
+        "top": [
+          "Lilac",
+          "Orris Root",
+          "Bergamot"
+        ],
+        "mid": [
+          "Musk",
+          "Amber"
+        ],
+        "base": [
+          "Sandalwood",
+          "Cedarwood"
+        ]
+      }
+    },
+    {
+      "id": 31508,
+      "name": "CH Men Prive",
+      "brand": "Carolina Herrera",
+      "year": 2015,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/CH-Men-Prive-31508.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.31508.2x.webp",
+      "rating": 4.31,
+      "ratingVotes": 5339,
+      "accords": {
+        "warm spicy": 100,
+        "leather": 91,
+        "aromatic": 90,
+        "whiskey": 87,
+        "woody": 85,
+        "amber": 72,
+        "vanilla": 67,
+        "animalic": 60,
+        "citrus": 56,
+        "lavender": 53
+      },
+      "seasonVotes": {
+        "winter": 2600,
+        "spring": 913,
+        "summer": 256,
+        "fall": 2600
+      },
+      "timeVotes": {
+        "day": 959,
+        "night": 2700
+      },
+      "season": {
+        "winter": 0.408,
+        "spring": 0.143,
+        "summer": 0.04,
+        "fall": 0.408
+      },
+      "dayNight": {
+        "day": 0.262,
+        "night": 0.738
+      },
+      "sentiment": {
+        "love": 2800,
+        "like": 1800,
+        "ok": 221,
+        "dislike": 444,
+        "hate": 32
+      },
+      "notes": {
+        "top": [
+          "Whiskey",
+          "Grapefruit",
+          "Pomelo"
+        ],
+        "mid": [
+          "Cardamom",
+          "Lavender",
+          "Sage",
+          "Red Thyme"
+        ],
+        "base": [
+          "Leather",
+          "Tonka Bean",
+          "Woody Notes",
+          "Benzoin"
+        ]
+      }
+    },
+    {
+      "id": 31861,
+      "name": "Sauvage",
+      "brand": "Dior",
+      "year": 2015,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Dior/Sauvage-31861.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.31861.2x.webp",
+      "rating": 3.85,
+      "ratingVotes": 34383,
+      "accords": {
+        "fresh spicy": 100,
+        "amber": 71,
+        "citrus": 69,
+        "aromatic": 64,
+        "musky": 57,
+        "woody": 55,
+        "lavender": 47,
+        "herbal": 46,
+        "warm spicy": 45
+      },
+      "seasonVotes": {
+        "winter": 10300,
+        "spring": 15200,
+        "summer": 14200,
+        "fall": 14100
+      },
+      "timeVotes": {
+        "day": 15100,
+        "night": 13700
+      },
+      "season": {
+        "winter": 0.191,
+        "spring": 0.283,
+        "summer": 0.264,
+        "fall": 0.262
+      },
+      "dayNight": {
+        "day": 0.524,
+        "night": 0.476
+      },
+      "sentiment": {
+        "love": 13200,
+        "like": 11100,
+        "ok": 3600,
+        "dislike": 4600,
+        "hate": 1900
+      },
+      "notes": {
+        "top": [
+          "Calabrian bergamot",
+          "Pepper"
+        ],
+        "mid": [
+          "Sichuan Pepper",
+          "Lavender",
+          "Pink Pepper",
+          "Vetiver",
+          "Patchouli",
+          "Geranium",
+          "elemi"
+        ],
+        "base": [
+          "Ambroxan",
+          "Cedar",
+          "Labdanum"
+        ]
+      }
+    },
+    {
+      "id": 116876,
+      "name": "Amber Empire",
+      "brand": "French Avenue",
+      "year": 2025,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/French-Avenue/Amber-Empire-116876.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.116876.2x.webp",
+      "rating": 4.3,
+      "ratingVotes": 1526,
+      "accords": {
+        "amber": 100,
+        "vanilla": 64,
+        "warm spicy": 60,
+        "woody": 60,
+        "musky": 52,
+        "powdery": 51,
+        "sweet": 50
+      },
+      "seasonVotes": {
+        "winter": 1000,
+        "spring": 293,
+        "summer": 96,
+        "fall": 927
+      },
+      "timeVotes": {
+        "day": 325,
+        "night": 932
+      },
+      "season": {
+        "winter": 0.432,
+        "spring": 0.127,
+        "summer": 0.041,
+        "fall": 0.4
+      },
+      "dayNight": {
+        "day": 0.259,
+        "night": 0.741
+      },
+      "sentiment": {
+        "love": 892,
+        "like": 357,
+        "ok": 154,
+        "dislike": 83,
+        "hate": 40
+      },
+      "notes": {
+        "top": [
+          "Oriental notes",
+          "Liquor",
+          "Vanilla Pod",
+          "Cashmere Wood"
+        ],
+        "mid": [
+          "Amber",
+          "Sugar Cane",
+          "Cedarwood"
+        ],
+        "base": [
+          "Tonka",
+          "Sandalwood",
+          "Musk",
+          "Labdanum"
+        ]
+      }
+    },
+    {
+      "id": 113595,
+      "name": "Atlantis Extrait",
+      "brand": "French Avenue",
+      "year": 2025,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/French-Avenue/Atlantis-Extrait-113595.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.113595.2x.webp",
+      "rating": 4.27,
+      "ratingVotes": 1866,
+      "accords": {
+        "ozonic": 100,
+        "aquatic": 93,
+        "citrus": 83,
+        "coconut": 76,
+        "amber": 63,
+        "sweet": 60,
+        "fruity": 48,
+        "cacao": 47,
+        "lactonic": 46,
+        "vanilla": 45
+      },
+      "seasonVotes": {
+        "winter": 141,
+        "spring": 1100,
+        "summer": 1300,
+        "fall": 387
+      },
+      "timeVotes": {
+        "day": 1200,
+        "night": 424
+      },
+      "season": {
+        "winter": 0.048,
+        "spring": 0.376,
+        "summer": 0.444,
+        "fall": 0.132
+      },
+      "dayNight": {
+        "day": 0.739,
+        "night": 0.261
+      },
+      "sentiment": {
+        "love": 1100,
+        "like": 458,
+        "ok": 207,
+        "dislike": 105,
+        "hate": 44
+      },
+      "notes": {
+        "top": [
+          "Orange",
+          "Mandarin Orange",
+          "Lemon"
+        ],
+        "mid": [
+          "Watermelon",
+          "Coconut"
+        ],
+        "base": [
+          "Ambergris",
+          "Cacao",
+          "Amberwood"
+        ]
+      }
+    },
+    {
+      "id": 95181,
+      "name": "Essence de Blanc",
+      "brand": "French Avenue",
+      "year": 2022,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/French-Avenue/Essence-de-Blanc-95181.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.95181.2x.webp",
+      "rating": 4.06,
+      "ratingVotes": 824,
+      "accords": {
+        "citrus": 100,
+        "fresh spicy": 80,
+        "aromatic": 65,
+        "fresh": 59,
+        "green": 58,
+        "floral": 44
+      },
+      "seasonVotes": {
+        "winter": 82,
+        "spring": 496,
+        "summer": 537,
+        "fall": 208
+      },
+      "timeVotes": {
+        "day": 501,
+        "night": 162
+      },
+      "season": {
+        "winter": 0.062,
+        "spring": 0.375,
+        "summer": 0.406,
+        "fall": 0.157
+      },
+      "dayNight": {
+        "day": 0.756,
+        "night": 0.244
+      },
+      "sentiment": {
+        "love": 381,
+        "like": 237,
+        "ok": 110,
+        "dislike": 66,
+        "hate": 30
+      },
+      "notes": {
+        "top": [
+          "Bergamot",
+          "Citrus",
+          "Petitgrain",
+          "Orange"
+        ],
+        "mid": [
+          "Ginger",
+          "Mint",
+          "Spicy Notes"
+        ],
+        "base": [
+          "Transparent Flowers",
+          "Aquatic notes",
+          "Ambergris"
+        ]
+      }
+    },
+    {
+      "id": 98348,
+      "name": "Glorious Oud Royal Blanc",
+      "brand": "French Avenue",
+      "year": 2022,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/French-Avenue/Glorious-Oud-Royal-Blanc-98348.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.98348.2x.webp",
+      "rating": 4.06,
+      "ratingVotes": 373,
+      "accords": {
+        "citrus": 100,
+        "floral": 72,
+        "woody": 69,
+        "fruity": 56,
+        "fresh spicy": 49,
+        "aromatic": 46,
+        "powdery": 46,
+        "mossy": 45
+      },
+      "seasonVotes": {
+        "winter": 98,
+        "spring": 196,
+        "summer": 190,
+        "fall": 143
+      },
+      "timeVotes": {
+        "day": 197,
+        "night": 99
+      },
+      "season": {
+        "winter": 0.156,
+        "spring": 0.313,
+        "summer": 0.303,
+        "fall": 0.228
+      },
+      "dayNight": {
+        "day": 0.666,
+        "night": 0.334
+      },
+      "sentiment": {
+        "love": 166,
+        "like": 114,
+        "ok": 54,
+        "dislike": 26,
+        "hate": 13
+      },
+      "notes": {
+        "top": [
+          "Black Currant",
+          "Moss"
+        ],
+        "mid": [
+          "Bergamot",
+          "Magnolia",
+          "Mandarin Orange"
+        ],
+        "base": [
+          "White Sandalwood"
+        ]
+      }
+    },
+    {
+      "id": 94713,
+      "name": "Liquid Brun",
+      "brand": "French Avenue",
+      "year": 2024,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/French-Avenue/Liquid-Brun-94713.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.94713.2x.webp",
+      "rating": 4.43,
+      "ratingVotes": 14819,
+      "accords": {
+        "sweet": 100,
+        "warm spicy": 98,
+        "vanilla": 96,
+        "cinnamon": 79,
+        "white floral": 61,
+        "powdery": 61,
+        "aromatic": 58,
+        "citrus": 58,
+        "musky": 57,
+        "amber": 52
+      },
+      "seasonVotes": {
+        "winter": 11100,
+        "spring": 2500,
+        "summer": 878,
+        "fall": 8900
+      },
+      "timeVotes": {
+        "day": 4200,
+        "night": 9100
+      },
+      "season": {
+        "winter": 0.475,
+        "spring": 0.107,
+        "summer": 0.038,
+        "fall": 0.381
+      },
+      "dayNight": {
+        "day": 0.316,
+        "night": 0.684
+      },
+      "sentiment": {
+        "love": 9800,
+        "like": 3000,
+        "ok": 1000,
+        "dislike": 604,
+        "hate": 413
+      },
+      "notes": {
+        "top": [
+          "Cinnamon",
+          "Orange Blossom",
+          "Cardamom",
+          "Bergamot"
+        ],
+        "mid": [
+          "Bourbon Vanilla",
+          "elemi"
+        ],
+        "base": [
+          "Praline",
+          "Ambroxan",
+          "Musk",
+          "Guaiac Wood"
+        ]
+      }
+    },
+    {
+      "id": 4310,
+      "name": "Jake",
+      "brand": "Hollister",
+      "year": null,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Hollister/Jake-4310.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.4310.2x.webp",
+      "rating": 4.18,
+      "ratingVotes": 346,
+      "accords": {
+        "woody": 100,
+        "citrus": 100,
+        "fresh": 65,
+        "fresh spicy": 44,
+        "aromatic": 34
+      },
+      "seasonVotes": {
+        "winter": 35,
+        "spring": 122,
+        "summer": 175,
+        "fall": 78
+      },
+      "timeVotes": {
+        "day": 159,
+        "night": 82
+      },
+      "season": {
+        "winter": 0.085,
+        "spring": 0.298,
+        "summer": 0.427,
+        "fall": 0.19
+      },
+      "dayNight": {
+        "day": 0.66,
+        "night": 0.34
+      },
+      "sentiment": {
+        "love": 134,
+        "like": 156,
+        "ok": 43,
+        "dislike": 12,
+        "hate": 1
+      },
+      "notes": {
+        "all": [
+          "Citruses",
+          "Woodsy Notes"
+        ]
+      }
+    },
+    {
+      "id": 102358,
+      "name": "Cream Velvet",
+      "brand": "Khadlaj Perfumes",
+      "year": 2025,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Khadlaj-Perfumes/Cream-Velvet-102358.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.102358.2x.webp",
+      "rating": 4.36,
+      "ratingVotes": 1234,
+      "accords": {
+        "vanilla": 100,
+        "sweet": 86,
+        "caramel": 76,
+        "amber": 62,
+        "powdery": 60,
+        "honey": 55,
+        "lactonic": 52,
+        "musky": 50,
+        "balsamic": 45
+      },
+      "seasonVotes": {
+        "winter": 650,
+        "spring": 285,
+        "summer": 155,
+        "fall": 611
+      },
+      "timeVotes": {
+        "day": 484,
+        "night": 461
+      },
+      "season": {
+        "winter": 0.382,
+        "spring": 0.168,
+        "summer": 0.091,
+        "fall": 0.359
+      },
+      "dayNight": {
+        "day": 0.512,
+        "night": 0.488
+      },
+      "sentiment": {
+        "love": 755,
+        "like": 282,
+        "ok": 105,
+        "dislike": 69,
+        "hate": 23
+      },
+      "notes": {
+        "top": [
+          "Caramel",
+          "Butter"
+        ],
+        "mid": [
+          "Tonka",
+          "Honey",
+          "Jasmine"
+        ],
+        "base": [
+          "Vanilla",
+          "Musk",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 137096,
+      "name": "Shiyaaka Sky",
+      "brand": "Khadlaj Perfumes",
+      "year": 2026,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Khadlaj-Perfumes/Shiyaaka-Sky-137096.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.137096.2x.webp",
+      "rating": 4.26,
+      "ratingVotes": 326,
+      "accords": {
+        "citrus": 100,
+        "green": 73,
+        "musky": 66,
+        "white floral": 58,
+        "aromatic": 58,
+        "fresh spicy": 57,
+        "powdery": 48,
+        "amber": 45
+      },
+      "seasonVotes": {
+        "winter": 22,
+        "spring": 227,
+        "summer": 246,
+        "fall": 64
+      },
+      "timeVotes": {
+        "day": 226,
+        "night": 54
+      },
+      "season": {
+        "winter": 0.039,
+        "spring": 0.406,
+        "summer": 0.44,
+        "fall": 0.114
+      },
+      "dayNight": {
+        "day": 0.807,
+        "night": 0.193
+      },
+      "sentiment": {
+        "love": 174,
+        "like": 90,
+        "ok": 44,
+        "dislike": 8,
+        "hate": 10
+      },
+      "notes": {
+        "top": [
+          "Bergamot",
+          "Verbena",
+          "Mandarin"
+        ],
+        "mid": [
+          "Green Accord",
+          "Neroli",
+          "Orange Blossom",
+          "Geranium"
+        ],
+        "base": [
+          "Musk",
+          "Ambroxan",
+          "Vetiver",
+          "Sandalwood"
+        ]
+      }
+    },
+    {
+      "id": 85097,
+      "name": "Liam",
+      "brand": "Lattafa Perfumes",
+      "year": 2023,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Liam-85097.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.85097.2x.webp",
+      "rating": 4.28,
+      "ratingVotes": 4765,
+      "accords": {
+        "woody": 100,
+        "warm spicy": 96,
+        "vanilla": 79,
+        "powdery": 74,
+        "aromatic": 71,
+        "sweet": 64,
+        "fruity": 58,
+        "iris": 56,
+        "green": 55,
+        "earthy": 52
+      },
+      "seasonVotes": {
+        "winter": 2700,
+        "spring": 2300,
+        "summer": 863,
+        "fall": 3000
+      },
+      "timeVotes": {
+        "day": 2400,
+        "night": 2500
+      },
+      "season": {
+        "winter": 0.305,
+        "spring": 0.26,
+        "summer": 0.097,
+        "fall": 0.338
+      },
+      "dayNight": {
+        "day": 0.49,
+        "night": 0.51
+      },
+      "sentiment": {
+        "love": 2600,
+        "like": 1400,
+        "ok": 483,
+        "dislike": 227,
+        "hate": 102
+      },
+      "notes": {
+        "top": [
+          "Cardamom",
+          "Black Tea",
+          "Fig"
+        ],
+        "mid": [
+          "Iris",
+          "Vetiver",
+          "Labdanum"
+        ],
+        "base": [
+          "Sandalwood",
+          "Vanilla",
+          "Tonka",
+          "Patchouli"
+        ]
+      }
+    },
+    {
+      "id": 89454,
+      "name": "Vintage Radio",
+      "brand": "Lattafa Perfumes",
+      "year": 2023,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Vintage-Radio-89454.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.89454.2x.webp",
+      "rating": 4.27,
+      "ratingVotes": 4750,
+      "accords": {
+        "woody": 100,
+        "fruity": 90,
+        "aromatic": 84,
+        "fresh spicy": 66,
+        "lavender": 64,
+        "citrus": 64,
+        "sweet": 62,
+        "herbal": 53,
+        "warm spicy": 50,
+        "powdery": 49
+      },
+      "seasonVotes": {
+        "winter": 2700,
+        "spring": 2600,
+        "summer": 1000,
+        "fall": 2900
+      },
+      "timeVotes": {
+        "day": 2400,
+        "night": 2400
+      },
+      "season": {
+        "winter": 0.293,
+        "spring": 0.283,
+        "summer": 0.109,
+        "fall": 0.315
+      },
+      "dayNight": {
+        "day": 0.5,
+        "night": 0.5
+      },
+      "sentiment": {
+        "love": 2600,
+        "like": 1300,
+        "ok": 461,
+        "dislike": 273,
+        "hate": 98
+      },
+      "notes": {
+        "top": [
+          "Lavender",
+          "Sage",
+          "Bergamot"
+        ],
+        "mid": [
+          "Plum",
+          "Palo Santo",
+          "Black Pepper"
+        ],
+        "base": [
+          "Sandalwood",
+          "Oud"
+        ]
+      }
+    },
+    {
+      "id": 83513,
+      "name": "Infini Rose",
+      "brand": "Maison Alhambra",
+      "year": 2023,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Maison-Alhambra/Infini-Rose-83513.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.83513.2x.webp",
+      "rating": 4.29,
+      "ratingVotes": 767,
+      "accords": {
+        "rose": 100,
+        "floral": 74,
+        "amber": 65,
+        "citrus": 63,
+        "soft spicy": 62,
+        "vanilla": 61,
+        "powdery": 48,
+        "white floral": 47,
+        "sweet": 45,
+        "fresh spicy": 45
+      },
+      "seasonVotes": {
+        "winter": 410,
+        "spring": 380,
+        "summer": 214,
+        "fall": 418
+      },
+      "timeVotes": {
+        "day": 323,
+        "night": 388
+      },
+      "season": {
+        "winter": 0.288,
+        "spring": 0.267,
+        "summer": 0.15,
+        "fall": 0.294
+      },
+      "dayNight": {
+        "day": 0.454,
+        "night": 0.546
+      },
+      "sentiment": {
+        "love": 434,
+        "like": 208,
+        "ok": 59,
+        "dislike": 46,
+        "hate": 20
+      },
+      "notes": {
+        "top": [
+          "Pink Pepper",
+          "Bergamot",
+          "Hedione"
+        ],
+        "mid": [
+          "Bulgarian Rose",
+          "Turkish Rose",
+          "Egyptian Jasmine"
+        ],
+        "base": [
+          "Amber",
+          "Madagascar Vanilla"
+        ]
+      }
+    },
+    {
+      "id": 105076,
+      "name": "Legacy",
+      "brand": "MAISON ASRAR",
+      "year": 2025,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/MAISON-ASRAR/Legacy-105076.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.105076.2x.webp",
+      "rating": 4.38,
+      "ratingVotes": 1026,
+      "accords": {
+        "white floral": 100,
+        "fruity": 79,
+        "sweet": 78,
+        "citrus": 77,
+        "musky": 73,
+        "fresh": 67,
+        "fresh spicy": 67,
+        "powdery": 62,
+        "amber": 56,
+        "aquatic": 54
+      },
+      "seasonVotes": {
+        "winter": 125,
+        "spring": 664,
+        "summer": 702,
+        "fall": 410
+      },
+      "timeVotes": {
+        "day": 643,
+        "night": 344
+      },
+      "season": {
+        "winter": 0.066,
+        "spring": 0.349,
+        "summer": 0.369,
+        "fall": 0.216
+      },
+      "dayNight": {
+        "day": 0.651,
+        "night": 0.349
+      },
+      "sentiment": {
+        "love": 615,
+        "like": 266,
+        "ok": 86,
+        "dislike": 41,
+        "hate": 18
+      },
+      "notes": {
+        "top": [
+          "Pear",
+          "Ginger",
+          "Bergamot"
+        ],
+        "mid": [
+          "Orange Blossom",
+          "Jasmine",
+          "Woody Notes"
+        ],
+        "base": [
+          "Musk",
+          "Amber",
+          "Vanilla"
+        ]
+      }
+    },
+    {
+      "id": 116224,
+      "name": "Meant To Be Seen",
+      "brand": "Nishane",
+      "year": 2025,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Nishane/Meant-To-Be-Seen-116224.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.116224.2x.webp",
+      "rating": 4.19,
+      "ratingVotes": 1245,
+      "accords": {
+        "powdery": 100,
+        "woody": 89,
+        "iris": 85,
+        "violet": 69,
+        "musky": 64,
+        "oud": 57,
+        "earthy": 52,
+        "floral": 50,
+        "warm spicy": 48,
+        "citrus": 47
+      },
+      "seasonVotes": {
+        "winter": 340,
+        "spring": 469,
+        "summer": 327,
+        "fall": 446
+      },
+      "timeVotes": {
+        "day": 463,
+        "night": 234
+      },
+      "season": {
+        "winter": 0.215,
+        "spring": 0.296,
+        "summer": 0.207,
+        "fall": 0.282
+      },
+      "dayNight": {
+        "day": 0.664,
+        "night": 0.336
+      },
+      "sentiment": {
+        "love": 655,
+        "like": 330,
+        "ok": 140,
+        "dislike": 82,
+        "hate": 38
+      },
+      "notes": {
+        "top": [
+          "Violet",
+          "Bergamot"
+        ],
+        "mid": [
+          "Orris Root",
+          "Moxalone",
+          "Civettone"
+        ],
+        "base": [
+          "Akigalawood",
+          "Sesame",
+          "Ambrettolide",
+          "Sandalwood"
+        ]
+      }
+    },
+    {
+      "id": 99060,
+      "name": "Rifaaqat",
+      "brand": "PARIS CORNER",
+      "year": 2023,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/PARIS-CORNER/Rifaaqat-99060.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.99060.2x.webp",
+      "rating": 4.23,
+      "ratingVotes": 4074,
+      "accords": {
+        "fresh spicy": 100,
+        "vanilla": 98,
+        "warm spicy": 80,
+        "amber": 74,
+        "aromatic": 70,
+        "balsamic": 64,
+        "woody": 62,
+        "soft spicy": 57,
+        "powdery": 55,
+        "sweet": 51
+      },
+      "seasonVotes": {
+        "winter": 2700,
+        "spring": 621,
+        "summer": 181,
+        "fall": 2400
+      },
+      "timeVotes": {
+        "day": 1100,
+        "night": 2300
+      },
+      "season": {
+        "winter": 0.457,
+        "spring": 0.105,
+        "summer": 0.031,
+        "fall": 0.407
+      },
+      "dayNight": {
+        "day": 0.324,
+        "night": 0.676
+      },
+      "sentiment": {
+        "love": 2300,
+        "like": 976,
+        "ok": 366,
+        "dislike": 275,
+        "hate": 148
+      },
+      "notes": {
+        "top": [
+          "Black Pepper",
+          "elemi",
+          "Pink Pepper"
+        ],
+        "mid": [
+          "Olibanum",
+          "Saffron"
+        ],
+        "base": [
+          "Vanilla",
+          "Cedarwood"
+        ]
+      }
+    },
+    {
+      "id": 121449,
+      "name": "Zahri Amara",
+      "brand": "PARIS CORNER",
+      "year": 2025,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/PARIS-CORNER/Zahri-Amara-121449.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.121449.2x.webp",
+      "rating": 3.7,
+      "ratingVotes": 121,
+      "accords": {
+        "fruity": 100,
+        "floral": 87,
+        "fresh": 75,
+        "woody": 69,
+        "sweet": 60,
+        "musky": 60,
+        "green": 57,
+        "powdery": 54,
+        "rose": 50,
+        "savory": 50
+      },
+      "seasonVotes": {
+        "winter": 28,
+        "spring": 56,
+        "summer": 48,
+        "fall": 28
+      },
+      "timeVotes": {
+        "day": 49,
+        "night": 23
+      },
+      "season": {
+        "winter": 0.175,
+        "spring": 0.35,
+        "summer": 0.3,
+        "fall": 0.175
+      },
+      "dayNight": {
+        "day": 0.681,
+        "night": 0.319
+      },
+      "sentiment": {
+        "love": 41,
+        "like": 40,
+        "ok": 11,
+        "dislike": 21,
+        "hate": 8
+      },
+      "notes": {
+        "top": [
+          "Blackcurrant",
+          "Green Tea",
+          "Raspberry"
+        ],
+        "mid": [
+          "Peony",
+          "Rice",
+          "Cyclamen"
+        ],
+        "base": [
+          "Musk",
+          "Cedar",
+          "Cashmeran"
+        ]
+      }
+    },
+    {
+      "id": 110808,
+      "name": "Hawas Elixir",
+      "brand": "Rasasi",
+      "year": 2024,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Rasasi/Hawas-Elixir-110808.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.110808.2x.webp",
+      "rating": 4.47,
+      "ratingVotes": 1413,
+      "accords": {
+        "vanilla": 100,
+        "aromatic": 81,
+        "green": 70,
+        "sweet": 65,
+        "fresh spicy": 64,
+        "warm spicy": 59,
+        "amber": 59,
+        "chocolate": 56,
+        "lavender": 54,
+        "powdery": 51
+      },
+      "seasonVotes": {
+        "winter": 1100,
+        "spring": 405,
+        "summer": 114,
+        "fall": 868
+      },
+      "timeVotes": {
+        "day": 371,
+        "night": 938
+      },
+      "season": {
+        "winter": 0.442,
+        "spring": 0.163,
+        "summer": 0.046,
+        "fall": 0.349
+      },
+      "dayNight": {
+        "day": 0.283,
+        "night": 0.717
+      },
+      "sentiment": {
+        "love": 896,
+        "like": 361,
+        "ok": 100,
+        "dislike": 38,
+        "hate": 18
+      },
+      "notes": {
+        "top": [
+          "Mint",
+          "Bergamot",
+          "Artemisia"
+        ],
+        "mid": [
+          "Dark Chocolate",
+          "Lavender",
+          "Benzoin"
+        ],
+        "base": [
+          "Vanilla",
+          "Tonka Bean",
+          "White Musk"
+        ]
+      }
+    },
+    {
+      "id": 118549,
+      "name": "Terra",
+      "brand": "Rayhaan",
+      "year": 2025,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Rayhaan/Terra-118549.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.118549.2x.webp",
+      "rating": 4.3,
+      "ratingVotes": 1944,
+      "accords": {
+        "amber": 100,
+        "warm spicy": 75,
+        "aromatic": 68,
+        "fresh spicy": 65,
+        "balsamic": 56,
+        "vanilla": 54,
+        "citrus": 52,
+        "sweet": 46,
+        "woody": 45
+      },
+      "seasonVotes": {
+        "winter": 1400,
+        "spring": 594,
+        "summer": 127,
+        "fall": 1200
+      },
+      "timeVotes": {
+        "day": 628,
+        "night": 1200
+      },
+      "season": {
+        "winter": 0.422,
+        "spring": 0.179,
+        "summer": 0.038,
+        "fall": 0.361
+      },
+      "dayNight": {
+        "day": 0.344,
+        "night": 0.656
+      },
+      "sentiment": {
+        "love": 1200,
+        "like": 408,
+        "ok": 176,
+        "dislike": 106,
+        "hate": 70
+      },
+      "notes": {
+        "top": [
+          "Cardamom",
+          "elemi",
+          "Sichuan Pepper",
+          "Bergamot",
+          "Lemon"
+        ],
+        "mid": [
+          "Patchouli",
+          "Cumin",
+          "Coriander",
+          "Anise",
+          "Saffron",
+          "Wormwood",
+          "Orange Blossom",
+          "Rose",
+          "Geranium"
+        ],
+        "base": [
+          "Frankincense",
+          "Vanilla",
+          "Amber",
+          "Benzoin",
+          "Opoponax",
+          "Oud",
+          "Labdanum",
+          "Birch",
+          "Musk",
+          "Ambergris",
+          "Maltol"
+        ]
+      }
+    }
+  ]
+}
