@@ -3,6 +3,7 @@ import { occasionById } from './occasions.js';
 import { getForecast, summarize } from './weather.js';
 import { loadLocation, saveLocation, deviceLocation, searchCities } from './location.js';
 import { loadHistory, toggleWear, wornIn } from './history.js';
+import { loadHidden, saveHidden } from './hidden.js';
 import { sceneTint } from './scene.js';
 import * as ui from './ui.js';
 
@@ -30,6 +31,7 @@ const state = {
   occasion: prefs.occasion ?? 'casual',
   occasionSlot: null,
   history: loadHistory(),
+  hidden: loadHidden(), // ids left out of rankings on this device
   contexts: {}, // ctx key -> { win, occasion, entries: Map(id -> ranked entry) }
   today: null, // { day: ranked[], night: ranked[] }
   expanded: new Set(), // ctx keys showing B and C tiers
@@ -57,8 +59,12 @@ function renderHero() {
   document.documentElement.style.setProperty('--tint-mid', mid);
 }
 
+function activeFragrances() {
+  return state.collection.fragrances.filter(f => !state.hidden.has(f.id));
+}
+
 function rankContext(key, win, occasion) {
-  const ranked = rank(state.collection.fragrances, win, win.slot, {
+  const ranked = rank(activeFragrances(), win, win.slot, {
     occasion,
     history: state.history,
     todayISO: win.dateISO,
@@ -68,7 +74,7 @@ function rankContext(key, win, occasion) {
 }
 
 function computeToday() {
-  state.today = state.wx && state.collection
+  state.today = state.wx && state.collection && activeFragrances().length
     ? { day: rankContext('day', state.wx.day, null), night: rankContext('night', state.wx.night, null) }
     : null;
 }
@@ -108,6 +114,11 @@ function renderView() {
       : '<div class="loading" aria-live="polite"><span></span><span></span><span></span></div>';
     return;
   }
+  if (!activeFragrances().length) {
+    view.innerHTML = messageCard('Every bottle is hidden', 'Turn some back on to get picks.',
+      `<button class="primary-btn" data-action="manage"><span>Manage collection</span></button>`);
+    return;
+  }
 
   if (state.view === 'today') {
     view.innerHTML = `<div class="slots">
@@ -132,7 +143,8 @@ function renderFooter() {
     ? `Weather ${state.wx.stale ? 'offline · ' : ''}updated ${new Date(state.wx.fetchedAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`
     : '';
   $('#foot').innerHTML = `
-    <span>${c.fragrances.length} bottles from Fragrantica · synced ${ui.esc(c.fetched)}</span>
+    <span>${c.fragrances.length - state.hidden.size} of ${c.fragrances.length} bottles in rotation · <button class="link-btn" data-action="manage">Manage</button></span>
+    <span>From Fragrantica · synced ${ui.esc(c.fetched)}</span>
     <span>${updated} <button class="icon-btn small" data-action="refresh" aria-label="Refresh weather">${ui.icon.refresh}</button></span>
     <span class="muted">Forecast by <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a></span>`;
 }
@@ -157,6 +169,8 @@ function renderSheet() {
     const label = ctx.occasion ? `${ctx.occasion.label} · ${ctx.win.label.toLowerCase()}` : ctx.win.label;
     const worn = wornIn(state.history, ctx.win.dateISO, ctx.win.slot)?.id ?? null;
     el.innerHTML = ui.sheetHTML(entry, label, s.ctx, worn);
+  } else if (s.kind === 'manage') {
+    el.innerHTML = ui.manageSheetHTML(state.collection.fragrances, state.hidden);
   } else {
     el.innerHTML = ui.locationSheetHTML(s);
   }
@@ -170,7 +184,7 @@ function openSheet(sheet) {
   el.hidden = false;
   document.body.classList.add('sheet-open');
   if (!wasOpen) requestAnimationFrame(() => el.classList.add('open'));
-  el.querySelector(sheet.kind === 'location' ? 'input' : '.sheet-close')?.focus({ preventScroll: true });
+  if (!wasOpen) el.querySelector(sheet.kind === 'location' ? 'input' : '.sheet-close')?.focus({ preventScroll: true });
 }
 
 function closeSheet() {
@@ -179,6 +193,33 @@ function closeSheet() {
   el.classList.remove('open');
   document.body.classList.remove('sheet-open');
   setTimeout(() => { if (!state.sheet) { el.hidden = true; el.innerHTML = ''; } }, 220);
+}
+
+// ---------- Hiding bottles ----------
+
+let toastTimer;
+function showToast(html) {
+  const el = $('#toast');
+  el.innerHTML = html;
+  el.hidden = false;
+  requestAnimationFrame(() => el.classList.add('show'));
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(hideToast, 5000);
+}
+function hideToast() {
+  const el = $('#toast');
+  el.classList.remove('show');
+  setTimeout(() => { if (!el.classList.contains('show')) el.hidden = true; }, 200);
+}
+
+function setHidden(id, hide) {
+  if (hide) state.hidden.add(id);
+  else state.hidden.delete(id);
+  saveHidden(state.hidden);
+  computeToday();
+  renderHero();
+  renderView();
+  renderFooter();
 }
 
 // ---------- Data ----------
@@ -215,7 +256,26 @@ document.addEventListener('click', async e => {
   if (!t) return;
   const d = t.dataset;
 
-  if (d.view) {
+  if (d.toggleHidden) {
+    const id = +d.toggleHidden;
+    const hide = !state.hidden.has(id);
+    setHidden(id, hide);
+    if (state.sheet?.kind === 'manage') {
+      const scroll = $('#sheet .sheet-panel').scrollTop;
+      renderSheet();
+      $('#sheet .sheet-panel').scrollTop = scroll;
+      $(`#sheet [data-toggle-hidden="${id}"]`)?.focus({ preventScroll: true });
+    } else if (hide) {
+      closeSheet();
+      const name = state.collection.fragrances.find(f => f.id === id)?.name ?? 'Bottle';
+      showToast(`<span>${ui.esc(name)} hidden from picks</span><button data-action="unhide" data-id="${id}">Undo</button>`);
+    }
+  } else if (d.action === 'unhide') {
+    setHidden(+d.id, false);
+    hideToast();
+  } else if (d.action === 'manage') {
+    openSheet({ kind: 'manage' });
+  } else if (d.view) {
     state.view = d.view;
     savePrefs();
     renderView();

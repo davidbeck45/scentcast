@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Same engine as the app, from the terminal.
 //   node scripts/recommend.mjs --city "New York" [--occasion date] [--slot day|night] [--json]
-//   node scripts/recommend.mjs --loc 40.71,-74.01
+//   node scripts/recommend.mjs --loc 40.71,-74.01 --exclude "Sauvage,Jake"
+// Bottles hidden in the app live in the phone's storage; pass them via --exclude.
 import { readFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 import { rank } from '../src/engine.js';
@@ -15,12 +16,13 @@ const { values: args } = parseArgs({
     loc: { type: 'string' },
     occasion: { type: 'string' },
     slot: { type: 'string' },
+    exclude: { type: 'string', default: '' },
     json: { type: 'boolean', default: false },
   },
 });
 
 if (!args.city && !args.loc) {
-  console.error(`usage: node scripts/recommend.mjs (--city NAME | --loc LAT,LON) [--occasion ${OCCASIONS.map(o => o.id).join('|')}] [--slot day|night] [--json]`);
+  console.error(`usage: node scripts/recommend.mjs (--city NAME | --loc LAT,LON) [--occasion ${OCCASIONS.map(o => o.id).join('|')}] [--slot day|night] [--exclude NAME,NAME] [--json]`);
   process.exit(1);
 }
 
@@ -37,7 +39,9 @@ if (args.loc) {
 const occasion = args.occasion ? occasionById(args.occasion) : null;
 if (args.occasion && !occasion) { console.error(`Unknown occasion "${args.occasion}"`); process.exit(1); }
 
-const { fragrances } = JSON.parse(readFileSync(new URL('../data/collection.json', import.meta.url)));
+const excluded = args.exclude.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+const fragrances = JSON.parse(readFileSync(new URL('../data/collection.json', import.meta.url))).fragrances
+  .filter(f => !excluded.includes(f.name.toLowerCase()));
 const wx = summarize(await fetchForecast(place));
 const slots = args.slot ? [args.slot] : occasion ? [occasion.slot] : ['day', 'night'];
 
