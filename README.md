@@ -16,7 +16,7 @@ npm test
 node scripts/recommend.mjs --city "New York" --occasion date
 ```
 
-It's a static site (installable as a PWA), so any static host works.
+Live at **https://davidbeck45.github.io/scentcast/** (GitHub Pages from `main`; every push redeploys). Add it to your phone's home screen to use it like an app.
 
 ## Collection
 
