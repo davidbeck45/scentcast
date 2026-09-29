@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200">
+  <title>Share card</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="../src/styles.css">
+  <style>
+    /* The 1200x630 link-preview image (icons/og.png). Not linked from the app.
+       Regenerate: chromium --headless=new --window-size=1200,630 --screenshot=icons/og.png http://127.0.0.1:5173/dev/og.html */
+    html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #0a0b10; }
+    .card { position: relative; width: 1200px; height: 630px; overflow: hidden; }
+    .card > .art, .card > .art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(4, 6, 14, 0.88) 0%, rgba(4, 6, 14, 0.55) 42%, transparent 70%), linear-gradient(180deg, transparent 55%, rgba(4, 6, 14, 0.7)); }
+    .copy { position: absolute; left: 84px; top: 50%; transform: translateY(-50%); display: grid; gap: 22px; color: #fff; }
+    .mark { display: flex; align-items: center; gap: 18px; }
+    .mark img { width: 64px; height: 64px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
+    .mark span { font-family: var(--display); font-size: 40px; font-style: italic; font-weight: 500; letter-spacing: 0.01em; }
+    h1 { max-width: 640px; font-family: var(--display); font-size: 76px; font-weight: 600; line-height: 0.98; letter-spacing: -0.025em; }
+    p { max-width: 560px; color: rgba(255, 255, 255, 0.78); font-size: 26px; line-height: 1.35; }
+    .pills { display: flex; gap: 12px; margin-top: 6px; }
+    .pills span { padding: 10px 20px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.22); background: rgba(8, 10, 20, 0.4); font-size: 20px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="art" id="art"></div>
+    <div class="shade"></div>
+    <div class="copy">
+      <div class="mark"><img src="../icons/icon-192.png" alt=""><span>Scentcast</span></div>
+      <h1>What to wear today, from your own shelf.</h1>
+      <p>Fragrance picks tuned to the forecast, the time of day and the occasion.</p>
+      <div class="pills"><span>Today</span><span>Week ahead</span><span>Any occasion</span></div>
+    </div>
+  </div>
+  <script type="module">
+    import { renderScene } from '../src/scene.js';
+    document.getElementById('art').innerHTML = renderScene({
+      phase: 'dusk', category: 'partly', season: 'fall', cold: false, sunProgress: 0.97, aspect: 1200 / 630, label: '',
+    });
+  </script>
+</body>
+</html>

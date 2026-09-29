@@ -27,3 +27,46 @@ export function toggleWear(id, dateISO, slot) {
   save(next);
   return next;
 }
+
+export function clearHistory() {
+  save([]);
+  return [];
+}
+
+const shiftISO = (iso, days) => new Date(Date.parse(`${iso}T12:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10);
+
+// Wear counts and last-worn dates for the journal. `days` is the look-back
+// window for counts; last-worn dates cover the whole log.
+export function journalStats(history, todayISO, days = 30) {
+  const since = shiftISO(todayISO, -(days - 1));
+  const counts = new Map();
+  const lastWorn = new Map();
+  let wears = 0;
+  for (const h of history) {
+    if (h.date > todayISO) continue;
+    if (!lastWorn.has(h.id) || h.date > lastWorn.get(h.id)) lastWorn.set(h.id, h.date);
+    if (h.date < since) continue;
+    wears++;
+    counts.set(h.id, (counts.get(h.id) ?? 0) + 1);
+  }
+  const top = [...counts].sort((a, b) => b[1] - a[1] || (lastWorn.get(b[0]) > lastWorn.get(a[0]) ? 1 : -1));
+  return { wears, bottles: counts.size, top, lastWorn, since };
+}
+
+// The last `weeks` calendar weeks up to today, Sunday first:
+// [[{ dateISO, day: entry|null, night: entry|null, future }...7], ...]
+export function journalCalendar(history, todayISO, weeks = 5) {
+  const weekday = new Date(`${todayISO}T12:00:00Z`).getUTCDay();
+  const start = shiftISO(todayISO, -weekday - 7 * (weeks - 1));
+  return Array.from({ length: weeks }, (_, w) => Array.from({ length: 7 }, (_, d) => {
+    const dateISO = shiftISO(start, w * 7 + d);
+    return {
+      dateISO,
+      future: dateISO > todayISO,
+      day: wornIn(history, dateISO, 'day'),
+      night: wornIn(history, dateISO, 'night'),
+    };
+  }));
+}
+
+export { shiftISO };

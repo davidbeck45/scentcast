@@ -1,8 +1,8 @@
-import { rank } from './engine.js';
+import { rank, planWindows } from './engine.js';
 import { occasionById } from './occasions.js';
-import { getForecast, summarize } from './weather.js';
-import { loadLocation, saveLocation, deviceLocation, searchCities } from './location.js';
-import { loadHistory, toggleWear, wornIn } from './history.js';
+import { getForecast, summarize, week } from './weather.js';
+import { loadLocation, saveLocation, loadRecent, deviceLocation, searchCities } from './location.js';
+import { loadHistory, toggleWear, wornIn, clearHistory, journalStats, journalCalendar, shiftISO } from './history.js';
 import { loadHidden, saveHidden } from './hidden.js';
 import { loadMine, saveMine, loadActive, saveActive, shareURL, parseShare, localMatches, sameBottle, importLines, MAX_IMPORT_LINES } from './collections.js';
 import { apiReady, searchFragrances, fetchFragrances } from './api.js';
@@ -12,14 +12,25 @@ import * as ui from './ui.js';
 
 const PREFS_KEY = 'scentcast.prefs';
 const REFRESH_AFTER = 20 * 60 * 1000;
+const VIEWS = ['today', 'week', 'occasion'];
+const DUSTY_AFTER_DAYS = 30;
+// Countries that read temperatures in °F.
+const FAHRENHEIT_REGIONS = ['US', 'LR', 'MM', 'BS', 'BZ', 'KY', 'PW', 'FM', 'MH'];
 
 const $ = sel => document.querySelector(sel);
+const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function loadPrefs() {
   try { return JSON.parse(localStorage.getItem(PREFS_KEY)) ?? {}; } catch { return {}; }
 }
 function savePrefs() {
-  try { localStorage.setItem(PREFS_KEY, JSON.stringify({ view: state.view, occasion: state.occasion })); } catch {}
+  try { localStorage.setItem(PREFS_KEY, JSON.stringify({ view: state.view, occasion: state.occasion, units: state.units })); } catch {}
+}
+
+function defaultUnits() {
+  const [lang, region] = (navigator.language || 'en-US').split('-');
+  if (!region) return lang === 'en' ? 'F' : 'C';
+  return FAHRENHEIT_REGIONS.includes(region.toUpperCase()) ? 'F' : 'C';
 }
 
 const prefs = loadPrefs();
@@ -33,17 +44,20 @@ const state = {
   wx: null,
   loading: false,
   error: null,
-  view: prefs.view ?? 'today',
+  view: VIEWS.includes(prefs.view) ? prefs.view : 'today',
+  renderedView: null,
+  units: prefs.units === 'C' || prefs.units === 'F' ? prefs.units : defaultUnits(),
   occasion: prefs.occasion ?? 'casual',
   occasionSlot: null,
   history: loadHistory(),
   hidden: loadHidden(), // ids left out of rankings on this device
-  contexts: {}, // ctx key -> { win, occasion, entries: Map(id -> ranked entry) }
-  today: null, // { day: ranked[], night: ranked[] }
+  contexts: {}, // ctx key -> { win, occasion, ranked, entries: Map(id -> ranked entry) }
+  today: null, // { day: plan, night: plan } where plan = { win, ranked, pick }
   expanded: new Set(), // ctx keys showing B and C tiers
-  sheet: null, // { kind: 'detail' | 'location' | 'collection' | 'add' | 'import', ...sheet state }
+  sheet: null, // { kind: 'detail' | 'location' | 'collection' | 'add' | 'import' | 'journal', ...sheet state }
   lastRemoved: null, // { record, index } for undo
 };
+ui.setUnits(state.units);
 
 // ---------- Collections ----------
 
@@ -91,14 +105,27 @@ function closeShared() {
 
 // ---------- Rendering ----------
 
+const SLOT_ORDER = { day: 0, night: 1 };
+const byTime = (a, b) => a.dateISO.localeCompare(b.dateISO) || SLOT_ORDER[a.slot] - SLOT_ORDER[b.slot];
+
 function heroAspect() {
   const el = $('#hero');
   return el.clientHeight ? el.clientWidth / el.clientHeight : 400 / 220;
 }
 
+// Today's two windows in time order (tonight comes before tomorrow's daytime).
+function todaySlots() {
+  return state.today ? Object.values(state.today).sort((a, b) => byTime(a.win, b.win)) : [];
+}
+
 function heroPicks() {
   if (!state.today) return null;
-  return ['day', 'night'].map(slot => ({ slot, label: state.wx[slot].label, entry: state.today[slot][0] }));
+  return todaySlots().map(({ win, pick }) => ({
+    slot: win.slot,
+    label: win.label,
+    entry: pick,
+    worn: wornIn(state.history, win.dateISO, win.slot)?.id === pick.fragrance.id,
+  }));
 }
 
 function renderHero() {
@@ -108,6 +135,11 @@ function renderHero() {
   const [top, mid] = sceneTint(now?.phase ?? 'night', now?.category ?? 'clear');
   document.documentElement.style.setProperty('--tint-top', top);
   document.documentElement.style.setProperty('--tint-mid', mid);
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', top);
+}
+
+function storeContext(key, win, occasion, ranked) {
+  state.contexts[key] = { win, occasion, ranked, entries: new Map(ranked.map(r => [r.fragrance.id, r])) };
 }
 
 function rankContext(key, win, occasion) {
@@ -116,23 +148,51 @@ function rankContext(key, win, occasion) {
     history: state.history,
     todayISO: win.dateISO,
   });
-  state.contexts[key] = { win, occasion, entries: new Map(ranked.map(r => [r.fragrance.id, r])) };
+  storeContext(key, win, occasion, ranked);
   return ranked;
 }
 
+// Today's day and night are planned together, so the evening pick doesn't
+// repeat the daytime one and a logged wear becomes that window's pick.
 function computeToday() {
-  state.today = state.wx && activeFragrances().length
-    ? { day: rankContext('day', state.wx.day, null), night: rankContext('night', state.wx.night, null) }
-    : null;
+  if (!state.wx || !activeFragrances().length) {
+    state.today = null;
+    return;
+  }
+  const plan = planWindows(activeFragrances(), [state.wx.day, state.wx.night].sort(byTime), { history: state.history });
+  state.today = {};
+  for (const p of plan) {
+    storeContext(p.win.slot, p.win, null, p.ranked);
+    state.today[p.win.slot] = p;
+  }
 }
 
-function slotSection(key, ranked, kicker) {
-  const { win } = state.contexts[key];
+function computeWeek() {
+  const days = week(state.forecast);
+  const windows = days.flatMap(d => [d.day, d.night].filter(Boolean));
+  const plan = planWindows(activeFragrances(), windows, { history: state.history });
+  const byWindow = new Map(plan.map(p => [`${p.win.dateISO}:${p.win.slot}`, p]));
+  const slotPlan = win => {
+    if (!win) return null;
+    const p = byWindow.get(`${win.dateISO}:${win.slot}`);
+    const ctx = `w:${win.dateISO}:${win.slot}`;
+    storeContext(ctx, win, null, p.ranked);
+    return { ...p, ctx, worn: wornIn(state.history, win.dateISO, win.slot)?.id === p.pick.fragrance.id };
+  };
+  return days.map(d => ({ ...d, day: slotPlan(d.day), night: slotPlan(d.night) }));
+}
+
+// Wear logging is for the windows on the Today tab, not days further out.
+function canWear(win) {
+  return Boolean(state.wx) && [state.wx.day, state.wx.night].some(w => w.dateISO === win.dateISO && w.slot === win.slot);
+}
+
+function slotSection(key, { win, ranked, pick }, kicker) {
   const worn = wornIn(state.history, win.dateISO, win.slot)?.id ?? null;
   return `
     <section class="slot" id="slot-${key}" data-slot="${win.slot}">
       ${ui.slotHeaderHTML(win, nowHour())}
-      ${ui.pickHTML(ranked[0], key, worn, kicker)}
+      ${ui.pickHTML(pick, key, worn, kicker, { canWear: canWear(win) })}
       ${ui.tierListHTML(ranked, key, worn, state.expanded.has(key))}
     </section>`;
 }
@@ -142,43 +202,73 @@ function nowHour() {
   return new Date(Date.now() + offset * 1000).getUTCHours();
 }
 
-function messageCard(title, body, action = '') {
-  return `<div class="message"><h2>${ui.esc(title)}</h2><p>${ui.esc(body)}</p>${action}</div>`;
-}
-
 function emptyState() {
   if (state.shared) {
     return state.shared.loading
-      ? '<div class="loading" aria-live="polite"><span></span><span></span><span></span></div>'
-      : messageCard('Nothing to show', 'None of the bottles in this link could be loaded.',
-        `<button class="primary-btn" data-action="shared-close"><span>Back to my picks</span></button>`);
+      ? ui.skeletonHTML(2)
+      : ui.messageHTML({ glyph: ui.icon.share, title: 'Nothing to show', body: 'None of the bottles in this link could be loaded.',
+        action: `<button class="primary-btn" data-action="shared-close"><span>Back to my picks</span></button>` });
   }
   if (!sourceRecords().length) {
-    return messageCard('Your collection is empty', 'Add the bottles you own and picks start right away.',
-      `<div class="message-actions">
+    return ui.messageHTML({ glyph: ui.icon.bottle, title: 'Your collection is empty', body: 'Add the bottles you own and picks start right away.',
+      action: `<div class="message-actions">
         <button class="primary-btn" data-action="add">${ui.icon.plus}<span>Add bottles</span></button>
         <button class="ghost-btn" data-action="import">${ui.icon.paste}Paste a list</button>
         <button class="link-btn" data-collection-tab="demo">Use the demo collection</button>
-      </div>`);
+      </div>` });
   }
-  return messageCard('Every bottle is hidden', 'Turn some back on to get picks.',
-    `<button class="primary-btn" data-action="collection"><span>Manage collection</span></button>`);
+  return ui.messageHTML({ glyph: ui.icon.hide, title: 'Every bottle is hidden', body: 'Turn some back on to get picks.',
+    action: `<button class="primary-btn" data-action="collection"><span>Manage collection</span></button>` });
+}
+
+function journalTeaser() {
+  if (!state.history.length || !state.wx) return '';
+  const todayISO = state.wx.todayISO;
+  const strip = Array.from({ length: 7 }, (_, i) => {
+    const dateISO = shiftISO(todayISO, i - 6);
+    const isToday = dateISO === todayISO;
+    return {
+      dateISO,
+      isToday,
+      label: isToday ? 'Today' : ui.shortDate(dateISO).split(' ')[1],
+      day: wornIn(state.history, dateISO, 'day'),
+      night: wornIn(state.history, dateISO, 'night'),
+    };
+  });
+  return ui.journalTeaserHTML({ strip, stats: journalStats(state.history, todayISO) }, findRecord);
 }
 
 function renderView() {
-  document.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === state.view)));
+  const tabs = document.querySelectorAll('[data-view]');
+  tabs.forEach(b => {
+    const on = b.dataset.view === state.view;
+    b.setAttribute('aria-selected', String(on));
+    b.tabIndex = on ? 0 : -1;
+  });
+  $('.tabs').style.setProperty('--i', VIEWS.indexOf(state.view));
   const view = $('#view');
+  view.setAttribute('aria-labelledby', `tab-${state.view}`);
   const banner = state.shared ? ui.sharedBannerHTML(state.shared, state.mine.records.length) : '';
 
+  if (state.renderedView !== state.view) {
+    state.renderedView = state.view;
+    if (!reducedMotion()) {
+      view.classList.remove('enter');
+      void view.offsetWidth; // restart the animation
+      view.classList.add('enter');
+    }
+  }
+
   if (!state.loc) {
-    view.innerHTML = messageCard('Set your location', 'Picks are based on your local forecast.',
-      `<button class="primary-btn" data-action="location">${ui.icon.pin}<span>Choose location</span></button>`);
+    view.innerHTML = ui.messageHTML({ glyph: ui.icon.pin, title: 'Set your location', body: 'Picks are based on your local forecast.',
+      action: `<button class="primary-btn" data-action="location">${ui.icon.pin}<span>Choose location</span></button>` });
     return;
   }
   if (!state.wx) {
     view.innerHTML = state.error
-      ? messageCard('Couldn’t load the weather', state.error, `<button class="primary-btn" data-action="refresh">${ui.icon.refresh}<span>Try again</span></button>`)
-      : '<div class="loading" aria-live="polite"><span></span><span></span><span></span></div>';
+      ? ui.messageHTML({ glyph: ui.icon.cloud, title: 'Couldn’t load the weather', body: state.error,
+        action: `<button class="primary-btn" data-action="refresh">${ui.icon.refresh}<span>Try again</span></button>` })
+      : ui.skeletonHTML(state.view === 'today' ? 2 : 1);
     return;
   }
   if (!activeFragrances().length) {
@@ -188,38 +278,40 @@ function renderView() {
 
   if (state.view === 'today') {
     view.innerHTML = `${banner}<div class="slots">
-      ${slotSection('day', state.today.day, `Top pick · ${state.wx.day.label.toLowerCase()}`)}
-      ${slotSection('night', state.today.night, `Top pick · ${state.wx.night.label.toLowerCase()}`)}
-    </div>`;
+      ${todaySlots().map(p => slotSection(p.win.slot, p, `Top pick · ${p.win.label.toLowerCase()}`)).join('')}
+    </div>${journalTeaser()}`;
+  } else if (state.view === 'week') {
+    view.innerHTML = banner + ui.weekHTML(computeWeek());
   } else {
     const occasion = occasionById(state.occasion) ?? occasionById('casual');
     const slot = state.occasionSlot ?? occasion.slot;
-    const ranked = rankContext('occ', state.wx[slot], occasion);
+    const win = state.wx[slot];
+    const ranked = rankContext('occ', win, occasion);
     view.innerHTML = `${banner}
       ${ui.occasionPickerHTML(occasion.id)}
       <div class="occ-bar">${ui.slotToggleHTML(slot, state.wx)}</div>
-      <div class="slots single">${slotSection('occ', ranked, `Best for ${occasion.label.toLowerCase()}`)}</div>`;
+      <div class="slots single">${slotSection('occ', { win, ranked, pick: ranked[0] }, `Best for ${occasion.label.toLowerCase()}`)}</div>`;
   }
 }
 
 function renderFooter() {
   if (!state.demo) return;
   const all = sourceRecords();
-  const on = activeFragrances().length;
   const usesFragella = all.some(f => isFragellaId(f.id));
   const usesFragrantica = all.some(f => !isFragellaId(f.id));
   const sources = [
     usesFragrantica && `Fragrantica (synced ${ui.esc(state.demo.fetched)})`,
     usesFragella && '<a href="https://api.fragella.com" target="_blank" rel="noopener">Fragella</a>',
   ].filter(Boolean).join(' · ');
-  const updated = state.wx
-    ? `Weather ${state.wx.stale ? 'offline · ' : ''}updated ${new Date(state.wx.fetchedAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`
-    : '';
-  $('#foot').innerHTML = `
-    <span>${on} of ${all.length} bottles in rotation · <button class="link-btn" data-action="collection">Manage</button></span>
-    ${sources ? `<span>Fragrance data: ${sources}</span>` : ''}
-    <span>${updated} <button class="icon-btn small" data-action="refresh" aria-label="Refresh weather">${ui.icon.refresh}</button></span>
-    <span class="muted">Forecast by <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a></span>`;
+  $('#foot').innerHTML = ui.footerHTML({
+    on: activeFragrances().length,
+    total: all.length,
+    sources,
+    updated: state.wx ? new Date(state.wx.fetchedAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : '',
+    stale: state.wx?.stale,
+    units: state.units,
+    hasHistory: state.history.length > 0,
+  });
 }
 
 function renderPicks() {
@@ -231,10 +323,40 @@ function renderPicks() {
 
 function render() {
   renderPicks();
-  if (state.sheet) renderSheet();
+  if (state.sheet) renderSheet({ keepScroll: true });
 }
 
 // ---------- Sheets ----------
+
+function wearInfo(id) {
+  if (!state.wx) return null;
+  const stats = journalStats(state.history.filter(h => h.id === id), state.wx.todayISO);
+  return { count: stats.wears, last: stats.lastWorn.get(id) ?? null };
+}
+
+function journalData() {
+  const todayISO = state.wx?.todayISO ?? new Date().toISOString().slice(0, 10);
+  const stats = journalStats(state.history, todayISO, DUSTY_AFTER_DAYS);
+  const dusty = activeFragrances()
+    .map(f => ({ f, last: stats.lastWorn.get(f.id) ?? null }))
+    .filter(d => !d.last || d.last < stats.since)
+    .sort((a, b) => (a.last ?? '').localeCompare(b.last ?? ''))
+    .slice(0, 6);
+  return { stats, dusty, todayISO, calendar: journalCalendar(state.history, todayISO, 5), confirmClear: !!state.sheet?.confirmClear };
+}
+
+function applyCollectionFilter() {
+  const q = (state.sheet?.filter ?? '').trim().toLowerCase();
+  const rows = document.querySelectorAll('#sheet .manage-list li[data-name]');
+  let shown = 0;
+  rows.forEach(li => {
+    const hit = !q || li.dataset.name.includes(q);
+    li.hidden = !hit;
+    if (hit) shown++;
+  });
+  const empty = $('#sheet .filter-empty');
+  if (empty) empty.hidden = shown > 0 || !rows.length;
+}
 
 function renderSheet({ keepScroll = false } = {}) {
   const el = $('#sheet');
@@ -246,7 +368,12 @@ function renderSheet({ keepScroll = false } = {}) {
     if (!entry) return closeSheet();
     const label = ctx.occasion ? `${ctx.occasion.label} · ${ctx.win.label.toLowerCase()}` : ctx.win.label;
     const worn = wornIn(state.history, ctx.win.dateISO, ctx.win.slot)?.id ?? null;
-    el.innerHTML = ui.sheetHTML(entry, label, s.ctx, worn);
+    el.innerHTML = ui.sheetHTML(entry, label, s.ctx, worn, {
+      canWear: canWear(ctx.win),
+      wears: wearInfo(s.id),
+      todayISO: state.wx?.todayISO,
+      alts: ctx.ranked.filter(r => r.fragrance.id !== s.id).slice(0, 4),
+    });
   } else if (s.kind === 'collection') {
     el.innerHTML = ui.collectionSheetHTML({
       tab: state.shared ? null : state.active,
@@ -254,28 +381,48 @@ function renderSheet({ keepScroll = false } = {}) {
       mine: state.mine,
       hidden: state.hidden,
       shared: state.shared,
+      filter: s.filter,
     });
+    applyCollectionFilter();
   } else if (s.kind === 'add') {
     el.innerHTML = ui.addSheetHTML(s, new Set(state.mine.records.map(r => r.id)));
   } else if (s.kind === 'import') {
     el.innerHTML = ui.importSheetHTML(s, MAX_IMPORT_LINES);
+  } else if (s.kind === 'journal') {
+    el.innerHTML = ui.journalSheetHTML(journalData(), findRecord);
   } else {
-    el.innerHTML = ui.locationSheetHTML(s);
+    el.innerHTML = ui.locationSheetHTML(s, loadRecent());
   }
   if (keepScroll) el.querySelector('.sheet-panel').scrollTop = scroll;
+}
+
+let sheetOpener = null;
+
+// Put focus back where the sheet was opened from. Views re-render while a
+// sheet is open, so fall back to the element with the same data attributes.
+function refocus(el) {
+  if (!el || el === document.body) return;
+  if (el.isConnected) return el.focus({ preventScroll: true });
+  const attrs = Object.entries(el.dataset ?? {})
+    .map(([k, v]) => `[data-${k.replace(/[A-Z]/g, c => `-${c.toLowerCase()}`)}="${CSS.escape(v)}"]`).join('');
+  if (attrs) document.querySelector(`#app ${el.tagName.toLowerCase()}${attrs}`)?.focus({ preventScroll: true });
 }
 
 function openSheet(sheet) {
   const wasOpen = !!state.sheet;
   const sameKind = state.sheet?.kind === sheet.kind;
+  const sameBottle = sameKind && sheet.kind === 'detail' && state.sheet.id === sheet.id;
+  if (!wasOpen) sheetOpener = document.activeElement;
   state.sheet = sheet;
-  renderSheet({ keepScroll: sameKind });
+  renderSheet({ keepScroll: sameKind && (sheet.kind !== 'detail' || sameBottle) });
   const el = $('#sheet');
   el.hidden = false;
   document.body.classList.add('sheet-open');
+  $('#app').inert = true;
   if (!wasOpen) requestAnimationFrame(() => el.classList.add('open'));
-  if (!sameKind) {
-    const typing = ['add', 'import', 'location'].includes(sheet.kind);
+  if (!sameKind || (sheet.kind === 'detail' && !sameBottle)) {
+    // Don't pop the keyboard on phones just for opening a sheet.
+    const typing = ['add', 'import', 'location'].includes(sheet.kind) && matchMedia('(hover: hover)').matches;
     el.querySelector(typing ? 'input, textarea' : '.sheet-close')?.focus({ preventScroll: true });
   }
 }
@@ -291,13 +438,16 @@ function closeSheet() {
   state.sheet = null;
   el.classList.remove('open');
   document.body.classList.remove('sheet-open');
-  setTimeout(() => { if (!state.sheet) { el.hidden = true; el.innerHTML = ''; } }, 220);
+  $('#app').inert = false;
+  refocus(sheetOpener);
+  sheetOpener = null;
+  setTimeout(() => { if (!state.sheet) { el.hidden = true; el.innerHTML = ''; } }, 260);
 }
 
 let toastTimer;
 function showToast(html) {
   const el = $('#toast');
-  el.innerHTML = html;
+  el.innerHTML = `${ui.icon.check}${html}`;
   el.hidden = false;
   requestAnimationFrame(() => el.classList.add('show'));
   clearTimeout(toastTimer);
@@ -510,26 +660,46 @@ document.addEventListener('click', async e => {
     closeShared();
     renderPicks();
   } else if (d.view) {
+    if (state.view === d.view) return;
     state.view = d.view;
     savePrefs();
     renderView();
+    if (window.scrollY > $('#hero').offsetHeight) $('.tabs').scrollIntoView({ block: 'start' });
   } else if (d.close !== undefined) {
     closeSheet();
   } else if (d.wear !== undefined) {
     const ctx = state.contexts[d.ctx];
     state.history = toggleWear(d.id, ctx.win.dateISO, ctx.win.slot);
+    if (wornIn(state.history, ctx.win.dateISO, ctx.win.slot)) navigator.vibrate?.(12);
     computeToday();
     const picks = $('.hero-picks');
     if (picks) picks.outerHTML = ui.heroPicksHTML(heroPicks());
     renderView();
-    if (state.sheet) renderSheet();
+    renderFooter();
+    if (state.sheet) renderSheet({ keepScroll: true });
+  } else if (d.units) {
+    state.units = d.units;
+    ui.setUnits(state.units);
+    savePrefs();
+    render();
+  } else if (d.action === 'journal') {
+    openSheet({ kind: 'journal' });
+  } else if (d.action === 'journal-clear') {
+    if (!state.sheet?.confirmClear) return updateSheet({ confirmClear: true });
+    state.history = clearHistory();
+    closeSheet();
+    renderPicks();
+    showToast('<span>Wear history cleared</span>');
+  } else if (d.recent !== undefined) {
+    const r = loadRecent()[+d.recent];
+    if (r) await setLocation(r);
   } else if (d.expand) {
     if (state.expanded.has(d.expand)) state.expanded.delete(d.expand);
     else state.expanded.add(d.expand);
     renderView();
   } else if (d.jump) {
     if (state.view !== 'today') { state.view = 'today'; savePrefs(); renderView(); }
-    document.getElementById(`slot-${d.jump}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById(`slot-${d.jump}`)?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' });
   } else if (d.open !== undefined) {
     openSheet({ kind: 'detail', ctx: d.ctx, id: d.id });
   } else if (d.occasion) {
@@ -548,12 +718,53 @@ document.addEventListener('click', async e => {
   } else if (d.action === 'refresh') {
     await refreshWeather({ force: true });
   } else if (d.action === 'geo') {
-    openSheet({ ...state.sheet, busy: true, error: '' });
+    updateSheet({ locating: true, error: '' });
     try {
       await setLocation(await deviceLocation());
     } catch (err) {
-      if (state.sheet) openSheet({ ...state.sheet, busy: false, error: err.message });
+      updateSheet({ locating: false, error: err.message });
     }
+  }
+});
+
+// City search runs as you type. Only the results list re-renders, so the
+// input keeps focus; a newer query makes older responses stale.
+let citySeq = 0;
+let cityTimer;
+async function runCitySearch(query) {
+  const seq = ++citySeq;
+  const sheet = state.sheet;
+  if (sheet?.kind !== 'location') return;
+  sheet.query = query;
+  sheet.error = '';
+  if (query.length < 2) {
+    sheet.results = null;
+    sheet.busy = false;
+  } else {
+    sheet.busy = true;
+    try {
+      const results = await searchCities(query);
+      if (seq !== citySeq || state.sheet !== sheet) return;
+      sheet.results = results;
+    } catch (err) {
+      if (seq !== citySeq || state.sheet !== sheet) return;
+      sheet.error = err.message;
+    }
+    sheet.busy = false;
+  }
+  const slot = $('#sheet .city-slot');
+  if (slot) slot.innerHTML = sheet.error ? `<p class="error">${ui.esc(sheet.error)}</p>` : ui.cityResultsHTML(sheet, loadRecent());
+}
+
+document.addEventListener('input', e => {
+  const field = e.target.dataset.field;
+  if (field === 'city') {
+    clearTimeout(cityTimer);
+    const query = e.target.value.trim();
+    cityTimer = setTimeout(() => runCitySearch(query), query.length < 2 ? 0 : 280);
+  } else if (field === 'collection-filter' && state.sheet?.kind === 'collection') {
+    state.sheet.filter = e.target.value;
+    applyCollectionFilter();
   }
 });
 
@@ -563,13 +774,10 @@ document.addEventListener('submit', async e => {
   e.preventDefault();
   const data = new FormData(e.target);
   if (form === 'city') {
+    clearTimeout(cityTimer);
     const query = data.get('q').trim();
-    if (!query) return;
-    try {
-      openSheet({ kind: 'location', query, results: await searchCities(query) });
-    } catch (err) {
-      openSheet({ kind: 'location', query, error: err.message });
-    }
+    if (query) await runCitySearch(query);
+    $('#sheet [data-city="0"]')?.focus();
   } else if (form === 'search') {
     const query = data.get('q').trim();
     if (query.length < 3) return updateSheet({ query, error: 'Type at least 3 letters.' });
@@ -596,6 +804,43 @@ window.addEventListener('resize', () => {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && state.sheet) closeSheet();
+  // Arrow keys move between tabs (roving tabindex).
+  if (e.target.getAttribute?.('role') === 'tab' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+    const i = VIEWS.indexOf(e.target.dataset.view);
+    const next = VIEWS[(i + (e.key === 'ArrowRight' ? 1 : VIEWS.length - 1)) % VIEWS.length];
+    const btn = $(`.tabs [data-view="${next}"]`);
+    btn.click();
+    btn.focus();
+  }
+});
+
+// Drag a sheet down to dismiss it (phones). Only starts when the sheet is
+// scrolled to the top, so it never fights with scrolling the content.
+let drag = null;
+document.addEventListener('touchstart', e => {
+  const panel = e.target.closest?.('.sheet-panel');
+  if (!panel || innerWidth >= 720 || panel.scrollTop > 0 || e.target.closest('input, textarea, .alts, .calendar')) return;
+  drag = { panel, y0: e.touches[0].clientY, t0: e.timeStamp, dy: 0 };
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (!drag) return;
+  drag.dy = e.touches[0].clientY - drag.y0;
+  if (drag.dy <= 0 || drag.panel.scrollTop > 0) {
+    drag.panel.style.transform = '';
+    if (drag.dy < -4) drag = null;
+    return;
+  }
+  drag.panel.classList.add('dragging');
+  drag.panel.style.transform = `translateY(${drag.dy}px)`;
+}, { passive: true });
+document.addEventListener('touchend', e => {
+  if (!drag) return;
+  const { panel, dy, t0 } = drag;
+  drag = null;
+  panel.classList.remove('dragging');
+  const flick = dy > 40 && dy / Math.max(1, e.timeStamp - t0) > 0.5;
+  if (dy > 120 || flick) closeSheet();
+  panel.style.transform = '';
 });
 
 document.addEventListener('visibilitychange', () => {
@@ -619,12 +864,14 @@ async function boot() {
   const params = new URLSearchParams(location.search);
   const pinned = locationFromURL(params);
   if (pinned) state.loc = pinned;
+  // ?view=week etc., used by the home-screen shortcuts.
+  if (VIEWS.includes(params.get('view'))) state.view = params.get('view');
   render();
   try {
     state.demo = await (await fetch('data/collection.json')).json();
     for (const f of state.demo.fragrances) f.id = String(f.id);
   } catch {
-    $('#view').innerHTML = messageCard('Collection missing', 'Couldn’t load data/collection.json.');
+    $('#view').innerHTML = ui.messageHTML({ glyph: ui.icon.bottle, title: 'Collection missing', body: 'Couldn’t load data/collection.json.' });
     return;
   }
   const link = parseShare(params);
