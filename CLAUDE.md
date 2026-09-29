@@ -57,3 +57,9 @@ GitHub Pages serves `main` at https://davidbeck45.github.io/scentcast/, so pushi
 `npm run dev` serves http://127.0.0.1:5173. `?loc=lat,lon,Name` pins a location and skips the location prompt, which makes headless screenshots possible; `?view=today|week|occasion` opens a tab. `dev/scenes.html` renders every weather and time-of-day scene for tuning `src/scene.js`. `dev/og.html` is the link-preview card; re-render `icons/og.png` from it with the command in its comment. The service worker is network-first for app files, so a reload shows edits; bump `CACHE` in `sw.js` when adding app files.
 
 Temperatures are °F throughout the engine and weather code; only `src/ui.js` converts for display (`setUnits`). Engine reason text must not include a temperature number for that reason.
+
+## Omarchy widget
+
+The repo root doubles as an Omarchy shell plugin (`doeszen.scentcast`): `manifest.json` points at `omarchy/BarWidget.qml`, which loads `omarchy/Panel.qml`. The panel runs `node omarchy/widget.mjs`, which resolves a place (widget setting, else `~/.local/state/omarchy/settings/weather.json`, else wttr.in's IP lookup), fetches the forecast and prints the week plan as JSON (`widgetPayload`, tested in `test/widget.test.js`). Without `--hidden` it drops `DEFAULT_HIDDEN`, like a new device.
+
+The installed copy in `~/.config/omarchy/plugins/doeszen.scentcast/` is separate from this checkout (the plugin validator refuses symlinks). To try edits, copy the files there (`git ls-files -co --exclude-standard`, which keeps `worker/.dev.vars` out); the shell hot-reloads it. `omarchy-shell doeszen.scentcast open|close|refresh` drives the popup, `omarchy plugin validate .` checks the manifest, and QML errors land in `/run/user/$UID/quickshell/by-pid/<shell pid>/log.log`. Built-in widgets to crib from live in `/usr/share/omarchy/shell/plugins/` (read only).

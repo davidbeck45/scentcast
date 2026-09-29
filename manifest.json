@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "doeszen.scentcast",
+  "name": "Scentcast",
+  "version": "1.0.0",
+  "author": "David Beck",
+  "description": "What to wear from my fragrance wardrobe for today's weather, in the Omarchy bar.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "omarchy/BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Scentcast",
+    "description": "The fragrance to wear now for the weather and time of day, with why, a runner-up and the week's day and night plan. Needs Node.js.",
+    "category": "Info",
+    "aliases": [
+      "fragrance",
+      "perfume",
+      "cologne",
+      "scent"
+    ],
+    "allowMultiple": false,
+    "defaultSection": "center",
+    "defaults": {
+      "location": "",
+      "units": "auto",
+      "refreshMinutes": 30
+    },
+    "schema": [
+      {
+        "key": "location",
+        "type": "string",
+        "label": "Location",
+        "defaultValue": "",
+        "description": "A city, or lat,lon. Empty follows the Omarchy weather location, then your IP address."
+      },
+      {
+        "key": "hidden",
+        "type": "string",
+        "label": "Switched-off bottles",
+        "description": "Comma-separated names to leave out, like Manage in the app. Unset keeps the site's defaults; empty shows every bottle."
+      },
+      {
+        "key": "units",
+        "type": "enum",
+        "label": "Units",
+        "options": [
+          "auto",
+          "F",
+          "C"
+        ],
+        "defaultValue": "auto"
+      },
+      {
+        "key": "refreshMinutes",
+        "type": "integer",
+        "label": "Refresh interval (minutes)",
+        "min": 5,
+        "max": 240,
+        "step": 5,
+        "defaultValue": 30
+      }
+    ]
+  }
+}
