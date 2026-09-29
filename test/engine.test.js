@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { rank, groupTiers, targetSeasonWeights, calendarSeason, rotationPenalty, planWindows } from '../src/engine.js';
 import { occasionById } from '../src/occasions.js';
 import { summarize, week } from '../src/weather.js';
+import { syntheticForecast } from './fixtures.js';
 
 const { fragrances } = JSON.parse(readFileSync(new URL('../data/collection.json', import.meta.url)));
 const names = list => list.map(r => r.fragrance.name);
@@ -119,33 +120,6 @@ test('summarize splits the forecast into day and night windows in local time', (
   assert.equal(evening.night.label, 'Tonight');
   assert.equal(evening.now.phase, 'night');
 });
-
-function syntheticForecast(days, { hot = () => false } = {}) {
-  const dates = Array.from({ length: days }, (_, i) => new Date(Date.UTC(2026, 8, 28 + i)).toISOString().slice(0, 10));
-  const hours = dates.flatMap(day => Array.from({ length: 24 }, (_, h) => `${day}T${String(h).padStart(2, '0')}:00`));
-  const temp = t => (hot(t.slice(0, 10)) ? 90 : +t.slice(11, 13) >= 19 ? 55 : 72);
-  return {
-    latitude: 40,
-    utc_offset_seconds: -4 * 3600,
-    current: { temperature_2m: 70, apparent_temperature: 71, relative_humidity_2m: 50, weather_code: 0, cloud_cover: 5 },
-    hourly: {
-      time: hours,
-      temperature_2m: hours.map(temp),
-      apparent_temperature: hours.map(temp),
-      relative_humidity_2m: hours.map(() => 55),
-      weather_code: hours.map(() => 1),
-      precipitation_probability: hours.map(() => 10),
-    },
-    daily: {
-      time: dates,
-      sunrise: dates.map(d => `${d}T06:50`),
-      sunset: dates.map(d => `${d}T18:45`),
-      temperature_2m_max: dates.map(d => (hot(d) ? 92 : 74)),
-      temperature_2m_min: dates.map(() => 54),
-    },
-    fetchedAt: 0,
-  };
-}
 
 test('week drops windows that have already ended today', () => {
   const forecast = syntheticForecast(7);

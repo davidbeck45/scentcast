@@ -190,7 +190,7 @@ function chips(accords, n = 3) {
     .map(a => `<span class="chip" style="--c:${accordColor(a)}">${esc(a)}</span>`).join('');
 }
 
-function displayReasons(entry, n) {
+export function displayReasons(entry, n) {
   const good = entry.reasons.filter(r => r.tone === 'good');
   const bad = entry.reasons.filter(r => r.tone === 'bad');
   const ordered = entry.tier === 'S' || entry.tier === 'A' ? [...good, ...bad] : [...bad, ...good];

@@ -26,3 +26,19 @@ Live at **https://davidbeck45.github.io/scentcast/** (GitHub Pages from `main`; 
 ## Collection
 
 `data/collection.jsonl` holds my Fragrantica wardrobe ("Have" shelf), scraped with `scripts/fragrantica-extract.js`. `npm run build:data` turns it into `data/collection.json`.
+
+## Omarchy widget
+
+The repo is also an [Omarchy](https://omarchy.org) shell plugin (`manifest.json`, `omarchy/`): a bar icon for the bottle to wear now, and a popup with why, a runner-up and the week's day and night plan. It runs the same engine in Node, so it needs Node.js on the PATH.
+
+```sh
+omarchy plugin add https://github.com/davidbeck45/scentcast.git --enable
+omarchy plugin update doeszen.scentcast   # pull new engine code or collection data
+```
+
+Left click opens the popup, middle click refreshes, right click opens the site. Settings go on the widget's entry in `~/.config/omarchy/shell.json` (or `omarchy bar set doeszen.scentcast <key> <value>`):
+
+- `location`: a city or `lat,lon`. Empty follows Omarchy's weather location, then the IP address.
+- `hidden`: comma-separated bottles to leave out. Unset keeps the site's defaults; `""` shows every bottle.
+- `units`: `auto`, `F` or `C`.
+- `refreshMinutes`: default 30.
