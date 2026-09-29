@@ -8,6 +8,7 @@ const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 export const WINDOWS = { day: [10, 17], night: [19, 23] };
 
 const CACHE_KEY = 'scentcast.weather';
+const CACHE_VERSION = 2; // bump when the request shape changes
 const CACHE_MAX_AGE = 20 * 60 * 1000;
 
 const wallMs = iso => Date.parse(`${iso}Z`);
@@ -23,7 +24,7 @@ export async function fetchForecast({ lat, lon }) {
     daily: 'sunrise,sunset,temperature_2m_max,temperature_2m_min',
     temperature_unit: 'fahrenheit',
     timezone: 'auto',
-    forecast_days: 3,
+    forecast_days: 7,
   });
   const res = await fetch(`${FORECAST_URL}?${params}`);
   if (!res.ok) throw new Error(`Weather request failed (${res.status})`);
@@ -32,7 +33,7 @@ export async function fetchForecast({ lat, lon }) {
 
 // Cached fetch: fresh cache wins, network next, stale cache if offline.
 export async function getForecast(loc) {
-  const key = `${loc.lat},${loc.lon}`;
+  const key = `${CACHE_VERSION}:${loc.lat},${loc.lon}`;
   let cached = null;
   try { cached = JSON.parse(localStorage.getItem(CACHE_KEY)); } catch {}
   if (cached?.key === key && Date.now() - cached.forecast.fetchedAt < CACHE_MAX_AGE) return cached.forecast;
@@ -70,15 +71,9 @@ export function phaseAt(now, sunrise, sunset) {
   return 'night';
 }
 
-export function summarize(forecast, nowMs = Date.now()) {
-  const wallNow = nowMs + forecast.utc_offset_seconds * 1000;
-  const nowDate = new Date(wallNow);
-  const todayISO = nowDate.toISOString().slice(0, 10);
-  const hour = nowDate.getUTCHours();
-  const tomorrowISO = new Date(wallNow + 86_400_000).toISOString().slice(0, 10);
-
+function hourlyRows(forecast) {
   const h = forecast.hourly;
-  const hours = h.time.map((t, i) => ({
+  return h.time.map((t, i) => ({
     date: t.slice(0, 10),
     hour: +t.slice(11, 13),
     temp: h.temperature_2m[i],
@@ -87,30 +82,63 @@ export function summarize(forecast, nowMs = Date.now()) {
     code: h.weather_code[i],
     pop: h.precipitation_probability[i] ?? 0,
   }));
+}
 
-  const slotWindow = slot => {
-    const [start, end] = WINDOWS[slot];
-    const today = hour < end;
-    const dateISO = today ? todayISO : tomorrowISO;
-    const from = today ? Math.max(start, hour) : start;
-    const span = hours.filter(x => x.date === dateISO && x.hour >= from && x.hour <= end);
-    const cond = headline(span);
-    return {
-      slot,
-      label: slot === 'day' ? (today ? 'Today' : 'Tomorrow') : (today ? 'Tonight' : 'Tomorrow night'),
-      dateISO,
-      date: new Date(`${dateISO}T12:00:00`),
-      lat: forecast.latitude,
-      feelsF: avg(span.map(x => x.feels)),
-      hiF: Math.max(...span.map(x => x.temp)),
-      loF: Math.min(...span.map(x => x.temp)),
-      humidity: avg(span.map(x => x.humidity)),
-      pop: Math.max(...span.map(x => x.pop)),
-      code: cond.code,
-      condition: cond.label,
-      category: cond.category,
-    };
+const WEEKDAY = new Intl.DateTimeFormat('en-US', { weekday: 'long', timeZone: 'UTC' });
+const dayName = dateISO => WEEKDAY.format(new Date(`${dateISO}T12:00:00Z`));
+
+function slotLabel(slot, dateISO, todayISO, tomorrowISO) {
+  if (dateISO === todayISO) return slot === 'day' ? 'Today' : 'Tonight';
+  const name = dateISO === tomorrowISO ? 'Tomorrow' : dayName(dateISO);
+  return slot === 'day' ? name : `${name} night`;
+}
+
+// One day or night window, from `fromHour` (for a window already under way)
+// to the window's end. Null when no forecast hours fall inside it.
+function slotWindow(hours, slot, dateISO, fromHour, ctx) {
+  const [start, end] = WINDOWS[slot];
+  const from = Math.max(start, fromHour);
+  const span = hours.filter(x => x.date === dateISO && x.hour >= from && x.hour <= end);
+  if (!span.length) return null;
+  const cond = headline(span);
+  return {
+    slot,
+    label: slotLabel(slot, dateISO, ctx.todayISO, ctx.tomorrowISO),
+    dateISO,
+    date: new Date(`${dateISO}T12:00:00`),
+    lat: ctx.lat,
+    feelsF: avg(span.map(x => x.feels)),
+    hiF: Math.max(...span.map(x => x.temp)),
+    loF: Math.min(...span.map(x => x.temp)),
+    humidity: avg(span.map(x => x.humidity)),
+    pop: Math.max(...span.map(x => x.pop)),
+    code: cond.code,
+    condition: cond.label,
+    category: cond.category,
   };
+}
+
+function clock(forecast, nowMs) {
+  const wallNow = nowMs + forecast.utc_offset_seconds * 1000;
+  const nowDate = new Date(wallNow);
+  return {
+    wallNow,
+    hour: nowDate.getUTCHours(),
+    todayISO: nowDate.toISOString().slice(0, 10),
+    tomorrowISO: new Date(wallNow + 86_400_000).toISOString().slice(0, 10),
+    lat: forecast.latitude,
+  };
+}
+
+export function summarize(forecast, nowMs = Date.now()) {
+  const ctx = clock(forecast, nowMs);
+  const { wallNow, todayISO, tomorrowISO, hour } = ctx;
+  const hours = hourlyRows(forecast);
+
+  // A window that has ended today rolls over to tomorrow.
+  const next = slot => (hour < WINDOWS[slot][1]
+    ? slotWindow(hours, slot, todayISO, hour, ctx)
+    : slotWindow(hours, slot, tomorrowISO, 0, ctx));
 
   const d = forecast.daily;
   const di = Math.max(0, d.time.indexOf(todayISO));
@@ -133,7 +161,40 @@ export function summarize(forecast, nowMs = Date.now()) {
       sunProgress: clamp((wallNow - sunrise) / (sunset - sunrise), 0, 1),
       ...describe(c.weather_code),
     },
-    day: slotWindow('day'),
-    night: slotWindow('night'),
+    day: next('day'),
+    night: next('night'),
   };
+}
+
+// The forecast as days, each with whatever day and night windows are still
+// ahead. Today drops windows that have already ended.
+export function week(forecast, nowMs = Date.now()) {
+  const ctx = clock(forecast, nowMs);
+  const hours = hourlyRows(forecast);
+  const d = forecast.daily;
+  return d.time
+    .map((dateISO, i) => {
+      if (dateISO < ctx.todayISO) return null;
+      const from = dateISO === ctx.todayISO ? ctx.hour : 0;
+      const windows = {
+        day: from < WINDOWS.day[1] ? slotWindow(hours, 'day', dateISO, from, ctx) : null,
+        night: from < WINDOWS.night[1] ? slotWindow(hours, 'night', dateISO, from, ctx) : null,
+      };
+      const waking = hours.filter(x => x.date === dateISO && x.hour >= 7 && x.hour <= 22);
+      if (!waking.length || (!windows.day && !windows.night)) return null;
+      const cond = headline(waking);
+      return {
+        dateISO,
+        isToday: dateISO === ctx.todayISO,
+        name: dateISO === ctx.todayISO ? 'Today' : dateISO === ctx.tomorrowISO ? 'Tomorrow' : dayName(dateISO),
+        hiF: d.temperature_2m_max[i],
+        loF: d.temperature_2m_min[i],
+        pop: Math.max(...waking.map(x => x.pop)),
+        code: cond.code,
+        condition: cond.label,
+        category: cond.category,
+        ...windows,
+      };
+    })
+    .filter(Boolean);
 }

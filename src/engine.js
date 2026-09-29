@@ -104,8 +104,9 @@ export function daysBetween(fromISO, toISO) {
 
 // Penalize recent wears so picks rotate. A wear logged for this same slot
 // today is the user's current choice, not a reason to demote it.
+// Entries marked `planned` are picks from a plan (see planWindows), not wears.
 export function rotationPenalty(fragId, history, todayISO, slot) {
-  let penalty = 0, daysAgo = null;
+  let penalty = 0, daysAgo = null, planned = false;
   for (const h of history) {
     if (h.id !== fragId) continue;
     if (h.date === todayISO && h.slot === slot) continue;
@@ -113,9 +114,10 @@ export function rotationPenalty(fragId, history, todayISO, slot) {
     if (d >= 0 && d < ROTATION_PENALTY.length && ROTATION_PENALTY[d] > penalty) {
       penalty = ROTATION_PENALTY[d];
       daysAgo = d;
+      planned = !!h.planned;
     }
   }
-  return { penalty, daysAgo };
+  return { penalty, daysAgo, planned };
 }
 
 function topAccord(accords, predicate) {
@@ -150,7 +152,7 @@ function reasonsFor(frag, parts, ctx) {
   if (conditions.feelsF >= 78) {
     const fresh = topAccord(frag.accords, w => w <= -0.3);
     if (h <= -0.1) good(fresh ? `Fresh ${fresh} cuts the heat` : 'Fresh notes cut the heat', W.weather * 0.8);
-    else if (h >= 0.25) bad(sticky ? 'Too rich for sticky heat' : `Heavy for ${Math.round(conditions.feelsF)}°`, W.weather);
+    else if (h >= 0.25) bad(sticky ? 'Too rich for sticky heat' : 'Heavy for this heat', W.weather);
   } else if (conditions.feelsF <= 52) {
     if (h >= 0.25) good(`Warm ${topAccord(frag.accords, w => w >= 0.7) ?? 'base'} for the cold`, W.weather * 0.8);
     else if (h <= -0.2) bad('Thin in the cold', W.weather * 0.8);
@@ -172,7 +174,10 @@ function reasonsFor(frag, parts, ctx) {
 
   if (frag.rating >= 4.35 && frag.ratingVotes >= 1000) good(`Crowd favorite · ${frag.rating.toFixed(1)}★`, 0.03);
 
-  if (parts.daysAgo === 0) bad('Already wearing it today', parts.rotation);
+  if (parts.planned) {
+    if (parts.daysAgo === 0) bad('Already picked for that day', parts.rotation);
+    else if (parts.daysAgo > 0) bad(`Picked ${parts.daysAgo === 1 ? 'the day' : `${parts.daysAgo} days`} before`, parts.rotation);
+  } else if (parts.daysAgo === 0) bad('Already wearing it today', parts.rotation);
   else if (parts.daysAgo === 1) bad('Worn yesterday', parts.rotation);
   else if (parts.daysAgo === 2) bad('Worn 2 days ago', parts.rotation);
 
@@ -193,7 +198,7 @@ export function rank(fragrances, conditions, slot, opts = {}) {
   const lo = Math.min(...raws), hi = Math.max(...raws);
 
   const scored = fragrances.map((frag, i) => {
-    const { penalty, daysAgo } = rotationPenalty(frag.id, history, todayISO, slot);
+    const { penalty, daysAgo, planned } = rotationPenalty(frag.id, history, todayISO, slot);
     const parts = {
       season: seasonFit(frag, weights),
       time: timeFit(frag, slot),
@@ -202,6 +207,7 @@ export function rank(fragrances, conditions, slot, opts = {}) {
       occasion: occasion ? (hi > lo ? (raws[i] - lo) / (hi - lo) : 0.5) : null,
       rotation: penalty,
       daysAgo,
+      planned,
     };
     const W = occasion ? OCCASION_WEIGHTS : DAILY_WEIGHTS;
     let score = W.season * parts.season + W.time * parts.time + W.weather * parts.weather + W.quality * parts.quality;
@@ -221,6 +227,35 @@ export function rank(fragrances, conditions, slot, opts = {}) {
   const ctx = { conditions, slot, weights, occasion };
   for (const s of scored) s.reasons = reasonsFor(s.fragrance, s.parts, ctx);
   return scored;
+}
+
+// How far below the top score a bottle not yet in the plan can sit and still
+// take the slot. Keeps one all-rounder from filling the whole week.
+const PLAN_MARGIN = 0.06;
+
+/**
+ * Plan a run of windows in time order (e.g. the week ahead, day then night).
+ * Each planned pick counts as worn for the windows after it, and a bottle not
+ * yet in the plan wins over a repeat when it scores within PLAN_MARGIN.
+ * A wear already logged for a window is kept as that window's pick.
+ * Returns [{ win, ranked, pick }].
+ */
+export function planWindows(fragrances, windows, opts = {}) {
+  const { occasion = null, history = [] } = opts;
+  let planned = [...history];
+  const used = new Set();
+  return windows.map(win => {
+    const ranked = rank(fragrances, win, win.slot, { occasion, history: planned, todayISO: win.dateISO });
+    const logged = history.find(h => h.date === win.dateISO && h.slot === win.slot);
+    const fresh = ranked.find(r => !used.has(r.fragrance.id));
+    let pick = logged && ranked.find(r => r.fragrance.id === logged.id);
+    if (!pick) pick = fresh && ranked[0].score - fresh.score <= PLAN_MARGIN ? fresh : ranked[0];
+    if (pick) {
+      used.add(pick.fragrance.id);
+      if (!logged) planned = [{ id: pick.fragrance.id, date: win.dateISO, slot: win.slot, planned: true }, ...planned];
+    }
+    return { win, ranked, pick: pick ?? null };
+  });
 }
 
 export function groupTiers(ranked) {
