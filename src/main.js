@@ -4,9 +4,10 @@ import { getForecast, summarize, week } from './weather.js';
 import { loadLocation, saveLocation, loadRecent, deviceLocation, searchCities } from './location.js';
 import { loadHistory, toggleWear, wornIn, clearHistory, journalStats, journalCalendar, shiftISO } from './history.js';
 import { loadHidden, saveHidden } from './hidden.js';
-import { loadMine, saveMine, loadActive, saveActive, shareURL, parseShare, localMatches, sameBottle, importLines, MAX_IMPORT_LINES } from './collections.js';
+import { loadMine, saveMine, loadActive, saveActive, shareURL, parseShare, localMatches, nameMatches, sameBottle, importLines, MAX_IMPORT_LINES } from './collections.js';
 import { apiReady, searchFragrances, fetchFragrances } from './api.js';
 import { isFragellaId } from './fragella.js';
+import { customRecord, isCustomId, fromShareToken, MAX_CUSTOM_ACCORDS } from './custom.js';
 import { sceneTint } from './scene.js';
 import * as ui from './ui.js';
 
@@ -36,6 +37,7 @@ function defaultUnits() {
 const prefs = loadPrefs();
 const state = {
   demo: null, // { fetched, fragrances } from data/collection.json
+  catalog: [], // data/catalog.json: other people's bottles that Fragella lacks
   mine: loadMine(), // { name, records }
   active: loadActive(), // 'demo' | 'mine'
   shared: null, // { name, ids, records, missing, loading, confirmReplace } from a ?c= link
@@ -54,7 +56,7 @@ const state = {
   contexts: {}, // ctx key -> { win, occasion, ranked, entries: Map(id -> ranked entry) }
   today: null, // { day: plan, night: plan } where plan = { win, ranked, pick }
   expanded: new Set(), // ctx keys showing B and C tiers
-  sheet: null, // { kind: 'detail' | 'location' | 'collection' | 'add' | 'import' | 'journal', ...sheet state }
+  sheet: null, // { kind: 'detail' | 'location' | 'collection' | 'add' | 'import' | 'custom' | 'journal', ...sheet state }
   lastRemoved: null, // { record, index } for undo
 };
 ui.setUnits(state.units);
@@ -76,8 +78,13 @@ function collectionLabel() {
   return state.active === 'mine' ? 'My collection' : 'Demo collection';
 }
 
+// Bottles with Fragrantica data, searched before Fragella: free, with real votes.
+function knownBottles() {
+  return [...(state.demo?.fragrances ?? []), ...state.catalog];
+}
+
 function findRecord(id) {
-  return [...sourceRecords(), ...state.mine.records, ...(state.demo?.fragrances ?? [])].find(f => f.id === id);
+  return [...sourceRecords(), ...state.mine.records, ...knownBottles()].find(f => f.id === id);
 }
 
 function setActive(active) {
@@ -298,7 +305,7 @@ function renderFooter() {
   if (!state.demo) return;
   const all = sourceRecords();
   const usesFragella = all.some(f => isFragellaId(f.id));
-  const usesFragrantica = all.some(f => !isFragellaId(f.id));
+  const usesFragrantica = all.some(f => !isFragellaId(f.id) && !isCustomId(f.id));
   const sources = [
     usesFragrantica && `Fragrantica (synced ${ui.esc(state.demo.fetched)})`,
     usesFragella && '<a href="https://api.fragella.com" target="_blank" rel="noopener">Fragella</a>',
@@ -388,6 +395,8 @@ function renderSheet({ keepScroll = false } = {}) {
     el.innerHTML = ui.addSheetHTML(s, new Set(state.mine.records.map(r => r.id)));
   } else if (s.kind === 'import') {
     el.innerHTML = ui.importSheetHTML(s, MAX_IMPORT_LINES);
+  } else if (s.kind === 'custom') {
+    el.innerHTML = ui.customSheetHTML(s, MAX_CUSTOM_ACCORDS);
   } else if (s.kind === 'journal') {
     el.innerHTML = ui.journalSheetHTML(journalData(), findRecord);
   } else {
@@ -422,7 +431,7 @@ function openSheet(sheet) {
   if (!wasOpen) requestAnimationFrame(() => el.classList.add('open'));
   if (!sameKind || (sheet.kind === 'detail' && !sameBottle)) {
     // Don't pop the keyboard on phones just for opening a sheet.
-    const typing = ['add', 'import', 'location'].includes(sheet.kind) && matchMedia('(hover: hover)').matches;
+    const typing = ['add', 'import', 'custom', 'location'].includes(sheet.kind) && matchMedia('(hover: hover)').matches;
     el.querySelector(typing ? 'input, textarea' : '.sheet-close')?.focus({ preventScroll: true });
   }
 }
@@ -461,11 +470,11 @@ function hideToast() {
 
 // ---------- Finding bottles ----------
 
-// Demo-catalog matches come first: they're free and carry real vote data.
-// Fragella (which spends a lookup unless cached) runs only when the demo has no
-// match or the user asks for more.
+// Matches from the demo and the catalog come first: they're free and carry real
+// vote data. Fragella (which spends a lookup unless cached) runs only when
+// those have no match or the user asks for more.
 async function findBottles(query, { everywhere = false } = {}) {
-  const local = localMatches(query, state.demo?.fragrances ?? []);
+  const local = localMatches(query, knownBottles());
   if (!apiReady()) return { results: local, more: false, notice: local.length ? '' : 'Online search isn’t set up yet, so only the demo collection was searched.' };
   if (local.length && !everywhere) return { results: local, more: true, notice: '' };
   // Fragella sometimes lists one bottle twice; keep the first of each name + brand.
@@ -480,7 +489,7 @@ async function runSearch(query, opts) {
     const { results, more, notice } = await findBottles(query, opts);
     updateSheet({ results, more, notice, busy: false });
   } catch (err) {
-    const local = localMatches(query, state.demo?.fragrances ?? []);
+    const local = localMatches(query, knownBottles());
     updateSheet({ results: local.length ? local : null, busy: false, error: err.message });
   }
 }
@@ -488,17 +497,20 @@ async function runSearch(query, opts) {
 async function runImport(text) {
   const lines = importLines(text);
   if (!lines.length) return updateSheet({ text, error: 'Paste at least one fragrance name.' });
-  const rows = lines.map(line => ({ line, status: 'pending', match: null, checked: false }));
+  const rows = lines.map(l => ({ ...l, status: 'pending', match: null, checked: false, weak: false }));
   updateSheet({ text, rows, busy: true, error: '' });
   let stopped = '';
   for (const row of rows) {
-    const local = localMatches(row.line, state.demo?.fragrances ?? [], 1)[0];
+    const local = localMatches(row.line, knownBottles(), 1)[0];
     if (local) Object.assign(row, { match: local, checked: true, status: 'done' });
     else if (stopped || !apiReady()) Object.assign(row, { status: 'done', note: stopped || 'Online search isn’t set up yet.' });
     else {
       try {
-        const [hit] = await searchFragrances(row.line);
-        Object.assign(row, { match: hit ?? null, checked: Boolean(hit), status: 'done' });
+        // Fragella answers with its nearest guess even when it lacks the bottle,
+        // so a hit whose name wasn't typed is offered unticked.
+        const hits = await searchFragrances(row.line);
+        const hit = hits.find(r => nameMatches(row.line, r));
+        Object.assign(row, { match: hit ?? hits[0] ?? null, checked: Boolean(hit), weak: !hit && hits.length > 0, status: 'done' });
       } catch (err) {
         stopped = err.message;
         Object.assign(row, { status: 'done', note: err.message });
@@ -508,6 +520,28 @@ async function runImport(text) {
     updateSheet({ rows: [...rows] });
   }
   updateSheet({ busy: false });
+}
+
+// A bottle entered by hand, opened from Add bottles or from an unmatched row
+// of a pasted list (`row`); `back` is the sheet to return to.
+function customSheet({ name = '', brand = '', row = null }) {
+  return { kind: 'custom', name, brand, accords: [], seasons: [], time: null, error: '', back: state.sheet, row };
+}
+
+function saveCustom(name, brand) {
+  const s = state.sheet;
+  if (!name) return updateSheet({ name, brand, error: 'Give it a name.' });
+  if (!s.accords.length) return updateSheet({ name, brand, error: 'Pick at least one accord.' });
+  const record = customRecord({ name, brand, accords: s.accords, seasons: s.seasons, time: s.time });
+  if (s.back?.kind === 'import') {
+    // Fills that row of the pasted list, ticked; the list's Add button saves it.
+    const rows = s.back.rows.map((r, i) => (i === s.row ? { ...r, match: record, checked: true, weak: false, note: '' } : r));
+    return openSheet({ ...s.back, rows });
+  }
+  addToMine(record);
+  renderPicks();
+  openSheet(s.back ?? { kind: 'collection' });
+  showToast(`<span>${ui.esc(record.name)} added to your collection</span>`);
 }
 
 async function share() {
@@ -529,17 +563,18 @@ async function share() {
 
 async function openSharedLink(link) {
   state.shared = { ...link, records: [], missing: [], loading: true, confirmReplace: false };
-  const demoById = new Map((state.demo?.fragrances ?? []).map(f => [f.id, f]));
-  const fromDemo = link.ids.map(id => demoById.get(id)).filter(Boolean);
+  // Bottles entered by hand travel whole inside the link.
+  const known = new Map(knownBottles().map(f => [f.id, f]));
+  const local = link.ids.map(id => known.get(id) ?? (isCustomId(id) ? fromShareToken(id) : null));
   const remoteIds = link.ids.filter(isFragellaId);
   let fetched = { records: [], missing: remoteIds };
   if (remoteIds.length && apiReady()) {
     try { fetched = await fetchFragrances(remoteIds); } catch {}
   }
   if (!state.shared) return;
-  const byId = new Map([...fromDemo, ...fetched.records].map(r => [r.id, r]));
-  state.shared.records = link.ids.map(id => byId.get(id)).filter(Boolean);
-  state.shared.missing = link.ids.filter(id => !byId.has(id));
+  const remote = new Map(fetched.records.map(r => [r.id, r]));
+  state.shared.records = link.ids.map((id, i) => local[i] ?? remote.get(id)).filter(Boolean);
+  state.shared.missing = link.ids.filter((id, i) => !local[i] && !remote.has(id));
   state.shared.loading = false;
   renderPicks();
 }
@@ -632,6 +667,25 @@ document.addEventListener('click', async e => {
     openSheet({ kind: 'import', text: state.sheet?.kind === 'import' ? state.sheet.text : '' });
   } else if (d.action === 'search-more') {
     await runSearch(state.sheet.query, { everywhere: true });
+  } else if (d.action === 'custom') {
+    openSheet(customSheet({ name: state.sheet?.query ?? '' }));
+  } else if (d.customRow !== undefined) {
+    const row = state.sheet.rows[+d.customRow];
+    openSheet(customSheet({ name: row.name, brand: row.brand, row: +d.customRow }));
+  } else if (d.accord) {
+    const s = state.sheet;
+    const accords = s.accords.includes(d.accord) ? s.accords.filter(a => a !== d.accord) : [...s.accords, d.accord].slice(0, MAX_CUSTOM_ACCORDS);
+    updateSheet({ accords, error: '' });
+    $(`#sheet [data-accord="${CSS.escape(d.accord)}"]`)?.focus({ preventScroll: true });
+  } else if (d.season) {
+    const s = state.sheet;
+    updateSheet({ seasons: s.seasons.includes(d.season) ? s.seasons.filter(x => x !== d.season) : [...s.seasons, d.season] });
+    $(`#sheet [data-season="${d.season}"]`)?.focus({ preventScroll: true });
+  } else if (d.time) {
+    updateSheet({ time: state.sheet.time === d.time ? null : d.time });
+    $(`#sheet [data-time="${d.time}"]`)?.focus({ preventScroll: true });
+  } else if (d.action === 'custom-back') {
+    openSheet(state.sheet.back);
   } else if (d.importToggle !== undefined) {
     const rows = state.sheet.rows.map((r, i) => (i === +d.importToggle ? { ...r, checked: !r.checked } : r));
     updateSheet({ rows });
@@ -765,6 +819,9 @@ document.addEventListener('input', e => {
   } else if (field === 'collection-filter' && state.sheet?.kind === 'collection') {
     state.sheet.filter = e.target.value;
     applyCollectionFilter();
+  } else if ((field === 'custom-name' || field === 'custom-brand') && state.sheet?.kind === 'custom') {
+    // Kept in state so a re-render (tapping an accord) doesn't wipe the typing.
+    state.sheet[field === 'custom-name' ? 'name' : 'brand'] = e.target.value;
   }
 });
 
@@ -784,6 +841,8 @@ document.addEventListener('submit', async e => {
     await runSearch(query);
   } else if (form === 'import') {
     await runImport(String(data.get('text') ?? ''));
+  } else if (form === 'custom') {
+    saveCustom(String(data.get('name') ?? '').trim(), String(data.get('brand') ?? '').trim());
   }
 });
 
@@ -868,8 +927,13 @@ async function boot() {
   if (VIEWS.includes(params.get('view'))) state.view = params.get('view');
   render();
   try {
-    state.demo = await (await fetch('data/collection.json')).json();
-    for (const f of state.demo.fragrances) f.id = String(f.id);
+    const [demo, catalog] = await Promise.all([
+      fetch('data/collection.json').then(r => r.json()),
+      fetch('data/catalog.json').then(r => r.json()).catch(() => ({ fragrances: [] })),
+    ]);
+    for (const f of [...demo.fragrances, ...catalog.fragrances]) f.id = String(f.id);
+    state.demo = demo;
+    state.catalog = catalog.fragrances;
   } catch {
     $('#view').innerHTML = ui.messageHTML({ glyph: ui.icon.bottle, title: 'Collection missing', body: 'Couldn’t load data/collection.json.' });
     return;

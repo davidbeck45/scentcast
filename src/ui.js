@@ -1,5 +1,5 @@
 // HTML templates. Everything user-visible is built here; main.js owns state.
-import { accordColor } from './accords.js';
+import { ACCORDS, accordColor } from './accords.js';
 import { renderScene } from './scene.js';
 import { calendarSeason, SEASONS } from './engine.js';
 import { OCCASIONS } from './occasions.js';
@@ -424,8 +424,10 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears 
     .map(([k, label]) => `<div class="layer"><span class="layer-label">${label}</span><div class="notes">${f.notes[k].map(n => `<span class="note-chip">${esc(n)}</span>`).join('')}</div></div>`)
     .join('');
   const meta = [f.brand, f.year, GENDER[f.gender]].filter(Boolean).map(esc).join(' · ');
-  const fromFragella = f.source === 'fragella';
-  const ratingNote = fromFragella ? 'Fragella rating' : `${f.ratingVotes.toLocaleString()} votes`;
+  const estimated = f.source === 'fragella' || f.source === 'custom';
+  const ratingLine = f.source === 'custom'
+    ? '<span>Entered by hand</span>'
+    : `${f.rating ? `★ ${f.rating.toFixed(2)}` : 'Unrated'} <span>${esc(f.source === 'fragella' ? 'Fragella rating' : `${f.ratingVotes.toLocaleString()} votes`)}</span>`;
   const performance = [f.longevity, f.sillage && `${f.sillage} sillage`].filter(Boolean).map(esc).join(' · ');
   const altRow = alts.length
     ? `<section><h4>Also good for ${esc(ctxLabel.toLowerCase())}</h4><div class="alts">${alts.map(a => `
@@ -440,7 +442,7 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears 
           <div class="kicker"><span class="tier-chip" data-tier="${entry.tier}">${entry.tier}</span>${esc(ctxLabel)}</div>
           <h2 id="sheet-title">${esc(f.name)}</h2>
           <div class="brand">${meta}</div>
-          <div class="rating">${f.rating ? `★ ${f.rating.toFixed(2)}` : 'Unrated'} <span>${esc(ratingNote)}</span></div>
+          <div class="rating">${ratingLine}</div>
           ${performance ? `<div class="performance">${performance}</div>` : ''}
         </div>
       </div>
@@ -455,8 +457,8 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears 
       ${altRow}
       <section><h4>Main accords</h4><div class="bars accords">${accordBars}</div></section>
       <section class="two-col">
-        <div><h4>${fromFragella ? 'Season fit' : 'Seasons voted'}</h4><div class="bars">${seasonBars}</div></div>
-        <div><h4>${fromFragella ? 'Time of day (est.)' : 'Time of day'}</h4><div class="bars">${dnBars}</div></div>
+        <div><h4>${estimated ? 'Season fit' : 'Seasons voted'}</h4><div class="bars">${seasonBars}</div></div>
+        <div><h4>${estimated ? 'Time of day (est.)' : 'Time of day'}</h4><div class="bars">${dnBars}</div></div>
       </section>
       ${layers ? `<section><h4>Notes</h4><div class="pyramid">${layers}</div></section>` : ''}`);
 }
@@ -512,9 +514,11 @@ function resultRow(r, i, added) {
   </li>`;
 }
 
+const handAdd = label => `<button class="link-btn" data-action="custom">${label}</button>`;
+
 export function addSheetHTML({ query = '', results = null, more = false, busy = false, error = '', notice = '' }, ownedIds) {
   const list = results === null ? ''
-    : results.length === 0 ? `<p class="muted small">No matches for “${esc(query)}”. Try the brand plus the name, like “Dior Sauvage”.</p>`
+    : results.length === 0 ? `<p class="muted small">No matches for “${esc(query)}”. Check the spelling, or ${handAdd('add it yourself')}.</p>`
     : `<ul class="manage-list results">${results.map((r, i) => resultRow(r, i, ownedIds.has(r.id))).join('')}</ul>`;
   return sheetFrame('add-title', `
       <h2 id="add-title" class="sheet-title">Add bottles</h2>
@@ -527,6 +531,7 @@ export function addSheetHTML({ query = '', results = null, more = false, busy = 
       ${notice ? `<p class="muted small">${esc(notice)}</p>` : ''}
       ${list}
       ${more && !busy ? '<button class="link-btn more-search" data-action="search-more">Not it? Search all fragrances</button>' : ''}
+      ${results?.length && !more && !busy ? `<p class="muted small hand-add">Not listed? ${handAdd('Add it yourself')}</p>` : ''}
       <div class="sheet-footer"><button class="ghost-btn" data-action="collection">Done</button></div>`, { narrow: true });
 }
 
@@ -541,10 +546,14 @@ export function importSheetHTML({ text = '', rows = null, busy = false, error = 
     const picked = rows.filter(r => r.match && r.checked).length;
     body = `<ul class="manage-list import-rows">${rows.map((r, i) => {
       if (r.status === 'pending') return `<li class="pending"><span class="spinner" aria-hidden="true"></span><span class="manage-name"><b>${esc(r.line)}</b><small>Looking…</small></span></li>`;
-      if (!r.match) return `<li class="off"><span class="miss">?</span><span class="manage-name"><b>${esc(r.line)}</b><small>${esc(r.note || 'No match. Try Add bottles with the brand name.')}</small></span></li>`;
+      if (!r.match) return `<li><span class="miss">?</span><span class="manage-name"><b>${esc(r.line)}</b><small>${esc(r.note || 'Not found')}</small></span>
+        <button class="add-btn" data-custom-row="${i}">${icon.plus}Add it yourself</button></li>`;
+      const meta = r.weak
+        ? `Closest match for “${esc(r.line)}”. Not it? <button class="link-btn" data-custom-row="${i}">Add it yourself</button>`
+        : [r.match.brand, `for “${r.line}”`].filter(Boolean).map(esc).join(' · ');
       return `<li>
         ${img(r.match)}
-        <span class="manage-name"><b>${esc(r.match.name)}</b><small>${esc(r.match.brand)} · for “${esc(r.line)}”</small></span>
+        <span class="manage-name"><b>${esc(r.match.name)}</b><small${r.weak ? ' class="wrap"' : ''}>${r.weak ? `${esc(r.match.brand)} · ` : ''}${meta}</small></span>
         <button class="check${r.checked ? ' on' : ''}" role="checkbox" aria-checked="${r.checked}" data-import-toggle="${i}" aria-label="Add ${esc(r.match.name)}">${icon.check}</button>
       </li>`;
     }).join('')}</ul>
@@ -558,6 +567,45 @@ export function importSheetHTML({ text = '', rows = null, busy = false, error = 
       <p class="muted lede">One fragrance per line, up to ${maxLines} at a time. Copy it from your notes or your Fragrantica wardrobe page.</p>
       ${error ? `<p class="error">${esc(error)}</p>` : ''}
       ${body}`, { narrow: true });
+}
+
+const TIMES = [['day', 'Day'], ['night', 'Night'], ['both', 'Day & night']];
+
+// A bottle no database has. Chips run from rich to fresh, as in ACCORDS.
+export function customSheetHTML({ name = '', brand = '', accords = [], seasons = [], time = null, error = '', back = null }, maxAccords) {
+  const accordChip = a => {
+    const rank = accords.indexOf(a);
+    const full = rank < 0 && accords.length >= maxAccords;
+    return `<button type="button" class="pick-chip${rank >= 0 ? ' on' : ''}" style="--c:${accordColor(a)}" data-accord="${esc(a)}" aria-pressed="${rank >= 0}"${full ? ' disabled' : ''}>${rank >= 0 ? `<b>${rank + 1}</b>` : ''}${esc(a)}</button>`;
+  };
+  const toggle = (attr, value, on, label) => `<button type="button" data-${attr}="${value}" aria-pressed="${on}">${esc(label)}</button>`;
+  return sheetFrame('custom-title', `
+      <h2 id="custom-title" class="sheet-title">Add it yourself</h2>
+      <p class="muted lede">For bottles no database has. Picks work from the accords you choose. Fragrantica or the brand’s site usually lists them.</p>
+      <form class="custom-form" data-form="custom" novalidate>
+        <label class="name-field">Name
+          <input type="text" name="name" data-field="custom-name" value="${esc(name)}" maxlength="80" autocomplete="off" enterkeyhint="next">
+        </label>
+        <label class="name-field">Brand
+          <input type="text" name="brand" data-field="custom-brand" value="${esc(brand)}" maxlength="80" autocomplete="off" placeholder="Optional">
+        </label>
+        <fieldset>
+          <legend>Main accords, strongest first <span>${accords.length} of ${maxAccords}</span></legend>
+          <div class="pick-chips">${Object.keys(ACCORDS).map(accordChip).join('')}</div>
+        </fieldset>
+        <fieldset>
+          <legend>When do you wear it? <span>Optional</span></legend>
+          <div class="when">
+            <div class="seg" role="group" aria-label="Seasons">${SEASONS.map(s => toggle('season', s, seasons.includes(s), s[0].toUpperCase() + s.slice(1))).join('')}</div>
+            <div class="seg" role="group" aria-label="Time of day">${TIMES.map(([t, label]) => toggle('time', t, time === t, label)).join('')}</div>
+          </div>
+        </fieldset>
+        ${error ? `<p class="error" role="alert">${esc(error)}</p>` : ''}
+        <div class="sheet-actions">
+          <button class="wear-btn" type="submit">${icon.plus}<span>${back?.kind === 'import' ? 'Use for this line' : 'Add to my collection'}</span></button>
+          ${back ? '<button class="ghost-btn" type="button" data-action="custom-back">Back</button>' : ''}
+        </div>
+      </form>`, { narrow: true });
 }
 
 export function sharedBannerHTML(shared, mineCount) {

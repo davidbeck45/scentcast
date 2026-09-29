@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Build data/collection.json from the raw scrape in data/collection.jsonl.
+"""Build the app's data files from raw Fragrantica scrapes.
+
+- data/collection.jsonl -> data/collection.json: David's wardrobe (the demo).
+- data/catalog.jsonl -> data/catalog.json: bottles outside the wardrobe that
+  Fragella lacks (friends' niche and indie bottles), searchable in the app.
 
 Each jsonl line is the output of scripts/fragrantica-extract.js for one
 perfume page. Re-run this after adding or removing lines.
@@ -11,14 +15,20 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SEASONS = ("winter", "spring", "summer", "fall")
+FILES = (
+    ("collection", "fragrantica.com/@doeszen wardrobe (Have)"),
+    ("catalog", "fragrantica.com, bottles added for other people's collections"),
+)
 
 
 def split_name_brand(h1: str, brand_slug: str) -> tuple[str, str]:
     name_brand = re.sub(r" for (women and men|men|women)$", "", h1)
-    brand = brand_slug.replace("-", " ")
-    if name_brand.lower().endswith(brand.lower()):
-        return name_brand[: -len(brand)].strip(), name_brand[-len(brand):]
-    return name_brand, brand
+    # The slug drops punctuation ("d-Annam" for "d'Annam"), so match word by word.
+    words = [re.escape(w) for w in brand_slug.split("-") if w]
+    m = re.search(r"\s(" + r"[\W_]*".join(words) + r")$", name_brand, re.I)
+    if m:
+        return name_brand[: m.start()].strip(), m.group(1)
+    return name_brand, brand_slug.replace("-", " ")
 
 
 def build(raw: dict) -> dict:
@@ -52,17 +62,22 @@ def build(raw: dict) -> dict:
     }
 
 
-def main() -> None:
-    lines = (ROOT / "data/collection.jsonl").read_text().splitlines()
+def write(stem: str, source: str) -> None:
+    src, out = ROOT / f"data/{stem}.jsonl", ROOT / f"data/{stem}.json"
+    lines = src.read_text().splitlines() if src.exists() else []
     rows = [build(json.loads(line)) for line in lines if line.strip()]
     rows.sort(key=lambda f: (f["brand"].lower(), f["name"].lower()))
-    out = {
-        "source": "fragrantica.com/@doeszen wardrobe (Have)",
-        "fetched": date.today().isoformat(),
-        "fragrances": rows,
-    }
-    (ROOT / "data/collection.json").write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n")
-    print(f"{len(rows)} fragrances -> data/collection.json")
+    # "fetched" is the last time the data changed, so a rebuild alone keeps it.
+    old = json.loads(out.read_text()) if out.exists() else {}
+    fetched = old.get("fetched") if old.get("fragrances") == rows else date.today().isoformat()
+    body = {"source": source, "fetched": fetched, "fragrances": rows}
+    out.write_text(json.dumps(body, indent=2, ensure_ascii=False) + "\n")
+    print(f"{len(rows)} fragrances -> data/{stem}.json")
+
+
+def main() -> None:
+    for stem, source in FILES:
+        write(stem, source)
 
 
 if __name__ == "__main__":

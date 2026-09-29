@@ -7,7 +7,7 @@ A quick look at what to wear from my own collection, based on today's weather, t
 - **Occasion** — Everyday, Office, Date Night, Night Out, Formal, Outdoors, Cozy, for daytime or tonight.
 - **Wear this** — logs what you wore so picks rotate over the next couple of days. The wear journal shows a calendar, your most-worn bottles and the ones gathering dust.
 - °F or °C (defaults from your locale), recent locations, and home-screen shortcuts for Today, Week and Occasion.
-- **Your own collection** — search 80k+ fragrances (via [Fragella](https://api.fragella.com)) or paste a list, then share it as a link. The demo shows my wardrobe.
+- **Your own collection** — search 80k+ fragrances (via [Fragella](https://api.fragella.com)) plus indie bottles added from Fragrantica, paste a list, or add a bottle no database has by picking its accords. Share it as a link. The demo shows my wardrobe.
 
 Picks come from Fragrantica community votes (season, day/night), each bottle's main accords, how heavy they wear versus the temperature and humidity, and the occasion's accord profile.
 
@@ -26,6 +26,8 @@ Live at **https://davidbeck45.github.io/scentcast/** (GitHub Pages from `main`; 
 ## Collection
 
 `data/collection.jsonl` holds my Fragrantica wardrobe ("Have" shelf), scraped with `scripts/fragrantica-extract.js`. `npm run build:data` turns it into `data/collection.json`.
+
+`data/catalog.jsonl` holds other people's Fragrantica bottles that Fragella lacks (listed from a profile with `scripts/fragrantica-wardrobe.js`, then scraped the same way). `npm run build:data` builds both.
 
 ## Omarchy widget
 

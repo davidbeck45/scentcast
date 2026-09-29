@@ -1,8 +1,11 @@
 // Which bottles the app ranks.
 // - 'demo': David's Fragrantica wardrobe (data/collection.json).
-// - 'mine': a list the viewer builds by searching. Full records are stored with
-//   it, so it works offline and never spends another lookup.
+// - 'mine': a list the viewer builds by searching or entering bottles by hand.
+//   Full records are stored with it, so it works offline and never spends
+//   another lookup.
 // A share link (?c=id,id&n=Name) opens someone's list as a temporary view.
+import { isCustomId, shareToken } from './custom.js';
+
 const MINE_KEY = 'scentcast.mine';
 const ACTIVE_KEY = 'scentcast.active';
 const MAX_SHARED = 80;
@@ -31,7 +34,7 @@ export function saveActive(active) {
 
 export function shareURL(records, name) {
   // Built by hand so ids read cleanly (commas and colons unescaped).
-  const ids = records.map(r => encodeURIComponent(r.id).replace(/%3A/gi, ':')).join(',');
+  const ids = records.map(r => encodeURIComponent(isCustomId(r.id) ? shareToken(r) : r.id).replace(/%3A/gi, ':')).join(',');
   const suffix = name ? `&n=${encodeURIComponent(name)}` : '';
   return `${location.origin}${location.pathname}?c=${ids}${suffix}`;
 }
@@ -55,6 +58,15 @@ export function localMatches(query, records, limit = 5) {
   }).slice(0, limit);
 }
 
+// Whether a search hit is plausibly the bottle someone typed: every word of its
+// name was typed (a plural counts). Online search is fuzzy and returns its
+// nearest guess even for bottles it doesn't have ("Caramello" for "Caramellino").
+export function nameMatches(query, record) {
+  const typed = normalize(query).split(' ');
+  const words = normalize(record.name).split(' ').filter(w => w.length > 1);
+  return words.length > 0 && words.every(w => typed.some(t => t === w || t === `${w}s`));
+}
+
 // Same bottle from two sources ("Sauvage · Dior" vs "Sauvage · Christian Dior").
 export function sameBottle(a, b) {
   if (normalize(a.name) !== normalize(b.name)) return false;
@@ -62,16 +74,21 @@ export function sameBottle(a, b) {
   return x.includes(y) || y.includes(x);
 }
 
-// "1. Dior Sauvage 100ml" -> "Dior Sauvage"
+// "1. Pear Pavlova by French Cowboy 50ml"
+//   -> { line: 'Pear Pavlova French Cowboy', name: 'Pear Pavlova', brand: 'French Cowboy' }
+// `line` is the search query; name and brand prefill a bottle entered by hand.
 export function importLines(text) {
+  const tidy = s => s.replace(/\s+/g, ' ').trim();
   return text.split(/\r?\n/)
-    .map(l => l.replace(/^\s*(?:[-*•·]|\d+[.)])\s*/, '')
-      .replace(/\b\d+(?:[.,]\d+)?\s?(?:ml|oz)\b/gi, '')
-      .replace(/\s+(?:-|–|—|by)\s+/gi, ' ')
-      .replace(/\s+/g, ' ')
-      .trim())
+    .map(l => tidy(l.replace(/^\s*(?:[-*•·]|\d+[.)])\s*/, '').replace(/\b\d+(?:[.,]\d+)?\s?(?:ml|oz)\b/gi, '')))
     .filter(l => l.length >= 3)
-    .slice(0, MAX_IMPORT_LINES);
+    .slice(0, MAX_IMPORT_LINES)
+    .map(l => {
+      // Only "by" says which side is the brand ("Dior - Sauvage" could go either way).
+      const [name, brand = ''] = l.split(/\s+by\s+/i);
+      const line = tidy(l.replace(/\s+(?:-|–|—|by)\s+/gi, ' '));
+      return { line, name: brand ? name : line, brand };
+    });
 }
 
 export { MAX_IMPORT_LINES };
