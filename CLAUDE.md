@@ -4,7 +4,7 @@ Picks fragrances from David's own Fragrantica wardrobe for the weather, time of 
 
 ## Answering "what should I wear…"
 
-1. Get live picks from the engine: `node scripts/recommend.mjs --city "<city>" [--occasion <id>] [--slot day|night] --json`. Occasion ids are in `src/occasions.js`. Ask David for his city if he hasn't given it. Bottles he switched off in the app ("Manage") are stored on his phone only; pass any he mentions as `--exclude "Name,Name"`.
+1. Get live picks from the engine: `node scripts/recommend.mjs --city "<city>" [--occasion <id>] [--slot day|night] --json`. For "this week" or a trip, add `--week` for a day + night plan over the next 7 days. Occasion ids are in `src/occasions.js`. Ask David for his city if he hasn't given it. Bottles he switched off in the app ("Manage") are stored on his phone only; pass any he mentions as `--exclude "Name,Name"`.
 2. For an occasion no preset covers (job interview, outdoor wedding, a flight), run the nearest preset(s), then adjust using `data/collection.json`: accord strengths (0–100), note pyramid, season and day/night vote shares.
 3. Reply with a short ranked shortlist drawn only from `data/collection.json`: each pick with its reason (weather, votes, accords), plus a runner-up.
 
@@ -46,10 +46,14 @@ The key lives in `worker/.dev.vars` (ignored) and as the Worker secret `FRAGELLA
 
 Season and time fit are half "within its comfort zone" and half "its specialty" (lift over an even vote split). The specialty half keeps flat all-rounders from winning every mild day.
 
+`planWindows` plans several windows in time order (Today's day + night, the Week tab, `--week`): each pick counts as a `planned` wear for later windows, and a bottle not yet in the plan takes the slot when it scores within `PLAN_MARGIN` of the top. A wear already logged for a window stays its pick.
+
 ## Deploy
 
 GitHub Pages serves `main` at https://davidbeck45.github.io/scentcast/, so pushing to `main` publishes. Commit data refreshes (`data/collection.json`) for the live site to see them.
 
 ## Checking the UI
 
-`npm run dev` serves http://127.0.0.1:5173. `?loc=lat,lon,Name` pins a location and skips the location prompt, which makes headless screenshots possible. `dev/scenes.html` renders every weather and time-of-day scene for tuning `src/scene.js`. The service worker is network-first for app files, so a reload shows edits.
+`npm run dev` serves http://127.0.0.1:5173. `?loc=lat,lon,Name` pins a location and skips the location prompt, which makes headless screenshots possible; `?view=today|week|occasion` opens a tab. `dev/scenes.html` renders every weather and time-of-day scene for tuning `src/scene.js`. `dev/og.html` is the link-preview card; re-render `icons/og.png` from it with the command in its comment. The service worker is network-first for app files, so a reload shows edits; bump `CACHE` in `sw.js` when adding app files.
+
+Temperatures are °F throughout the engine and weather code; only `src/ui.js` converts for display (`setUnits`). Engine reason text must not include a temperature number for that reason.

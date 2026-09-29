@@ -1,4 +1,6 @@
 const KEY = 'scentcast.location';
+const RECENT_KEY = 'scentcast.recentLocations';
+const MAX_RECENT = 5;
 
 export function loadLocation() {
   try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; }
@@ -6,6 +8,18 @@ export function loadLocation() {
 
 export function saveLocation(loc) {
   try { localStorage.setItem(KEY, JSON.stringify(loc)); } catch {}
+  if (!loc.device) saveRecent(loc);
+}
+
+const sameSpot = (a, b) => Math.abs(a.lat - b.lat) < 0.01 && Math.abs(a.lon - b.lon) < 0.01;
+
+export function loadRecent() {
+  try { return JSON.parse(localStorage.getItem(RECENT_KEY)) ?? []; } catch { return []; }
+}
+
+function saveRecent(loc) {
+  const next = [loc, ...loadRecent().filter(r => !sameSpot(r, loc))].slice(0, MAX_RECENT);
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(next)); } catch {}
 }
 
 export function deviceLocation() {

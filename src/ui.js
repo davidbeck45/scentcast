@@ -5,28 +5,88 @@ import { calendarSeason, SEASONS } from './engine.js';
 import { OCCASIONS } from './occasions.js';
 
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-export const deg = f => `${Math.round(f)}°`;
 const TIERS = ['S', 'A', 'B', 'C'];
+
+// Temperatures stay in °F everywhere else; only display converts.
+let units = 'F';
+export const setUnits = u => { units = u === 'C' ? 'C' : 'F'; };
+export const temp = f => Math.round(units === 'C' ? ((f - 32) * 5) / 9 : f);
+export const deg = f => `${temp(f)}°`;
 
 const FALLBACK_THUMB = `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 170"><rect x="62" y="20" width="26" height="22" rx="4" fill="#3a3f4e"/><rect x="40" y="46" width="70" height="104" rx="18" fill="#2a2e3a" stroke="#4a5063" stroke-width="3"/></svg>')}`;
 export const thumbSrc = f => (f.thumb ? esc(f.thumb) : FALLBACK_THUMB);
+const img = (f, { lazy = true, cls = '' } = {}) =>
+  `<img${cls ? ` class="${cls}"` : ''} src="${thumbSrc(f)}" alt="" width="150" height="170"${lazy ? ' loading="lazy"' : ''} decoding="async">`;
+
+const svg = (body, extra = '') => `<svg viewBox="0 0 24 24" aria-hidden="true"${extra}>${body}</svg>`;
+const stroke = d => svg(`<path d="${d}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`);
 
 export const icon = {
-  pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></svg>',
-  sun: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>',
-  moon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" fill="currentColor"/></svg>',
-  refresh: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  external: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  spray: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9h6v11a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9Zm1-4h4v4H9zM15 6h2M18 4l1-1M18 8l1 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  hide: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.4 5.2A9.7 9.7 0 0 1 12 5c5 0 8.5 4.3 9.5 7-.4 1-1.2 2.4-2.4 3.7M6.1 6.2C4.2 7.5 3 9.4 2.5 12c1 2.7 4.5 7 9.5 7 1.6 0 3-.4 4.3-1.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  plus: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
-  paste: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v3H9zM7 5.5H6a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1h-1M9 12h6M9 16h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  bottle: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2h4v3h-4zM9 5h6v2.5a4 4 0 0 1 3 3.9V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-8.6a4 4 0 0 1 3-3.9Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
-  remove: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 11v6M14 11v6M9 7V4h6v3M7 7l1 13h8l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  pin: svg('<path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/>'),
+  sun: svg('<circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g>'),
+  moon: svg('<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" fill="currentColor"/>'),
+  refresh: stroke('M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7'),
+  external: stroke('M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5'),
+  check: svg('<path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>'),
+  spray: stroke('M8 9h6v11a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9Zm1-4h4v4H9zM15 6h2M18 4l1-1M18 8l1 1'),
+  hide: stroke('M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.4 5.2A9.7 9.7 0 0 1 12 5c5 0 8.5 4.3 9.5 7-.4 1-1.2 2.4-2.4 3.7M6.1 6.2C4.2 7.5 3 9.4 2.5 12c1 2.7 4.5 7 9.5 7 1.6 0 3-.4 4.3-1.1'),
+  plus: svg('<path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>'),
+  paste: stroke('M9 4h6v3H9zM7 5.5H6a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1h-1M9 12h6M9 16h4'),
+  share: stroke('M12 15V3M8 7l4-4 4 4M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7'),
+  bottle: svg('<path d="M10 2h4v3h-4zM9 5h6v2.5a4 4 0 0 1 3 3.9V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-8.6a4 4 0 0 1 3-3.9Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'),
+  remove: stroke('M5 7h14M10 11v6M14 11v6M9 7V4h6v3M7 7l1 13h8l1-13'),
+  close: svg('<path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>'),
+  chevron: stroke('M9 6l6 6-6 6'),
+  search: stroke('M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM20 20l-4-4'),
+  clock: stroke('M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5l3 2'),
+  journal: stroke('M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5v-15ZM5 19.5A1.5 1.5 0 0 0 6.5 21H19M9 7h6'),
+  calendar: stroke('M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7ZM4 10h16M8 3v4M16 3v4'),
+  sparkle: svg('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z" fill="currentColor"/>'),
+  cloud: stroke('M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.2 9.1 4.5 4.5 0 0 0 7 18Z'),
 };
+
+// ---------- Weather glyphs ----------
+
+const CLOUD_HI = 'M7.2 15h9.6a3.6 3.6 0 0 0 .3-7.2 5.4 5.4 0 0 0-10.4-.9A4.1 4.1 0 0 0 7.2 15Z';
+const CLOUD_MID = 'M7.2 18h9.6a3.6 3.6 0 0 0 .3-7.2 5.4 5.4 0 0 0-10.4-.9A4.1 4.1 0 0 0 7.2 18Z';
+const cloudPath = (d, cls = 'cl') => `<path class="${cls}" d="${d}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>`;
+const WX_GLYPH = {
+  clear: '<g class="sn"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g>',
+  partly: `<g class="sn"><circle cx="9" cy="8.5" r="3.4" fill="currentColor"/><path d="M9 2v1.4M3.4 4.4l1 1M2.5 9.5h1.4M14.6 4.4l-1 1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></g><path class="cl-fill" d="${CLOUD_MID}"/>${cloudPath(CLOUD_MID)}`,
+  cloudy: cloudPath('M6.8 19h10.4a3.9 3.9 0 0 0 .3-7.8 5.9 5.9 0 0 0-11.3-1A4.5 4.5 0 0 0 6.8 19Z'),
+  fog: `${cloudPath(CLOUD_HI)}<path class="fg" d="M4 18.5h16M6.5 21.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+  drizzle: `${cloudPath(CLOUD_HI)}<path class="dr" d="M8.5 18.5v.8M12 18.5v.8M15.5 18.5v.8M10.2 21.3v.5M13.8 21.3v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+  rain: `${cloudPath(CLOUD_HI)}<path class="dr" d="M8.8 17.5l-1 3.2M12.5 17.5l-1 3.2M16.2 17.5l-1 3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+  snow: `${cloudPath(CLOUD_HI)}<g class="sw" fill="currentColor"><circle cx="8.5" cy="18.6" r="1.1"/><circle cx="12" cy="20.6" r="1.1"/><circle cx="15.5" cy="18.6" r="1.1"/></g>`,
+  storm: `${cloudPath(CLOUD_HI)}<path class="bt" d="M12.8 14.5l-2.6 4h3l-2 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>`,
+};
+export const wxIcon = (category, label = '') =>
+  `<span class="wx" data-cat="${esc(category)}"${label ? ` role="img" aria-label="${esc(label)}"` : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${WX_GLYPH[category] ?? WX_GLYPH.cloudy}</svg></span>`;
+
+// ---------- Small helpers ----------
+
+const plural = (n, word, many = `${word}s`) => `${n} ${n === 1 ? word : many}`;
+const MONTH_DAY = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+const WEEKDAY_SHORT = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'UTC' });
+const utcDate = iso => new Date(`${iso}T12:00:00Z`);
+export const shortDate = iso => MONTH_DAY.format(utcDate(iso));
+const weekdayShort = iso => WEEKDAY_SHORT.format(utcDate(iso));
+
+function relativeDay(iso, todayISO) {
+  const days = Math.round((Date.parse(todayISO) - Date.parse(iso)) / 86_400_000);
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 7) return `${days} days ago`;
+  return shortDate(iso);
+}
+
+export const matchPct = entry => Math.max(1, Math.min(99, Math.round(entry.score * 100)));
+
+function matchBadge(entry) {
+  const p = matchPct(entry);
+  return `<span class="match" title="How well it fits right now" style="--p:${p}">
+    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" pathLength="100"/><circle class="arc" cx="10" cy="10" r="8" pathLength="100"/></svg>${p}% match</span>`;
+}
 
 function feelWords(win) {
   const words = [];
@@ -44,14 +104,41 @@ function windowRange(win, nowHour) {
   return `${today && nowHour > start ? 'Now' : fmt(start)}–${fmt(end)}`;
 }
 
+function sheetFrame(titleId, inner, { narrow = false } = {}) {
+  return `
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet-panel${narrow ? ' narrow' : ''}" role="dialog" aria-modal="true" aria-labelledby="${titleId}">
+      <div class="sheet-grip" aria-hidden="true"></div>
+      <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
+      ${inner}
+    </div>`;
+}
+
+export function messageHTML({ glyph = icon.sparkle, title, body, action = '' }) {
+  return `<div class="message">
+    <span class="message-icon">${glyph}</span>
+    <h2>${esc(title)}</h2><p>${esc(body)}</p>${action}
+  </div>`;
+}
+
+export function skeletonHTML(count = 2) {
+  const card = `<div class="slot sk-card">
+      <div class="sk-head"><span class="sk sk-thumb"></span><span class="sk-lines"><span class="sk sk-line w40"></span><span class="sk sk-line w70"></span></span></div>
+      <div class="sk sk-pick"></div>
+      <div class="sk sk-row"></div><div class="sk sk-row"></div>
+    </div>`;
+  return `<div class="slots${count === 1 ? ' single' : ''}" aria-busy="true" aria-label="Loading picks">${card.repeat(count)}</div>`;
+}
+
 // ---------- Hero ----------
 
 export function heroPicksHTML(picks) {
   if (!picks) return '';
-  return `<div class="hero-picks">${picks.map(({ slot, label, entry }) => `
+  return `<div class="hero-picks">${picks.map(({ slot, label, entry, worn }) => `
     <button class="hero-pick" data-jump="${slot}">
-      <img src="${thumbSrc(entry.fragrance)}" alt="" width="150" height="170">
-      <span><small>${slot === 'day' ? icon.sun : icon.moon}${esc(label)}</small><b>${esc(entry.fragrance.name)}</b></span>
+      ${img(entry.fragrance, { lazy: false })}
+      <span><small>${slot === 'day' ? icon.sun : icon.moon}${esc(worn ? 'Wearing' : label)}</small><b>${esc(entry.fragrance.name)}</b></span>
+      ${icon.chevron}
     </button>`).join('')}</div>`;
 }
 
@@ -67,26 +154,33 @@ export function heroHTML({ loc, wx, loading, error }, aspect, picks, collectionL
     aspect,
     label: now ? `${now.label}, ${deg(now.tempF)}` : 'Weather scene',
   });
-  const locBtn = `<button class="loc-btn" data-action="location">${icon.pin}<span>${esc(loc?.name ?? 'Set location')}</span></button>`;
+  const locBtn = `<button class="loc-btn" data-action="location" aria-label="Change location: ${esc(loc?.name ?? 'not set')}">${icon.pin}<span>${esc(loc?.name ?? 'Set location')}</span></button>`;
   let body;
   if (now) {
     body = `
-      <div class="hero-temp">${Math.round(now.tempF)}<span class="deg">°</span></div>
+      <div class="hero-temp">${temp(now.tempF)}<span class="deg">°</span></div>
       <div class="hero-meta">
         <div class="hero-cond">${esc(now.label)}</div>
-        <div class="hero-sub">Feels ${deg(now.feelsF)} · H ${deg(now.hiF)} L ${deg(now.loF)} · ${Math.round(now.humidity)}% humidity</div>
+        <div class="hero-sub">Feels ${deg(now.feelsF)} · H ${deg(now.hiF)} L ${deg(now.loF)}</div>
+        <div class="hero-sub">${Math.round(now.humidity)}% humidity${wx.stale ? ' · offline' : ''}</div>
       </div>`;
   } else if (error) {
     body = `<div class="hero-meta"><div class="hero-cond">Weather unavailable</div><div class="hero-sub">${esc(error)}</div></div>`;
   } else {
-    body = `<div class="hero-meta"><div class="hero-cond">${loading ? 'Checking the sky…' : 'Where are you?'}</div><div class="hero-sub">${loading ? '' : 'Set a location to get picks.'}</div></div>`;
+    body = `<div class="hero-meta"><div class="hero-cond">${loading ? 'Checking the sky…' : 'Where are you?'}</div><div class="hero-sub">${loading ? '&nbsp;' : 'Set a location to get picks.'}</div></div>`;
   }
   return `
     <div class="hero-scene">${scene}</div>
     <div class="hero-shade"></div>
-    <div class="hero-top">${locBtn}<button class="loc-btn" data-action="collection">${icon.bottle}<span>${esc(collectionLabel)}</span></button></div>
-    <div class="hero-bottom">${body}</div>
-    ${heroPicksHTML(picks)}`;
+    <div class="hero-top">
+      ${locBtn}
+      <span class="wordmark" aria-hidden="true">Scentcast</span>
+      <button class="loc-btn" data-action="collection">${icon.bottle}<span>${esc(collectionLabel)}</span></button>
+    </div>
+    <div class="hero-foot">
+      <div class="hero-bottom">${body}</div>
+      ${heroPicksHTML(picks)}
+    </div>`;
 }
 
 // ---------- Cards ----------
@@ -111,7 +205,7 @@ function reasonsList(reasons, cls = '') {
 
 function wearButton(entry, ctx, wornId) {
   const on = wornId === entry.fragrance.id;
-  return `<button class="wear-btn${on ? ' on' : ''}" data-wear data-ctx="${ctx}" data-id="${entry.fragrance.id}" aria-pressed="${on}">
+  return `<button class="wear-btn${on ? ' on' : ''}" data-wear data-ctx="${esc(ctx)}" data-id="${esc(entry.fragrance.id)}" aria-pressed="${on}">
     ${on ? icon.check : icon.spray}<span>${on ? 'Wearing' : 'Wear this'}</span></button>`;
 }
 
@@ -136,21 +230,22 @@ export function slotHeaderHTML(win, nowHour) {
     </header>`;
 }
 
-export function pickHTML(entry, ctx, wornId, kicker) {
+export function pickHTML(entry, ctx, wornId, kicker, { canWear = true } = {}) {
   const f = entry.fragrance;
   const top = Object.keys(f.accords)[0];
+  const worn = wornId === f.id;
   return `
     <article class="pick" style="--accent:${accordColor(top)}">
-      <button class="pick-bottle" data-open data-ctx="${ctx}" data-id="${f.id}" aria-label="Details for ${esc(f.name)}">
-        <img src="${thumbSrc(f)}" alt="" width="150" height="170">
+      <button class="pick-bottle" data-open data-ctx="${esc(ctx)}" data-id="${esc(f.id)}" aria-label="Details for ${esc(f.name)}">
+        ${img(f, { lazy: false })}
       </button>
       <div class="pick-info">
-        <div class="kicker"><span class="tier-chip" data-tier="${entry.tier}">${entry.tier}</span>${esc(kicker)}</div>
-        <h3>${esc(f.name)}</h3>
+        <div class="kicker"><span class="tier-chip" data-tier="${entry.tier}">${entry.tier}</span>${esc(worn ? 'Wearing' : kicker)}</div>
+        <h3><button class="pick-name" data-open data-ctx="${esc(ctx)}" data-id="${esc(f.id)}">${esc(f.name)}</button></h3>
         <div class="brand">${esc(f.brand)}</div>
         ${reasonsList(displayReasons(entry, 2))}
         <div class="chips">${chips(f.accords)}</div>
-        <div class="pick-actions">${wearButton(entry, ctx, wornId)}</div>
+        <div class="pick-actions">${canWear ? wearButton(entry, ctx, wornId) : ''}${matchBadge(entry)}</div>
       </div>
     </article>`;
 }
@@ -159,21 +254,107 @@ export function tierListHTML(ranked, ctx, wornId, expanded) {
   const rows = TIERS.map(t => {
     const items = ranked.filter(r => r.tier === t).map(r => {
       const f = r.fragrance;
-      return `<button class="bottle${wornId === f.id ? ' worn' : ''}" data-open data-ctx="${ctx}" data-id="${f.id}" title="${esc(f.name)} · ${esc(f.brand)}">
-        <img src="${thumbSrc(f)}" alt="" loading="lazy" width="150" height="170">
+      return `<button class="bottle${wornId === f.id ? ' worn' : ''}" data-open data-ctx="${esc(ctx)}" data-id="${esc(f.id)}" title="${esc(f.name)} · ${esc(f.brand)} · ${matchPct(r)}% match">
+        ${img(f)}
         <span>${esc(f.name)}</span>
       </button>`;
     }).join('');
-    return `<div class="tier" data-tier="${t}"><div class="tier-label">${t}</div><div class="tier-items">${items}</div></div>`;
+    return items ? `<div class="tier" data-tier="${t}"><div class="tier-label">${t}</div><div class="tier-items">${items}</div></div>` : '';
   });
   const hiddenCount = ranked.filter(r => r.tier === 'B' || r.tier === 'C').length;
   return `<div class="tierlist">
     ${rows.slice(0, 2).join('')}
     ${expanded ? rows.slice(2).join('') : ''}
-    <button class="more-btn" data-expand="${ctx}" aria-expanded="${expanded}">
+    ${hiddenCount ? `<button class="more-btn" data-expand="${esc(ctx)}" aria-expanded="${expanded}">
       ${expanded ? 'Show less' : `Show B & C tiers · ${hiddenCount} more`}
-    </button>
+    </button>` : ''}
   </div>`;
+}
+
+// ---------- Week ----------
+
+function weekPick(p, slot, dayName) {
+  if (!p) return `<span class="wk-pick empty"><span class="wk-slot">${slot === 'day' ? icon.sun : icon.moon}</span><span class="wk-none">Done for today</span></span>`;
+  const f = p.pick.fragrance;
+  return `<button class="wk-pick${p.worn ? ' worn' : ''}" data-open data-ctx="${esc(p.ctx)}" data-id="${esc(f.id)}" aria-label="${esc(`${dayName} ${slot === 'day' ? 'daytime' : 'night'}: ${f.name}`)}">
+    ${img(f)}
+    <span class="wk-text"><small>${slot === 'day' ? icon.sun : icon.moon}${slot === 'day' ? 'Day' : 'Night'}${p.worn ? ' · wearing' : ''}</small><b>${esc(f.name)}</b></span>
+    <span class="tier-chip" data-tier="${p.pick.tier}">${p.pick.tier}</span>
+  </button>`;
+}
+
+export function weekHTML(days) {
+  const rows = days.map(d => `
+    <li class="wk-day${d.isToday ? ' today' : ''}">
+      <div class="wk-date"><b>${esc(d.isToday ? 'Today' : weekdayShort(d.dateISO))}</b><small>${esc(shortDate(d.dateISO))}</small></div>
+      <div class="wk-wx">${wxIcon(d.category, d.condition)}<span class="wk-temps"><b>${deg(d.hiF)}</b><small>${deg(d.loF)}</small></span><span class="wk-pop"${d.pop >= 30 ? ` aria-label="${d.pop}% chance of rain">${d.pop}%` : ' aria-hidden="true">&nbsp;'}</span></div>
+      <div class="wk-picks">${weekPick(d.day, 'day', d.name)}${weekPick(d.night, 'night', d.name)}</div>
+    </li>`).join('');
+  return `<section class="week" aria-labelledby="week-title">
+    <header class="section-head">
+      <h2 id="week-title">${icon.calendar}The week ahead</h2>
+      <p>Planned against the forecast so nothing repeats back to back. Tap a bottle to see why.</p>
+    </header>
+    <ol class="wk-list">${rows}</ol>
+  </section>`;
+}
+
+// ---------- Journal ----------
+
+export function journalTeaserHTML({ strip, stats }, resolve) {
+  const cells = strip.map(c => {
+    const worn = [c.day, c.night].map(h => h && resolve(h.id)).filter(Boolean);
+    return `<span class="jt-cell${c.isToday ? ' today' : ''}">
+      <small>${esc(c.label)}</small>
+      <span class="jt-bottles">${worn.length ? worn.map(f => img(f)).join('') : '<i></i>'}</span>
+    </span>`;
+  }).join('');
+  return `<section class="journal-teaser">
+    <header>
+      <div><h3>${icon.journal}Wear journal</h3><p>${plural(stats.wears, 'wear')} · ${plural(stats.bottles, 'bottle')} in 30 days</p></div>
+      <button class="ghost-btn" data-action="journal">Open ${icon.chevron}</button>
+    </header>
+    <div class="jt-strip">${cells}</div>
+  </section>`;
+}
+
+export function journalSheetHTML({ stats, calendar, dusty, confirmClear, todayISO }, resolve) {
+  const top = stats.top.map(([id, n]) => [resolve(id), n]).filter(([f]) => f).slice(0, 5);
+  const most = top[0];
+  const peak = most?.[1] ?? 1;
+  const tiles = `<div class="stat-tiles">
+    <div class="stat"><b>${stats.wears}</b><span>wears</span></div>
+    <div class="stat"><b>${stats.bottles}</b><span>bottles</span></div>
+    <div class="stat wide">${most ? `${img(most[0])}<span><b class="name">${esc(most[0].name)}</b><span>most worn · ${most[1]}×</span></span>` : '<span><b class="name">—</b><span>most worn</span></span>'}</div>
+  </div>`;
+  const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => `<span class="cal-dow">${d}</span>`).join('');
+  const cells = calendar.flat().map(c => {
+    const worn = [c.day, c.night].map(h => h && resolve(h.id)).filter(Boolean);
+    const day = +c.dateISO.slice(8, 10);
+    const label = worn.length ? `${shortDate(c.dateISO)}: ${worn.map(f => f.name).join(', ')}` : shortDate(c.dateISO);
+    return `<span class="cal-cell${c.future ? ' future' : ''}${c.dateISO === todayISO ? ' today' : ''}${worn.length ? ' has' : ''}" title="${esc(label)}">
+      <small>${day === 1 ? esc(shortDate(c.dateISO)) : day}</small>
+      <span class="cal-bottles">${worn.map(f => img(f)).join('')}</span>
+    </span>`;
+  }).join('');
+  const mostList = top.length
+    ? `<ul class="rank-list">${top.map(([f, n]) => `<li>${img(f)}<span class="manage-name"><b>${esc(f.name)}</b><small>${esc(f.brand)}</small></span>
+        <span class="rank-bar"><span style="width:${((n / peak) * 100).toFixed(0)}%"></span></span><span class="rank-n">${n}×</span></li>`).join('')}</ul>`
+    : '<p class="muted small">Nothing logged in the last 30 days.</p>';
+  const dustList = dusty.length
+    ? `<ul class="dust-list">${dusty.map(({ f, last }) => `<li><button data-open data-ctx="day" data-id="${esc(f.id)}">${img(f)}<span><b>${esc(f.name)}</b><small>${last ? `Last worn ${esc(relativeDay(last, todayISO))}` : 'Not worn yet'}</small></span></button></li>`).join('')}</ul>`
+    : '<p class="muted small">Every bottle in rotation got worn this month. Nice.</p>';
+  return sheetFrame('journal-title', `
+    <h2 id="journal-title" class="sheet-title">Wear journal</h2>
+    <p class="muted lede">What you logged with “Wear this”, on this device. The last 30 days.</p>
+    ${tiles}
+    <section><h4>Calendar</h4><div class="calendar">${weekdays}${cells}</div></section>
+    <section><h4>Most worn</h4>${mostList}</section>
+    <section><h4>Gathering dust</h4>${dustList}</section>
+    <div class="sheet-footer spread">
+      <span class="muted small">History stays on this device.</span>
+      <button class="ghost-btn quiet${confirmClear ? ' danger' : ''}" data-action="journal-clear">${icon.remove}${confirmClear ? 'Tap again to clear' : 'Clear history'}</button>
+    </div>`);
 }
 
 // ---------- Occasion controls ----------
@@ -190,21 +371,48 @@ export function occasionPickerHTML(activeId) {
 
 export function slotToggleHTML(slot, wx) {
   const btn = (s, text) => `<button data-occ-slot="${s}" aria-pressed="${slot === s}">${s === 'day' ? icon.sun : icon.moon}${esc(text)}</button>`;
-  return `<div class="seg">${btn('day', wx.day.label)}${btn('night', wx.night.label)}</div>`;
+  const first = wx.night.dateISO < wx.day.dateISO ? 'night' : 'day';
+  const order = first === 'night' ? ['night', 'day'] : ['day', 'night'];
+  return `<div class="seg">${order.map(s => btn(s, wx[s].label)).join('')}</div>`;
 }
 
 // ---------- Detail sheet ----------
 
 function bar(label, pct, color, value) {
   return `<div class="bar"><span class="bar-label">${esc(label)}</span>
-    <span class="bar-track"><span class="bar-fill" style="width:${pct.toFixed(1)}%;--c:${color}"></span></span>
+    <span class="bar-track"><span class="bar-fill" style="width:${Math.max(0, Math.min(100, pct)).toFixed(1)}%;--c:${color}"></span></span>
     <span class="bar-value">${esc(value)}</span></div>`;
 }
 
 const SEASON_COLORS = { winter: '#8fc7f0', spring: '#9be39a', summer: '#f6a08f', fall: '#f2b264', day: '#f5c451', night: '#8ea3d9' };
 const GENDER = { men: 'for men', women: 'for women', 'women and men': 'unisex' };
+const FACTORS = [
+  ['occasion', 'Occasion', '#e7b6ff'],
+  ['season', 'Season', '#9be39a'],
+  ['weather', 'Weather', '#8fc7f0'],
+  ['time', 'Time of day', '#f5c451'],
+  ['quality', 'Crowd rating', '#f2b264'],
+];
 
-export function sheetHTML(entry, ctxLabel, ctx, wornId) {
+function whyHTML(entry) {
+  const p = entry.parts;
+  const bars = FACTORS.filter(([k]) => p[k] !== null && p[k] !== undefined)
+    .map(([k, label, color]) => bar(label, p[k] * 100, color, `${Math.round(p[k] * 100)}`)).join('');
+  const rotation = p.rotation > 0
+    ? `<p class="why-note">−${Math.round(p.rotation * 100)} for rotation: ${esc(p.planned ? 'already in the plan nearby' : 'worn recently')}.</p>`
+    : '';
+  return `<section><h4>Why it ranks here <span class="h4-aside">${matchPct(entry)}% match</span></h4><div class="bars why">${bars}</div>${rotation}</section>`;
+}
+
+function wearsHTML(wears, todayISO) {
+  if (!wears) return '';
+  const text = wears.count
+    ? `Worn ${wears.count}× in the last 30 days · last ${relativeDay(wears.last, todayISO)}`
+    : wears.last ? `Last worn ${relativeDay(wears.last, todayISO)}` : 'No wears logged yet';
+  return `<div class="wears">${icon.clock}<span>${esc(text)}</span></div>`;
+}
+
+export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears = null, todayISO = '', alts = [] } = {}) {
   const f = entry.fragrance;
   const peak = Math.max(...SEASONS.map(s => f.season[s]));
   const seasonBars = SEASONS.map(s => bar(s, (f.season[s] / peak) * 100, SEASON_COLORS[s], `${Math.round(f.season[s] * 100)}%`)).join('');
@@ -213,54 +421,59 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId) {
   const accordBars = Object.entries(f.accords).map(([a, v]) => bar(a, v, accordColor(a), '')).join('');
   const layers = [['top', 'Top'], ['mid', 'Heart'], ['base', 'Base'], ['all', 'Notes']]
     .filter(([k]) => f.notes[k]?.length)
-    .map(([k, label]) => `<div class="layer"><span class="layer-label">${label}</span><div class="notes">${f.notes[k].map(n => `<span class="note">${esc(n)}</span>`).join('')}</div></div>`)
+    .map(([k, label]) => `<div class="layer"><span class="layer-label">${label}</span><div class="notes">${f.notes[k].map(n => `<span class="note-chip">${esc(n)}</span>`).join('')}</div></div>`)
     .join('');
   const meta = [f.brand, f.year, GENDER[f.gender]].filter(Boolean).map(esc).join(' · ');
   const fromFragella = f.source === 'fragella';
-  const ratingNote = fromFragella ? 'Fragella rating' : `${f.ratingVotes.toLocaleString()} votes on Fragrantica`;
+  const ratingNote = fromFragella ? 'Fragella rating' : `${f.ratingVotes.toLocaleString()} votes`;
   const performance = [f.longevity, f.sillage && `${f.sillage} sillage`].filter(Boolean).map(esc).join(' · ');
-  return `
-    <div class="sheet-backdrop" data-close></div>
-    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
-      <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
-      <div class="sheet-head">
-        <img src="${thumbSrc(f)}" alt="" width="150" height="170">
+  const altRow = alts.length
+    ? `<section><h4>Also good for ${esc(ctxLabel.toLowerCase())}</h4><div class="alts">${alts.map(a => `
+        <button class="alt" data-open data-ctx="${esc(ctx)}" data-id="${esc(a.fragrance.id)}">
+          ${img(a.fragrance)}<span><b>${esc(a.fragrance.name)}</b><small><span class="tier-chip mini" data-tier="${a.tier}">${a.tier}</span>${matchPct(a)}%</small></span>
+        </button>`).join('')}</div></section>`
+    : '';
+  return sheetFrame('sheet-title', `
+      <div class="sheet-head" style="--accent:${accordColor(Object.keys(f.accords)[0])}">
+        <div class="sheet-bottle">${img(f, { lazy: false })}</div>
         <div>
           <div class="kicker"><span class="tier-chip" data-tier="${entry.tier}">${entry.tier}</span>${esc(ctxLabel)}</div>
           <h2 id="sheet-title">${esc(f.name)}</h2>
           <div class="brand">${meta}</div>
-          <div class="rating">★ ${f.rating.toFixed(2)} <span>${esc(ratingNote)}</span></div>
+          <div class="rating">${f.rating ? `★ ${f.rating.toFixed(2)}` : 'Unrated'} <span>${esc(ratingNote)}</span></div>
           ${performance ? `<div class="performance">${performance}</div>` : ''}
         </div>
       </div>
       ${reasonsList(entry.reasons, 'full')}
+      ${wearsHTML(wears, todayISO)}
       <div class="sheet-actions">
-        ${wearButton(entry, ctx, wornId)}
+        ${canWear ? wearButton(entry, ctx, wornId) : ''}
         ${f.url ? `<a class="ghost-btn" href="${esc(f.url)}" target="_blank" rel="noopener">Fragrantica ${icon.external}</a>` : ''}
-        <button class="ghost-btn quiet" data-toggle-hidden="${f.id}">${icon.hide}Hide from picks</button>
+        <button class="ghost-btn quiet" data-toggle-hidden="${esc(f.id)}">${icon.hide}Hide from picks</button>
       </div>
+      ${whyHTML(entry)}
+      ${altRow}
       <section><h4>Main accords</h4><div class="bars accords">${accordBars}</div></section>
       <section class="two-col">
         <div><h4>${fromFragella ? 'Season fit' : 'Seasons voted'}</h4><div class="bars">${seasonBars}</div></div>
         <div><h4>${fromFragella ? 'Time of day (est.)' : 'Time of day'}</h4><div class="bars">${dnBars}</div></div>
       </section>
-      <section><h4>Notes</h4><div class="pyramid">${layers}</div></section>
-    </div>`;
+      ${layers ? `<section><h4>Notes</h4><div class="pyramid">${layers}</div></section>` : ''}`);
 }
 
 // ---------- Collection sheets ----------
 
 function bottleRow(f, { hidden, removable }) {
   const active = !hidden.has(f.id);
-  return `<li class="${active ? '' : 'off'}">
-    <img src="${thumbSrc(f)}" alt="" loading="lazy" width="150" height="170">
+  return `<li class="${active ? '' : 'off'}" data-name="${esc(`${f.name} ${f.brand}`.toLowerCase())}">
+    ${img(f)}
     <span class="manage-name"><b>${esc(f.name)}</b><small>${esc(f.brand)}</small></span>
     ${removable ? `<button class="icon-btn small ghosted" data-remove="${esc(f.id)}" aria-label="Remove ${esc(f.name)}">${icon.remove}</button>` : ''}
     <button class="switch" role="switch" aria-checked="${active}" data-toggle-hidden="${esc(f.id)}" aria-label="Include ${esc(f.name)} in picks"><span></span></button>
   </li>`;
 }
 
-export function collectionSheetHTML({ tab, demo, mine, hidden, shared }) {
+export function collectionSheetHTML({ tab, demo, mine, hidden, shared, filter = '' }) {
   const list = tab === 'mine' ? mine.records : demo;
   const on = list.filter(f => !hidden.has(f.id)).length;
   const tabBtn = (id, label) => `<button data-collection-tab="${id}" aria-pressed="${tab === id}">${esc(label)}</button>`;
@@ -274,26 +487,26 @@ export function collectionSheetHTML({ tab, demo, mine, hidden, shared }) {
         <input type="text" data-field="mine-name" value="${esc(mine.name)}" placeholder="e.g. Alex" maxlength="40" autocomplete="off">
       </label>`
     : `<div class="sheet-actions"><button class="ghost-btn" data-action="share">${icon.share}Share this collection</button></div>`;
+  const search = list.length > 8
+    ? `<label class="filter">${icon.search}<input type="search" data-field="collection-filter" placeholder="Filter ${list.length} bottles" value="${esc(filter)}" autocomplete="off" aria-label="Filter bottles"></label>`
+    : '';
   const body = list.length
-    ? `<p class="muted">${on} of ${list.length} in rotation. Switch a bottle off to leave it out of picks on this device.</p>
-       <ul class="manage-list">${list.map(f => bottleRow(f, { hidden, removable: tab === 'mine' })).join('')}</ul>`
-    : `<p class="muted empty">No bottles yet. Search for what you own, or paste a list.</p>`;
-  return `
-    <div class="sheet-backdrop" data-close></div>
-    <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-labelledby="coll-title">
-      <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
-      <h2 id="coll-title">Collections</h2>
-      ${shared ? `<p class="note">Picking a collection below closes the shared one you're viewing.</p>` : ''}
+    ? `<div class="list-head"><p class="muted">${on} of ${list.length} in rotation. Switch a bottle off to leave it out of picks on this device.</p>${search}</div>
+       <ul class="manage-list">${list.map(f => bottleRow(f, { hidden, removable: tab === 'mine' })).join('')}</ul>
+       <p class="muted small filter-empty" hidden>No bottles match.</p>`
+    : `<div class="empty-illustration">${icon.bottle}</div><p class="muted empty">No bottles yet. Search for what you own, or paste a list.</p>`;
+  return sheetFrame('coll-title', `
+      <h2 id="coll-title" class="sheet-title">Collections</h2>
+      ${shared ? `<p class="notice">Picking a collection below closes the shared one you’re viewing.</p>` : ''}
       <div class="seg wide">${tabBtn('demo', 'Demo (David’s)')}${tabBtn('mine', `Mine · ${mine.records.length}`)}</div>
       ${actions}
-      ${body}
-    </div>`;
+      ${body}`, { narrow: true });
 }
 
 function resultRow(r, i, added) {
   const meta = [r.brand, r.year].filter(Boolean).map(esc).join(' · ');
   return `<li>
-    <img src="${thumbSrc(r)}" alt="" loading="lazy" width="150" height="170">
+    ${img(r)}
     <span class="manage-name"><b>${esc(r.name)}</b><small>${meta}</small></span>
     <button class="add-btn${added ? ' on' : ''}" data-add="${i}" ${added ? 'disabled' : ''}>${added ? `${icon.check}Added` : `${icon.plus}Add`}</button>
   </li>`;
@@ -301,24 +514,20 @@ function resultRow(r, i, added) {
 
 export function addSheetHTML({ query = '', results = null, more = false, busy = false, error = '', notice = '' }, ownedIds) {
   const list = results === null ? ''
-    : results.length === 0 ? `<p class="muted">No matches for “${esc(query)}”. Try the brand plus the name, like “Dior Sauvage”.</p>`
+    : results.length === 0 ? `<p class="muted small">No matches for “${esc(query)}”. Try the brand plus the name, like “Dior Sauvage”.</p>`
     : `<ul class="manage-list results">${results.map((r, i) => resultRow(r, i, ownedIds.has(r.id))).join('')}</ul>`;
-  return `
-    <div class="sheet-backdrop" data-close></div>
-    <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-labelledby="add-title">
-      <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
-      <h2 id="add-title">Add bottles</h2>
-      <p class="muted">Search 80,000+ fragrances. Brand plus name works best.</p>
-      <form class="city-form" data-form="search">
-        <input type="search" name="q" placeholder="e.g. Dior Sauvage" autocomplete="off" value="${esc(query)}" aria-label="Fragrance">
-        <button type="submit" ${busy ? 'disabled' : ''}>${busy ? 'Searching…' : 'Search'}</button>
+  return sheetFrame('add-title', `
+      <h2 id="add-title" class="sheet-title">Add bottles</h2>
+      <p class="muted lede">Search 80,000+ fragrances. Brand plus name works best.</p>
+      <form class="search-form" data-form="search">
+        <label class="filter big">${icon.search}<input type="search" name="q" placeholder="e.g. Dior Sauvage" autocomplete="off" value="${esc(query)}" aria-label="Fragrance" enterkeyhint="search"></label>
+        <button type="submit" class="solid-btn" ${busy ? 'disabled' : ''}>${busy ? '<span class="spinner small" aria-hidden="true"></span>Searching' : 'Search'}</button>
       </form>
       ${error ? `<p class="error">${esc(error)}</p>` : ''}
       ${notice ? `<p class="muted small">${esc(notice)}</p>` : ''}
       ${list}
       ${more && !busy ? '<button class="link-btn more-search" data-action="search-more">Not it? Search all fragrances</button>' : ''}
-      <div class="sheet-footer"><button class="link-btn" data-action="collection">Done</button></div>
-    </div>`;
+      <div class="sheet-footer"><button class="ghost-btn" data-action="collection">Done</button></div>`, { narrow: true });
 }
 
 export function importSheetHTML({ text = '', rows = null, busy = false, error = '' }, maxLines) {
@@ -334,55 +543,77 @@ export function importSheetHTML({ text = '', rows = null, busy = false, error = 
       if (r.status === 'pending') return `<li class="pending"><span class="spinner" aria-hidden="true"></span><span class="manage-name"><b>${esc(r.line)}</b><small>Looking…</small></span></li>`;
       if (!r.match) return `<li class="off"><span class="miss">?</span><span class="manage-name"><b>${esc(r.line)}</b><small>${esc(r.note || 'No match. Try Add bottles with the brand name.')}</small></span></li>`;
       return `<li>
-        <img src="${thumbSrc(r.match)}" alt="" loading="lazy" width="150" height="170">
+        ${img(r.match)}
         <span class="manage-name"><b>${esc(r.match.name)}</b><small>${esc(r.match.brand)} · for “${esc(r.line)}”</small></span>
         <button class="check${r.checked ? ' on' : ''}" role="checkbox" aria-checked="${r.checked}" data-import-toggle="${i}" aria-label="Add ${esc(r.match.name)}">${icon.check}</button>
       </li>`;
     }).join('')}</ul>
     <div class="sheet-actions">
-      <button class="wear-btn" data-action="import-confirm" ${busy || !picked ? 'disabled' : ''}>${icon.plus}<span>Add ${picked} bottle${picked === 1 ? '' : 's'}</span></button>
+      <button class="wear-btn" data-action="import-confirm" ${busy || !picked ? 'disabled' : ''}>${icon.plus}<span>Add ${plural(picked, 'bottle')}</span></button>
       <button class="ghost-btn" data-action="import" ${busy ? 'disabled' : ''}>Start over</button>
     </div>`;
   }
-  return `
-    <div class="sheet-backdrop" data-close></div>
-    <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-labelledby="import-title">
-      <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
-      <h2 id="import-title">Paste a list</h2>
-      <p class="muted">One fragrance per line, up to ${maxLines} at a time. Copy it from your notes or your Fragrantica wardrobe page.</p>
+  return sheetFrame('import-title', `
+      <h2 id="import-title" class="sheet-title">Paste a list</h2>
+      <p class="muted lede">One fragrance per line, up to ${maxLines} at a time. Copy it from your notes or your Fragrantica wardrobe page.</p>
       ${error ? `<p class="error">${esc(error)}</p>` : ''}
-      ${body}
-    </div>`;
+      ${body}`, { narrow: true });
 }
 
 export function sharedBannerHTML(shared, mineCount) {
   const who = shared.name ? `${esc(shared.name)}’s` : 'A shared';
-  const status = shared.loading ? 'Loading…' : `${shared.records.length} bottle${shared.records.length === 1 ? '' : 's'}${shared.missing.length ? ` · ${shared.missing.length} couldn’t load` : ''}`;
+  const status = shared.loading ? 'Loading…' : `${plural(shared.records.length, 'bottle')}${shared.missing.length ? ` · ${shared.missing.length} couldn’t load` : ''}`;
   const save = shared.confirmReplace ? `Replace my ${mineCount}?` : 'Save as mine';
   return `<div class="banner" role="status">
+    <span class="banner-icon">${icon.share}</span>
     <span><b>${who} collection</b><small>${status}</small></span>
     <button class="wear-btn" data-action="shared-save" ${shared.loading || !shared.records.length ? 'disabled' : ''}>${save}</button>
     <button class="icon-btn small" data-action="shared-close" aria-label="Close shared collection">${icon.close}</button>
   </div>`;
 }
 
-export function locationSheetHTML({ busy = false, error = '', results = null, query = '' } = {}) {
-  const list = results === null ? ''
-    : results.length === 0 ? '<p class="muted">No matches. Try a bigger nearby city.</p>'
-    : `<ul class="city-results">${results.map((r, i) => `<li><button data-city="${i}"><strong>${esc(r.name)}</strong><span>${esc(r.region)}</span></button></li>`).join('')}</ul>`;
-  return `
-    <div class="sheet-backdrop" data-close></div>
-    <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-labelledby="loc-title">
-      <button class="icon-btn sheet-close" data-close aria-label="Close">${icon.close}</button>
-      <h2 id="loc-title">Where are you?</h2>
-      <p class="muted">Used only to fetch your local forecast from Open-Meteo.</p>
-      <button class="primary-btn" data-action="geo" ${busy ? 'disabled' : ''}>${icon.pin}<span>${busy ? 'Locating…' : 'Use my location'}</span></button>
+// ---------- Location sheet ----------
+
+export function cityResultsHTML({ results = null, query = '', busy = false }, recent) {
+  if (busy && !results) return '<p class="muted small searching"><span class="spinner small" aria-hidden="true"></span>Searching…</p>';
+  if (results === null) {
+    if (!recent.length) return '';
+    return `<h4 class="list-title">Recent</h4><ul class="city-results">${recent.map((r, i) => `<li><button data-recent="${i}">${icon.clock}<strong>${esc(r.name)}</strong><span>${esc(r.region ?? '')}</span></button></li>`).join('')}</ul>`;
+  }
+  if (!results.length) return `<p class="muted small">No places match “${esc(query)}”. Try a bigger nearby city.</p>`;
+  return `<ul class="city-results">${results.map((r, i) => `<li><button data-city="${i}">${icon.pin}<strong>${esc(r.name)}</strong><span>${esc(r.region)}</span></button></li>`).join('')}</ul>`;
+}
+
+export function locationSheetHTML(s = {}, recent = []) {
+  const { locating = false, error = '', query = '' } = s;
+  return sheetFrame('loc-title', `
+      <h2 id="loc-title" class="sheet-title">Where are you?</h2>
+      <p class="muted lede">Used only to fetch your local forecast from Open-Meteo.</p>
+      <button class="primary-btn" data-action="geo" ${locating ? 'disabled' : ''}>${locating ? '<span class="spinner small" aria-hidden="true"></span>' : icon.pin}<span>${locating ? 'Locating…' : 'Use my location'}</span></button>
       <div class="or"><span>or</span></div>
-      <form class="city-form" data-form="city">
-        <input type="search" name="q" placeholder="Search a city" autocomplete="off" value="${esc(query)}" aria-label="City">
-        <button type="submit">Search</button>
+      <form class="search-form" data-form="city">
+        <label class="filter big">${icon.search}<input type="search" name="q" data-field="city" placeholder="Search a city" autocomplete="off" value="${esc(query)}" aria-label="City" enterkeyhint="search"></label>
       </form>
       ${error ? `<p class="error">${esc(error)}</p>` : ''}
-      ${list}
+      <div class="city-slot" aria-live="polite">${cityResultsHTML(s, recent)}</div>`, { narrow: true });
+}
+
+// ---------- Footer ----------
+
+export function footerHTML({ on, total, sources, updated, stale, units: u, hasHistory }) {
+  const unitBtn = x => `<button data-units="${x}" aria-pressed="${u === x}">°${x}</button>`;
+  return `
+    <div class="foot-row">
+      <span>${on} of ${total} bottles in rotation</span>
+      <button class="link-btn" data-action="collection">Manage</button>
+      ${hasHistory ? '<button class="link-btn" data-action="journal">Journal</button>' : ''}
+    </div>
+    <div class="foot-row">
+      <div class="seg tiny" role="group" aria-label="Temperature units">${unitBtn('F')}${unitBtn('C')}</div>
+      ${updated ? `<span class="updated">${stale ? 'Offline · ' : ''}Updated ${esc(updated)}<button class="icon-btn small" data-action="refresh" aria-label="Refresh weather">${icon.refresh}</button></span>` : ''}
+    </div>
+    <div class="foot-row fine">
+      ${sources ? `<span>Fragrance data: ${sources}</span>` : ''}
+      <span>Forecast by <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a></span>
     </div>`;
 }
