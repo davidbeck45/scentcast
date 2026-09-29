@@ -138,10 +138,12 @@ function reasonsFor(frag, parts, ctx) {
   const fragSeason = argmax(frag.season);
   const peakShare = frag.season[fragSeason];
   const comfort = SEASONS.reduce((sum, s) => sum + weights[s] * (frag.season[s] / peakShare), 0);
-  if (fragSeason === nowSeason && peakShare >= 0.3) good(`Voted a ${nowSeason} scent`, W.season * peakShare * 2);
+  // Only Fragrantica records carry votes; Fragella's and hand-entered seasons are estimates.
+  const voted = Boolean(frag.seasonVotes);
+  if (fragSeason === nowSeason && peakShare >= 0.3) good(voted ? `Voted a ${nowSeason} scent` : `A ${nowSeason} scent`, W.season * peakShare * 2);
   else if (comfort >= 0.85 && peakShare < 0.3) good('Versatile across seasons', W.season * 0.4);
   else if (comfort >= 0.85) good(`Fits ${nowSeason} weather`, W.season * 0.5);
-  else if (comfort < 0.55) bad(`Voted for ${fragSeason}, not ${nowSeason}`, W.season * (1 - comfort));
+  else if (comfort < 0.55) bad(voted ? `Voted for ${fragSeason}, not ${nowSeason}` : `Better in ${fragSeason} than ${nowSeason}`, W.season * (1 - comfort));
 
   const share = frag.dayNight[slot];
   if (share >= 0.62) good(slot === 'night' ? 'Built for nighttime' : 'Daytime favorite', W.time * share);

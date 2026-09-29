@@ -25,11 +25,25 @@ Fragrantica gotchas:
 - The "When To Wear" and "Rating" cards render client-side from obfuscated embedded data. Read the rendered DOM (the extractor waits for it); raw HTML fetches lack those numbers.
 - The current page layout has no longevity or sillage votes, so the data has none.
 - Tool output that includes raw page HTML can trip a cookie/query-string filter; return parsed fields only.
+- Fragrantica sometimes shows a Cloudflare "Verify you are human" check; ask David to click it.
+- To find a bottle's page, open `https://www.fragrantica.com/search/?query=<name brand>` and read the `/perfume/` links once results render (the sidebar also lists David's own bottles).
 - Bottle images hotlink `fimgs.net/mdimg/perfume-thumbs/dark-m.<id>.2x.webp` (transparent background).
 
-## Other people's collections (Fragella)
+## Catalog (other people's Fragrantica bottles)
+
+`data/catalog.jsonl` (built to `data/catalog.json` by the same `npm run build:data`) holds Fragrantica bottles outside David's wardrobe, mostly indie ones Fragella lacks, added for friends and family. The app searches the demo and the catalog before Fragella (free, real votes), and share links resolve catalog ids like demo ids. Bottles here never show up in the demo.
+
+When someone sends their Fragrantica profile (they follow the guide at https://claude.ai/code/artifact/25b353d3-857f-4341-89b3-230131f8c484):
+1. Open `https://www.fragrantica.com/@<name>#wardrobe` with Claude in Chrome and run `scripts/fragrantica-wardrobe.js`. It lists the pages on their "Perfumes I Have" shelf; `found` below `expected` means the shelf didn't fully load.
+2. Skip pages whose id (the number ending the slug) is already in `data/collection.jsonl` or `data/catalog.jsonl`. Run the extractor on each remaining page and append its line to `data/catalog.jsonl`.
+3. Add any accord the extractor returns that `src/accords.js` lacks (weight and color); the engine ignores unknown accords. Then `npm run build:data` and `npm test`.
+4. Once pushed, send them `https://davidbeck45.github.io/scentcast/?c=<id>,<id>&n=<Name>` with their bottles' ids; they open it and tap "Save as mine".
+
+## Other people's collections (Fragella and hand-entered)
 
 The app ranks one of three lists: `demo` (David's wardrobe, `data/collection.json`), `mine` (bottles a visitor adds; full records stored in their localStorage) or a shared link (`?c=id,id&n=Name`, opened as a temporary view). Logic lives in `src/collections.js` and `src/main.js`.
+
+Bottles no source has are entered by hand ("Add it yourself", `src/custom.js`): up to 6 accords, strongest first, plus optional seasons and day/night. Season and night shares blend those picks with a linear fit on accord heaviness over the demo's votes; refit `SEASON_FIT` and `NIGHT_FIT` if the demo changes a lot. Their ids are `my:<random>`, and share links carry them whole as `my:<id>~<base64url>`. Pasted lists only tick a Fragella hit whose name words were all typed (`nameMatches`); the rest come unticked with an "Add it yourself" option.
 
 Bottles outside the demo come from the Fragella API through the Cloudflare Worker in `worker/`, which keeps the key server-side, caches each bottle and search in KV for 30 days, and caps upstream lookups per IP per day. Fragella ids are `fg:<slug>`; demo ids are Fragrantica numbers, all compared as strings.
 

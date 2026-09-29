@@ -1,0 +1,534 @@
+{
+  "source": "fragrantica.com, bottles added for other people's collections",
+  "fetched": "2026-09-29",
+  "fragrances": [
+    {
+      "id": 88207,
+      "name": "Warm Bulb",
+      "brand": "Clue Perfumery",
+      "year": 2023,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Clue-Perfumery/Warm-Bulb-88207.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.88207.2x.webp",
+      "rating": 4,
+      "ratingVotes": 840,
+      "accords": {
+        "vanilla": 100,
+        "warm spicy": 79,
+        "sweet": 77,
+        "powdery": 71,
+        "fresh spicy": 70,
+        "woody": 64,
+        "paper": 63,
+        "herbal": 60,
+        "tobacco": 59,
+        "amber": 52
+      },
+      "seasonVotes": {
+        "winter": 289,
+        "spring": 69,
+        "summer": 46,
+        "fall": 324
+      },
+      "timeVotes": {
+        "day": 202,
+        "night": 237
+      },
+      "season": {
+        "winter": 0.397,
+        "spring": 0.095,
+        "summer": 0.063,
+        "fall": 0.445
+      },
+      "dayNight": {
+        "day": 0.46,
+        "night": 0.54
+      },
+      "sentiment": {
+        "love": 365,
+        "like": 238,
+        "ok": 133,
+        "dislike": 76,
+        "hate": 28
+      },
+      "notes": {
+        "top": [
+          "Dust",
+          "Steam Accord",
+          "Black Pepper"
+        ],
+        "mid": [
+          "Paper",
+          "Immortelle",
+          "Tobacco"
+        ],
+        "base": [
+          "Vanilla",
+          "Sandalwood",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 128201,
+      "name": "Mango Sticky Rice",
+      "brand": "d'Annam",
+      "year": 2026,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/d-Annam/Mango-Sticky-Rice-128201.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.128201.2x.webp",
+      "rating": 3.81,
+      "ratingVotes": 410,
+      "accords": {
+        "tropical": 100,
+        "sweet": 92,
+        "fruity": 80,
+        "savory": 59,
+        "lactonic": 58,
+        "coconut": 56,
+        "terpenic": 49
+      },
+      "seasonVotes": {
+        "winter": 11,
+        "spring": 151,
+        "summer": 156,
+        "fall": 22
+      },
+      "timeVotes": {
+        "day": 150,
+        "night": 14
+      },
+      "season": {
+        "winter": 0.032,
+        "spring": 0.444,
+        "summer": 0.459,
+        "fall": 0.065
+      },
+      "dayNight": {
+        "day": 0.915,
+        "night": 0.085
+      },
+      "sentiment": {
+        "love": 117,
+        "like": 161,
+        "ok": 81,
+        "dislike": 41,
+        "hate": 10
+      },
+      "notes": {
+        "top": [
+          "Mango"
+        ],
+        "mid": [
+          "Rice"
+        ],
+        "base": [
+          "Coconut Milk"
+        ]
+      }
+    },
+    {
+      "id": 115992,
+      "name": "Mooncake",
+      "brand": "d'Annam",
+      "year": 2025,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/d-Annam/Mooncake-115992.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.115992.2x.webp",
+      "rating": 3.82,
+      "ratingVotes": 501,
+      "accords": {
+        "sweet": 100,
+        "honey": 80,
+        "vanilla": 53,
+        "floral": 45,
+        "powdery": 40
+      },
+      "seasonVotes": {
+        "winter": 143,
+        "spring": 26,
+        "summer": 12,
+        "fall": 183
+      },
+      "timeVotes": {
+        "day": 131,
+        "night": 67
+      },
+      "season": {
+        "winter": 0.393,
+        "spring": 0.071,
+        "summer": 0.033,
+        "fall": 0.503
+      },
+      "dayNight": {
+        "day": 0.662,
+        "night": 0.338
+      },
+      "sentiment": {
+        "love": 153,
+        "like": 189,
+        "ok": 90,
+        "dislike": 53,
+        "hate": 16
+      },
+      "notes": {
+        "all": [
+          "Honey",
+          "Syrup",
+          "Salted Egg Yolk",
+          "Mung Bean",
+          "Vanilla",
+          "Lotus Seed"
+        ]
+      }
+    },
+    {
+      "id": 64338,
+      "name": "Bois Impérial",
+      "brand": "Essential Parfums",
+      "year": 2020,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Essential-Parfums/Bois-Imperial-64338.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.64338.2x.webp",
+      "rating": 4.16,
+      "ratingVotes": 16581,
+      "accords": {
+        "woody": 100,
+        "fresh spicy": 69,
+        "aromatic": 62,
+        "oud": 55,
+        "green": 49,
+        "amber": 48,
+        "earthy": 47,
+        "warm spicy": 47
+      },
+      "seasonVotes": {
+        "winter": 4700,
+        "spring": 8600,
+        "summer": 7200,
+        "fall": 7800
+      },
+      "timeVotes": {
+        "day": 8100,
+        "night": 4700
+      },
+      "season": {
+        "winter": 0.166,
+        "spring": 0.304,
+        "summer": 0.254,
+        "fall": 0.276
+      },
+      "dayNight": {
+        "day": 0.633,
+        "night": 0.367
+      },
+      "sentiment": {
+        "love": 8800,
+        "like": 4300,
+        "ok": 1700,
+        "dislike": 1100,
+        "hate": 689
+      },
+      "notes": {
+        "all": [
+          "Akigalawood",
+          "Woodsy Notes",
+          "Basil",
+          "Vetiver",
+          "Timur",
+          "Ambroxan",
+          "Patchouli"
+        ]
+      }
+    },
+    {
+      "id": 122015,
+      "name": "Pear Pavlova",
+      "brand": "French Cowboy",
+      "year": 2025,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/French-Cowboy/Pear-Pavlova-122015.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.122015.2x.webp",
+      "rating": 3.69,
+      "ratingVotes": 398,
+      "accords": {
+        "sweet": 100,
+        "musky": 88,
+        "fruity": 80,
+        "powdery": 75,
+        "aquatic": 56,
+        "fresh": 50
+      },
+      "seasonVotes": {
+        "winter": 34,
+        "spring": 186,
+        "summer": 158,
+        "fall": 46
+      },
+      "timeVotes": {
+        "day": 169,
+        "night": 20
+      },
+      "season": {
+        "winter": 0.08,
+        "spring": 0.439,
+        "summer": 0.373,
+        "fall": 0.108
+      },
+      "dayNight": {
+        "day": 0.894,
+        "night": 0.106
+      },
+      "sentiment": {
+        "love": 119,
+        "like": 127,
+        "ok": 81,
+        "dislike": 52,
+        "hate": 19
+      },
+      "notes": {
+        "all": [
+          "Pear",
+          "Musk",
+          "Meringue"
+        ]
+      }
+    },
+    {
+      "id": 137101,
+      "name": "Vanilla for Breakfast",
+      "brand": "French Cowboy",
+      "year": 2026,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/French-Cowboy/Vanilla-for-Breakfast-137101.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.137101.2x.webp",
+      "rating": 3.62,
+      "ratingVotes": 104,
+      "accords": {
+        "vanilla": 100,
+        "almond": 73,
+        "amber": 70,
+        "sweet": 69,
+        "nutty": 56,
+        "fruity": 51,
+        "warm spicy": 48
+      },
+      "seasonVotes": {
+        "winter": 34,
+        "spring": 22,
+        "summer": 8,
+        "fall": 39
+      },
+      "timeVotes": {
+        "day": 41,
+        "night": 27
+      },
+      "season": {
+        "winter": 0.33,
+        "spring": 0.214,
+        "summer": 0.078,
+        "fall": 0.379
+      },
+      "dayNight": {
+        "day": 0.603,
+        "night": 0.397
+      },
+      "sentiment": {
+        "love": 29,
+        "like": 30,
+        "ok": 25,
+        "dislike": 16,
+        "hate": 4
+      },
+      "notes": {
+        "all": [
+          "Tonka Bean",
+          "Almond Milk",
+          "Vanilla",
+          "Benzoin"
+        ]
+      }
+    },
+    {
+      "id": 69541,
+      "name": "Bo",
+      "brand": "Liis",
+      "year": 2020,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Liis/Bo-69541.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.69541.2x.webp",
+      "rating": 4.13,
+      "ratingVotes": 1213,
+      "accords": {
+        "woody": 100,
+        "vanilla": 50,
+        "aromatic": 47,
+        "amber": 46,
+        "powdery": 44
+      },
+      "seasonVotes": {
+        "winter": 399,
+        "spring": 177,
+        "summer": 105,
+        "fall": 492
+      },
+      "timeVotes": {
+        "day": 374,
+        "night": 244
+      },
+      "season": {
+        "winter": 0.34,
+        "spring": 0.151,
+        "summer": 0.09,
+        "fall": 0.419
+      },
+      "dayNight": {
+        "day": 0.605,
+        "night": 0.395
+      },
+      "sentiment": {
+        "love": 561,
+        "like": 375,
+        "ok": 175,
+        "dislike": 83,
+        "hate": 19
+      },
+      "notes": {
+        "top": [
+          "Elemi resin",
+          "Tobacco"
+        ],
+        "mid": [
+          "Kyara Incense",
+          "Sequoia"
+        ],
+        "base": [
+          "Cedar",
+          "Guaiac Wood",
+          "Vanilla"
+        ]
+      }
+    },
+    {
+      "id": 97237,
+      "name": "Coney Island Baby",
+      "brand": "Scout Dixon West",
+      "year": 2024,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Scout-Dixon-West/Coney-Island-Baby-97237.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.97237.2x.webp",
+      "rating": 3.26,
+      "ratingVotes": 274,
+      "accords": {
+        "amber": 100,
+        "vanilla": 72,
+        "balsamic": 49,
+        "powdery": 46,
+        "sweet": 43
+      },
+      "seasonVotes": {
+        "winter": 58,
+        "spring": 37,
+        "summer": 63,
+        "fall": 80
+      },
+      "timeVotes": {
+        "day": 61,
+        "night": 59
+      },
+      "season": {
+        "winter": 0.244,
+        "spring": 0.155,
+        "summer": 0.265,
+        "fall": 0.336
+      },
+      "dayNight": {
+        "day": 0.508,
+        "night": 0.492
+      },
+      "sentiment": {
+        "love": 102,
+        "like": 48,
+        "ok": 27,
+        "dislike": 14,
+        "hate": 83
+      },
+      "notes": {
+        "top": [
+          "Ylang Ylang",
+          "Bergamot"
+        ],
+        "mid": [
+          "Vanilla",
+          "Waffle"
+        ],
+        "base": [
+          "Styrax",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 77284,
+      "name": "Daddy",
+      "brand": "Universal Flowering",
+      "year": 2016,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Universal-Flowering/Daddy-77284.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.77284.2x.webp",
+      "rating": 4.14,
+      "ratingVotes": 226,
+      "accords": {
+        "woody": 100,
+        "earthy": 64,
+        "fresh spicy": 64,
+        "aromatic": 62,
+        "warm spicy": 48,
+        "mossy": 47,
+        "amber": 46
+      },
+      "seasonVotes": {
+        "winter": 58,
+        "spring": 37,
+        "summer": 16,
+        "fall": 92
+      },
+      "timeVotes": {
+        "day": 44,
+        "night": 64
+      },
+      "season": {
+        "winter": 0.286,
+        "spring": 0.182,
+        "summer": 0.079,
+        "fall": 0.453
+      },
+      "dayNight": {
+        "day": 0.407,
+        "night": 0.593
+      },
+      "sentiment": {
+        "love": 110,
+        "like": 62,
+        "ok": 35,
+        "dislike": 14,
+        "hate": 5
+      },
+      "notes": {
+        "top": [
+          "Guaiac Wood",
+          "Black Pepper"
+        ],
+        "mid": [
+          "Hinoki",
+          "Mushroom"
+        ],
+        "base": [
+          "Vetiver",
+          "Benzoin",
+          "Oakmoss"
+        ]
+      }
+    }
+  ]
+}
