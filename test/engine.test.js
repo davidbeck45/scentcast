@@ -1,9 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { rank, groupTiers, targetSeasonWeights, calendarSeason, rotationPenalty } from '../src/engine.js';
+import { rank, groupTiers, targetSeasonWeights, calendarSeason, rotationPenalty, planWindows } from '../src/engine.js';
 import { occasionById } from '../src/occasions.js';
-import { summarize } from '../src/weather.js';
+import { summarize, week } from '../src/weather.js';
 
 const { fragrances } = JSON.parse(readFileSync(new URL('../data/collection.json', import.meta.url)));
 const names = list => list.map(r => r.fragrance.name);
@@ -118,4 +118,83 @@ test('summarize splits the forecast into day and night windows in local time', (
   assert.equal(evening.day.dateISO, '2026-09-29');
   assert.equal(evening.night.label, 'Tonight');
   assert.equal(evening.now.phase, 'night');
+});
+
+function syntheticForecast(days, { hot = () => false } = {}) {
+  const dates = Array.from({ length: days }, (_, i) => new Date(Date.UTC(2026, 8, 28 + i)).toISOString().slice(0, 10));
+  const hours = dates.flatMap(day => Array.from({ length: 24 }, (_, h) => `${day}T${String(h).padStart(2, '0')}:00`));
+  const temp = t => (hot(t.slice(0, 10)) ? 90 : +t.slice(11, 13) >= 19 ? 55 : 72);
+  return {
+    latitude: 40,
+    utc_offset_seconds: -4 * 3600,
+    current: { temperature_2m: 70, apparent_temperature: 71, relative_humidity_2m: 50, weather_code: 0, cloud_cover: 5 },
+    hourly: {
+      time: hours,
+      temperature_2m: hours.map(temp),
+      apparent_temperature: hours.map(temp),
+      relative_humidity_2m: hours.map(() => 55),
+      weather_code: hours.map(() => 1),
+      precipitation_probability: hours.map(() => 10),
+    },
+    daily: {
+      time: dates,
+      sunrise: dates.map(d => `${d}T06:50`),
+      sunset: dates.map(d => `${d}T18:45`),
+      temperature_2m_max: dates.map(d => (hot(d) ? 92 : 74)),
+      temperature_2m_min: dates.map(() => 54),
+    },
+    fetchedAt: 0,
+  };
+}
+
+test('week drops windows that have already ended today', () => {
+  const forecast = syntheticForecast(7);
+  // 20:00 local on the 28th: today's daytime is over, tonight is still ahead
+  const days = week(forecast, Date.parse('2026-09-29T00:00:00Z'));
+  assert.equal(days.length, 7);
+  assert.equal(days[0].name, 'Today');
+  assert.equal(days[0].day, null);
+  assert.equal(days[0].night.label, 'Tonight');
+  assert.equal(days[1].name, 'Tomorrow');
+  assert.equal(days[1].night.label, 'Tomorrow night');
+  assert.equal(days[2].day.label, 'Wednesday');
+  assert.equal(days[6].dateISO, '2026-10-04');
+
+  // Past 23:00 today has nothing left, so the week starts tomorrow.
+  assert.equal(week(forecast, Date.parse('2026-09-29T03:30:00Z'))[0].name, 'Tomorrow');
+});
+
+test('week windows follow each day\'s weather', () => {
+  const forecast = syntheticForecast(7, { hot: d => d === '2026-10-01' });
+  const days = week(forecast, Date.parse('2026-09-28T13:00:00Z'));
+  const hot = days.find(d => d.dateISO === '2026-10-01');
+  assert.equal(hot.day.feelsF, 90);
+  assert.equal(hot.hiF, 92);
+  const plan = planWindows(fragrances, [hot.day], {});
+  assert.ok(FRESH.includes(plan[0].pick.fragrance.name), `${plan[0].pick.fragrance.name} should be fresh on a hot day`);
+});
+
+test('a week plan rotates instead of repeating one bottle', () => {
+  const windows = [];
+  for (let i = 0; i < 7; i++) {
+    const dateISO = `2026-10-${String(i + 1).padStart(2, '0')}`;
+    const date = new Date(`${dateISO}T12:00:00`);
+    windows.push({ ...mildFallNight, feelsF: 66, date, dateISO, slot: 'day' });
+    windows.push({ ...mildFallNight, date, dateISO, slot: 'night' });
+  }
+  const plan = planWindows(fragrances, windows);
+  const ids = plan.map(p => p.pick.fragrance.id);
+  assert.ok(new Set(ids).size >= 10, `only ${new Set(ids).size} different bottles in 14 slots`);
+  for (let i = 0; i < ids.length; i += 2) assert.notEqual(ids[i], ids[i + 1], 'same bottle day and night');
+  for (const p of plan) assert.ok(p.pick.tier === 'S' || p.pick.tier === 'A', `${p.pick.fragrance.name} is only ${p.pick.tier}`);
+  const night = plan[1].ranked.find(r => r.fragrance.id === ids[0]);
+  assert.ok(night.reasons.some(r => r.text === 'Already picked for that day'), 'planned picks are not reported as worn');
+});
+
+test('a logged wear stays the pick for its window', () => {
+  const dateISO = '2026-09-28';
+  const win = { ...mildFallNight, dateISO, slot: 'night' };
+  const last = rank(fragrances, win, 'night').at(-1).fragrance;
+  const [p] = planWindows(fragrances, [win], { history: [{ id: last.id, date: dateISO, slot: 'night' }] });
+  assert.equal(p.pick.fragrance.id, last.id);
 });
