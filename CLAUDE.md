@@ -8,7 +8,7 @@ Picks fragrances from David's own Fragrantica wardrobe for the weather, time of 
 2. For an occasion no preset covers (job interview, outdoor wedding, a flight), run the nearest preset(s), then adjust using `data/collection.json`: accord strengths (0–100), note pyramid, season and day/night vote shares.
 3. Reply with a short ranked shortlist drawn only from `data/collection.json`: each pick with its reason (weather, votes, accords), plus a runner-up.
 
-For layering ("what goes with X", "cool layers"): `node scripts/recommend.mjs --layer "<name>" [--json]`, or `--layer all` for the best pairs in the wardrobe. No city needed.
+For layering ("what goes with X", "cool layers"): `node scripts/recommend.mjs --layer "<name>" [--json]`, or `--layer all` for the best pairs in the wardrobe. No city needed; add `--city "<city>" [--slot day|night]` to score the pairs for that window's weather.
 
 ## Collection data
 
@@ -62,7 +62,7 @@ The key lives in `worker/.dev.vars` (ignored) and as the Worker secret `FRAGELLA
 
 Season and time fit are half "within its comfort zone" and half "its specialty" (lift over an even vote split). The specialty half keeps flat all-rounders from winning every mild day.
 
-Layering (`src/layering.js`, the "Layer it with" section of a bottle's detail sheet) is separate from ranking. Notes map to accord families by name (`NOTE_FAMILIES`, first match wins, so specific names go first), and each bottle's profile blends those with its accords. A pair scores on complement (`PAIRS`, symmetric, negatives for clashes), a bridge of shared families or notes (near-duplicates are marked down), and heaviness contrast; the heavier bottle is sprayed first. Each partner's average pairing across the collection is subtracted, so all-rounders don't top every list. `test/layering.test.js` fails when a note in the data maps to no family; add it to `NOTE_FAMILIES`.
+Layering (`src/layering.js`, the "Layer it with" section of a bottle's detail sheet) is separate from ranking. Notes map to accord families by name (`NOTE_FAMILIES`, first match wins, so specific names go first), and each bottle's profile blends those with its accords. A pair scores on complement (`PAIRS`, symmetric, negatives for clashes), a bridge of shared families or notes (near-duplicates are marked down), and heaviness contrast; the heavier bottle is sprayed first. Each partner's average pairing across the collection is subtracted, so all-rounders don't top every list. Given a weather window (the sheet always has one), `blendFit` reads the pair like the engine reads one bottle (both bottles' season votes, and their average heaviness against the weather's target) and a pair below `BLEND_OK` loses points; without one, two heavy bottles take a flat penalty instead. `test/layering.test.js` fails when a note in the data maps to no family; add it to `NOTE_FAMILIES`.
 
 `planWindows` plans several windows in time order (Today's day + night, the Week tab, `--week`): each pick counts as a `planned` wear for later windows, and a bottle not yet in the plan takes the slot when it scores within `PLAN_MARGIN` of the top. A wear already logged for a window stays its pick.
 

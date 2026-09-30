@@ -381,7 +381,7 @@ function renderSheet({ keepScroll = false } = {}) {
       wears: wearInfo(s.id),
       todayISO: state.wx?.todayISO,
       alts: ctx.ranked.filter(r => r.fragrance.id !== s.id).slice(0, 4),
-      partners: activeFragrances().length > 1 ? layerPicks(entry.fragrance, activeFragrances()) : null,
+      partners: activeFragrances().length > 1 ? layerPicks(entry.fragrance, activeFragrances(), 3, ctx.win) : null,
     });
   } else if (s.kind === 'collection') {
     el.innerHTML = ui.collectionSheetHTML({

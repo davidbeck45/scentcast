@@ -11,7 +11,11 @@
 // A partner that pairs with everything (a light citrus-woody) would top every
 // list, so picks are scored against each partner's average pairing, like the
 // engine's season "specialty".
+// Given the weather, a blend that doesn't suit it is marked down: both
+// bottles' season votes, and their average heaviness against what the weather
+// calls for, so one heavy and one light bottle meet in the middle.
 import { heaviness } from './accords.js';
+import { targetSeasonWeights, seasonFit, targetHeaviness } from './engine.js';
 
 // First match wins, so specific names come before the words they contain
 // ("orange blossom" before "orange", "bourbon vanilla" before "bourbon").
@@ -44,10 +48,12 @@ const NOTE_FAMILIES = [
   [/powder|aldehyde/, 'powdery'],
   [/mango|pineapple|passion|papaya|guava|lychee|litchi|banana|coconut water/, 'tropical'],
   [/grapefruit|bergamot|lemon|lime|orange|mandarin|tangerine|clementine|yuzu|pomelo|petitgrain|citrus|verbena|citron/, 'citrus'],
+  [/fig lea|fig tree/, 'green'],
   [/pear|apple|peach|plum|berry|berries|currant|cherry|fig|apricot|grape|melon|quince|pomegranate|rhubarb/, 'fruity'],
   [/sea|marine|aquatic|salt|water|calone|seaweed|algae/, 'aquatic'],
   [/ozon|steam|air|metallic|mineral/, 'ozonic'],
-  [/mint|basil|sage|thyme|rosemary|artemisia|wormwood|tea|herb|tarragon|clary|bay leaf/, 'herbal'],
+  [/\btea\b|matcha|oolong|rooibos|\bchai\b|\bmate\b/, 'tea'],
+  [/mint|basil|sage|thyme|rosemary|artemisia|wormwood|herb|tarragon|clary|bay leaf/, 'herbal'],
   [/moss/, 'mossy'],
   [/patchouli|vetiver|mushroom|earth|dust|soil|truffle|beet/, 'earthy'],
   [/cedar|sandal|guaiac|wood|oak|hinoki|sequoia|akigalawood|cypress|pine|cashmere|teak|ebony/, 'woody'],
@@ -98,7 +104,9 @@ const PAIRS = [
   ['tobacco', 'leather', 0.7], ['tobacco', 'woody', 0.7], ['tobacco', 'whiskey', 0.8], ['tobacco', 'amber', 0.6],
   ['whiskey', 'woody', 0.7], ['whiskey', 'amber', 0.6],
   ['leather', 'iris', 0.7], ['leather', 'woody', 0.6], ['leather', 'amber', 0.6],
-  ['iris', 'powdery', 0.5], ['iris', 'woody', 0.6], ['iris', 'musky', 0.6], ['iris', 'violet', 0.6],
+  ['iris', 'powdery', 0.5], ['iris', 'woody', 0.6], ['iris', 'musky', 0.6], ['iris', 'violet', 0.6], ['iris', 'oud', 0.7],
+  ['tea', 'vanilla', 0.8], ['tea', 'citrus', 0.7], ['tea', 'honey', 0.6], ['tea', 'white floral', 0.6],
+  ['tea', 'lactonic', 0.5], ['tea', 'woody', 0.5], ['tea', 'fruity', 0.4],
   ['violet', 'powdery', 0.5], ['violet', 'woody', 0.5],
   ['powdery', 'musky', 0.6], ['powdery', 'woody', 0.4],
   ['musky', 'woody', 0.6], ['musky', 'floral', 0.7], ['musky', 'white floral', 0.6], ['musky', 'amber', 0.6],
@@ -132,9 +140,10 @@ const EFFECT = {
   almond: 'rounds out', nutty: 'rounds out', musky: 'softens', powdery: 'softens', iris: 'softens',
   lactonic: 'softens', coconut: 'softens', fruity: 'adds juice to', tropical: 'adds juice to',
   floral: 'adds petals to', rose: 'adds petals to', 'white floral': 'adds petals to', violet: 'adds petals to',
-  animalic: 'adds skin to', savory: 'adds salt to', paper: 'dries out',
+  animalic: 'adds skin to', savory: 'adds salt to', paper: 'dries out', tea: 'adds a dry edge to',
 };
 const SWEET = ['vanilla', 'sweet', 'caramel', 'honey', 'cacao', 'almond', 'nutty'];
+const MARINE = ['aquatic', 'ozonic'];
 const LAYER_WEIGHT = { top: 0.6, mid: 1, base: 1.2, all: 1 };
 const NOTES_SHARE = 0.4; // of a profile, the rest from accords
 const COMPLEMENT_FLOOR = 0.15;
@@ -142,6 +151,12 @@ const COMPLEMENT_SPAN = 0.25;
 const MIN_SCORE = 0.4;
 const GENERALIST_DAMPING = 1;
 const GENERIC_NOTE = /notes?$|accord$|^(citruses|white flowers|flowers|spices|woods)$/;
+// Blend fit: the engine's daily weights for season and weather, and the fit
+// below which a pair loses points. Mild days keep every pair near or above it.
+const BLEND_SEASON = 0.5;
+const BLEND_WEATHER = 0.2;
+const BLEND_OK = 0.7;
+const BLEND_DAMPING = 0.5;
 
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
 const family = name => FAMILY_ALIAS[name] ?? name;
@@ -204,10 +219,22 @@ const isPlural = noun => /(notes|[^sui]s)$/.test(noun);
 const pluralVerb = phrase => phrase.replace(/^(\w+?)(ies|s)\b/, (m, stem, end) => (end === 'ies' ? `${stem}y` : stem));
 
 /**
- * How well `other` layers with `frag`.
+ * How well the pair suits the conditions, 0..1, read the way the engine reads
+ * one bottle. conditions: { feelsF, humidity, date, lat }
+ */
+export function blendFit(frag, other, conditions) {
+  const weights = targetSeasonWeights(conditions.feelsF, conditions.date, conditions.lat);
+  const season = (seasonFit(frag, weights) + seasonFit(other, weights)) / 2;
+  const h = (heaviness(frag.accords) + heaviness(other.accords)) / 2;
+  const weather = 1 - Math.abs(h - targetHeaviness(conditions)) / 2;
+  return (BLEND_SEASON * season + BLEND_WEATHER * weather) / (BLEND_SEASON + BLEND_WEATHER);
+}
+
+/**
+ * How well `other` layers with `frag`, for the weather when `conditions` are given.
  * -> { score 0..1, reasons: [{ text, tone }], first: the one to spray first }
  */
-export function layerPair(frag, other) {
+export function layerPair(frag, other, conditions = null) {
   const a = profileOf(frag), b = profileOf(other);
 
   // Complement: every family pair across the two, weighted by both shares.
@@ -232,6 +259,8 @@ export function layerPair(frag, other) {
   const [ha, hb] = [heaviness(frag.accords), heaviness(other.accords)];
   const sweetA = SWEET.reduce((s, f) => s + (a.profile[f] ?? 0), 0);
   const sweetB = SWEET.reduce((s, f) => s + (b.profile[f] ?? 0), 0);
+  const marineA = MARINE.reduce((s, f) => s + (a.profile[f] ?? 0), 0);
+  const marineB = MARINE.reduce((s, f) => s + (b.profile[f] ?? 0), 0);
 
   // Across the demo and catalog, complement runs about 0.19 (10th percentile) to 0.38 (90th).
   const complementScore = clamp((complement - COMPLEMENT_FLOOR) / COMPLEMENT_SPAN, 0, 1);
@@ -239,10 +268,15 @@ export function layerPair(frag, other) {
   const contrastScore = clamp(Math.abs(ha - hb) / 0.4, 0, 1);
   const tooAlike = similarity > 0.85;
   const bothSweet = sweetA > 0.35 && sweetB > 0.35;
-  const bothHeavy = ha > 0.55 && hb > 0.55;
+  const bothMarine = !tooAlike && marineA > 0.12 && marineB > 0.12;
+  // Without the weather, two heavy scents are marked down as a cold-nights-only pair.
+  const bothHeavy = !conditions && ha > 0.55 && hb > 0.55;
+  const fit = conditions ? blendFit(frag, other, conditions) : null;
+  const offWeather = conditions ? BLEND_DAMPING * Math.max(0, BLEND_OK - fit) : 0;
   const score = clamp(
     0.5 * complementScore + 0.25 * bridgeScore + 0.25 * contrastScore
-      - Math.min(0.3, clash * 4) - (tooAlike ? 0.25 : 0) - (bothSweet ? 0.12 : 0) - (bothHeavy ? 0.12 : 0),
+      - Math.min(0.3, clash * 4) - (tooAlike ? 0.25 : 0) - (bothSweet ? 0.12 : 0) - (bothMarine ? 0.12 : 0)
+      - (bothHeavy ? 0.12 : 0) - offWeather,
     0, 1);
 
   const reasons = [];
@@ -256,11 +290,24 @@ export function layerPair(frag, other) {
     reasons.push({ text: `Shared ${named} ${sharedNotes.length === 1 ? 'ties' : 'tie'} them together`, tone: 'good' });
   } else if (bridge >= 0.15 && !tooAlike) {
     const [f] = Object.keys(a.profile).filter(x => b.profile[x]).sort((x, y) => Math.min(a.profile[y], b.profile[y]) - Math.min(a.profile[x], b.profile[x]));
-    if (f) reasons.push({ text: `Both lean ${f}`, tone: 'good' });
+    if (f && !(bothMarine && MARINE.includes(f))) reasons.push({ text: `Both lean ${f}`, tone: 'good' });
   }
   if (!reasons.length && contrastScore > 0.5) reasons.push({ text: 'One richer, one lighter', tone: 'good' });
+  if (conditions) {
+    const hot = conditions.feelsF >= 78, cold = conditions.feelsF <= 52;
+    if (fit >= 0.85 && hot) reasons.push({ text: 'Light enough for the heat', tone: 'good' });
+    if (fit >= 0.85 && cold) reasons.push({ text: 'Rich enough for the cold', tone: 'good' });
+    if (offWeather >= 0.06) {
+      const sticky = conditions.feelsF > 75 && conditions.humidity > 65;
+      const text = (ha + hb) / 2 > targetHeaviness(conditions)
+        ? (hot ? `Too rich for ${sticky ? 'sticky' : 'this'} heat` : 'Too rich for this weather')
+        : (cold ? 'Too light for the cold' : 'Too light for this weather');
+      reasons.push({ text, tone: 'bad' });
+    }
+  }
   if (tooAlike) reasons.push({ text: 'So alike it adds little', tone: 'bad' });
   if (bothSweet) reasons.push({ text: 'Both run sweet, so go light on one', tone: 'bad' });
+  if (bothMarine) reasons.push({ text: 'Two aquatics just double up', tone: 'bad' });
   if (bothHeavy) reasons.push({ text: 'Two heavy scents, better for cold nights', tone: 'bad' });
   if (clash > 0.02) reasons.push({ text: 'Some notes fight each other', tone: 'bad' });
 
@@ -289,13 +336,13 @@ function pairingMeans(collection) {
   return meansFor;
 }
 
-/** The best partners for `frag` among `collection`, best first. */
-export function layerPicks(frag, collection, limit = 3) {
+/** The best partners for `frag` among `collection`, best first, for the weather when `conditions` are given. */
+export function layerPicks(frag, collection, limit = 3, conditions = null) {
   const { means, overall } = pairingMeans(collection);
   return collection
     .filter(f => f.id !== frag.id)
     .map(f => {
-      const pair = layerPair(frag, f);
+      const pair = layerPair(frag, f, conditions);
       const generalist = (means.get(f.id) ?? overall) - overall;
       return { ...pair, score: clamp(pair.score - GENERALIST_DAMPING * generalist, 0, 1) };
     })
