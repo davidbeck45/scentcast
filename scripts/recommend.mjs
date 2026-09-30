@@ -4,6 +4,7 @@
 //   node scripts/recommend.mjs --loc 40.71,-74.01 --exclude "Sauvage,Jake"
 //   node scripts/recommend.mjs --city "New York" --week   (day + night plan for the next 7 days)
 //   node scripts/recommend.mjs --layer "Liquid Brun"       (what layers with it; --layer all for the best pairs)
+//   node scripts/recommend.mjs --layer "Liquid Brun" --city "New York" [--slot night]   (for that weather)
 // Bottles hidden in the app live in the phone's storage; pass them via --exclude.
 import { readFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
@@ -30,8 +31,24 @@ const excluded = args.exclude.split(',').map(s => s.trim().toLowerCase()).filter
 const fragrances = JSON.parse(readFileSync(new URL('../data/collection.json', import.meta.url))).fragrances
   .filter(f => !excluded.includes(f.name.toLowerCase()));
 
-// Layering needs no weather: partners for one bottle, or the best pairs overall.
+async function resolvePlace() {
+  if (args.loc) {
+    const [lat, lon] = args.loc.split(',').map(Number);
+    return { name: args.loc, lat, lon };
+  }
+  const [hit] = await searchCities(args.city);
+  if (!hit) { console.error(`No city found for "${args.city}"`); process.exit(1); }
+  return { name: `${hit.name}, ${hit.region}`, lat: hit.lat, lon: hit.lon };
+}
+
+// Partners for one bottle, or the best pairs overall. The weather is optional:
+// with a place, pairs are scored for the current window (or --slot).
 if (args.layer) {
+  let win = null;
+  if (args.city || args.loc) {
+    const wx = summarize(await fetchForecast(await resolvePlace()));
+    win = wx[args.slot ?? (wx.day?.dateISO === wx.todayISO ? 'day' : 'night')];
+  }
   const pairLine = (a, p) => `${a.name} + ${p.fragrance.name} (${Math.round(p.score * 100)}%): ${p.reasons.map(r => r.text).join('; ')}. Spray ${p.first.name} first.`;
   let rows;
   if (args.layer.toLowerCase() === 'all') {
@@ -39,7 +56,7 @@ if (args.layer) {
     // lower of the two discounts both bottles.
     const pairs = new Map();
     for (const f of fragrances) {
-      for (const p of layerPicks(f, fragrances, Infinity)) {
+      for (const p of layerPicks(f, fragrances, Infinity, win)) {
         const key = [f.id, p.fragrance.id].sort().join('+');
         if (!pairs.has(key) || pairs.get(key).pair.score > p.score) pairs.set(key, { base: f, pair: p });
       }
@@ -49,7 +66,7 @@ if (args.layer) {
     const q = args.layer.toLowerCase();
     const base = fragrances.find(f => f.name.toLowerCase() === q) ?? fragrances.find(f => f.name.toLowerCase().includes(q));
     if (!base) { console.error(`No bottle matches "${args.layer}"`); process.exit(1); }
-    rows = layerPicks(base, fragrances, 5).map(pair => ({ base, pair }));
+    rows = layerPicks(base, fragrances, 5, win).map(pair => ({ base, pair }));
   }
   if (args.json) {
     console.log(JSON.stringify(rows.map(({ base, pair }) => ({
@@ -59,8 +76,10 @@ if (args.layer) {
       score: +pair.score.toFixed(3),
       sprayFirst: pair.first.name,
       reasons: pair.reasons.map(x => `${x.tone === 'good' ? '+' : '-'} ${x.text}`),
+      ...(win && { window: { label: win.label, feelsF: Math.round(win.feelsF), humidity: Math.round(win.humidity), condition: win.condition } }),
     })), null, 2));
   } else {
+    if (win) console.log(`${win.label}: ${win.condition}, feels ${Math.round(win.feelsF)}°F, ${Math.round(win.humidity)}% humidity\n`);
     console.log(rows.length ? rows.map(({ base, pair }) => pairLine(base, pair)).join('\n') : 'Nothing in the collection layers well with it.');
   }
   process.exit(0);
@@ -68,19 +87,11 @@ if (args.layer) {
 
 if (!args.city && !args.loc) {
   console.error(`usage: node scripts/recommend.mjs (--city NAME | --loc LAT,LON) [--occasion ${OCCASIONS.map(o => o.id).join('|')}] [--slot day|night] [--week] [--exclude NAME,NAME] [--json]
-       node scripts/recommend.mjs --layer NAME|all [--exclude NAME,NAME] [--json]`);
+       node scripts/recommend.mjs --layer NAME|all [--city NAME | --loc LAT,LON] [--slot day|night] [--exclude NAME,NAME] [--json]`);
   process.exit(1);
 }
 
-let place;
-if (args.loc) {
-  const [lat, lon] = args.loc.split(',').map(Number);
-  place = { name: args.loc, lat, lon };
-} else {
-  const [hit] = await searchCities(args.city);
-  if (!hit) { console.error(`No city found for "${args.city}"`); process.exit(1); }
-  place = { name: `${hit.name}, ${hit.region}`, lat: hit.lat, lon: hit.lon };
-}
+const place = await resolvePlace();
 
 const occasion = args.occasion ? occasionById(args.occasion) : null;
 if (args.occasion && !occasion) { console.error(`Unknown occasion "${args.occasion}"`); process.exit(1); }

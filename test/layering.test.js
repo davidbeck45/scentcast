@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { noteFamily, layerPair, layerPicks } from '../src/layering.js';
+import { heaviness } from '../src/accords.js';
 import { DEFAULT_HIDDEN } from '../src/hidden.js';
 
 const load = f => JSON.parse(readFileSync(new URL(`../data/${f}.json`, import.meta.url))).fragrances;
@@ -16,6 +17,10 @@ const GOURMAND_TWIN = bottle('twin', { vanilla: 100, sweet: 85, caramel: 75 }, {
 const WOODY = bottle('woody', { woody: 100, 'fresh spicy': 60, earthy: 45 }, { top: ['Black Pepper'], base: ['Cedar', 'Vetiver'] });
 const MARINE = bottle('marine', { aquatic: 100, fresh: 80, ozonic: 60 }, { top: ['Sea Notes'], base: ['Musk'] });
 
+const hotHumidDay = { feelsF: 92, humidity: 75, category: 'clear', date: new Date('2026-08-05T12:00:00'), lat: 40 };
+const coldNight = { feelsF: 28, humidity: 60, category: 'clear', date: new Date('2027-01-15T12:00:00'), lat: 40 };
+const named = name => demo.find(f => f.name === name);
+
 test('notes map to accord families, specific names first', () => {
   assert.equal(noteFamily('Tonka Bean'), 'vanilla');
   assert.equal(noteFamily('Bourbon Vanilla'), 'vanilla');
@@ -26,6 +31,10 @@ test('notes map to accord families, specific names first', () => {
   assert.equal(noteFamily('Guaiac Wood'), 'woody');
   assert.equal(noteFamily('Coconut Milk'), 'coconut');
   assert.equal(noteFamily('Hazelnut'), 'nutty');
+  assert.equal(noteFamily('Black Tea'), 'tea');
+  assert.equal(noteFamily('Tea Rose'), 'rose');
+  assert.equal(noteFamily('Fig Leaf'), 'green');
+  assert.equal(noteFamily('Fig'), 'fruity');
   const unmapped = [...demo, ...catalog].flatMap(f => Object.values(f.notes).flat()).filter(n => !noteFamily(n));
   assert.deepEqual(unmapped, [], 'every note in the data has a family');
 });
@@ -60,4 +69,35 @@ test('no single partner takes over every list', () => {
     for (const f of list) for (const p of layerPicks(f, list)) counts[p.fragrance.id] = (counts[p.fragrance.id] ?? 0) + 1;
     assert.ok(Math.max(...Object.values(counts)) <= 0.6 * list.length, JSON.stringify(counts));
   }
+});
+
+test('tea dries out vanilla, iris takes oud, and two aquatics only double up', () => {
+  const withNote = note => bottle(note, { green: 100, citrus: 60, woody: 40 }, { top: ['Bergamot'], mid: [note], base: ['Cedar'] });
+  assert.ok(layerPair(GOURMAND, withNote('Black Tea')).score > layerPair(GOURMAND, withNote('Basil')).score);
+  const iris = bottle('iris', { iris: 100, powdery: 70, musky: 50 }, { mid: ['Orris Root'], base: ['Musk'] });
+  const oud = bottle('oud', { oud: 100, woody: 70, amber: 50 }, { base: ['Agarwood (Oud)', 'Amber'] });
+  assert.match(layerPair(iris, oud).reasons[0].text, /oud\) deepens the orris root/);
+  const marine2 = bottle('marine2', { aquatic: 90, citrus: 80, woody: 60 }, { top: ['Calone', 'Grapefruit'], base: ['Cedar'] });
+  const twoMarine = layerPair(MARINE, marine2).reasons;
+  assert.ok(twoMarine.some(r => r.tone === 'bad' && /aquatics/.test(r.text)));
+  assert.ok(!twoMarine.some(r => r.text === 'Both lean aquatic'));
+  assert.ok(!layerPair(WOODY, marine2).reasons.some(r => /aquatics/.test(r.text)));
+});
+
+test('the weather lifts rich pairs on cold nights and fresh ones on hot days', () => {
+  const [amber, cream] = [named('Amber Empire'), named('Cream Velvet')];
+  const cold = layerPair(amber, cream, coldNight), hot = layerPair(amber, cream, hotHumidDay);
+  assert.ok(cold.score > layerPair(amber, cream).score, 'the weather replaces the flat two-heavy penalty');
+  assert.ok(cold.score > hot.score + 0.2, `${cold.score} vs ${hot.score}`);
+  assert.ok(hot.reasons.some(r => r.tone === 'bad' && /heat/.test(r.text)));
+  assert.ok(!cold.reasons.some(r => r.tone === 'bad'), JSON.stringify(cold.reasons));
+
+  // A light bottle's partners lean richer in the cold than in the heat.
+  const light = named('Essence de Blanc');
+  const partnerHeaviness = c => {
+    const picks = layerPicks(light, demo, 3, c);
+    return picks.reduce((s, p) => s + heaviness(p.fragrance.accords), 0) / picks.length;
+  };
+  assert.ok(partnerHeaviness(coldNight) > partnerHeaviness(hotHumidDay) + 0.2);
+  for (const p of layerPicks(light, demo, 3, hotHumidDay)) assert.ok(!p.reasons.some(r => r.tone === 'bad' && /heat/.test(r.text)));
 });
