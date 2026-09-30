@@ -412,7 +412,26 @@ function wearsHTML(wears, todayISO) {
   return `<div class="wears">${icon.clock}<span>${esc(text)}</span></div>`;
 }
 
-export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears = null, todayISO = '', alts = [] } = {}) {
+// Partners from the same collection (src/layering.js), heavier one sprayed first.
+function layersHTML(f, layers, ctx) {
+  if (!layers) return '';
+  const rows = layers.map(p => {
+    const o = p.fragrance;
+    const order = p.first.id === f.id ? `Spray this first, then ${o.name} on top.` : `Spray ${o.name} first, then this on top.`;
+    return `<li class="pairing">
+        <button class="pairing-head" data-open data-ctx="${esc(ctx)}" data-id="${esc(o.id)}">
+          ${img(o)}<span><b>${esc(o.name)}</b><small>${esc(o.brand)}</small></span>${icon.chevron}
+        </button>
+        ${reasonsList(p.reasons, 'compact')}
+        <p class="pairing-order">${icon.spray}${esc(order)}</p>
+      </li>`;
+  }).join('');
+  return `<section><h4>Layer it with</h4>${rows
+    ? `<ul class="pairings">${rows}</ul>`
+    : '<p class="muted small">Nothing else in this collection layers well with it.</p>'}</section>`;
+}
+
+export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears = null, todayISO = '', alts = [], partners = null } = {}) {
   const f = entry.fragrance;
   const peak = Math.max(...SEASONS.map(s => f.season[s]));
   const seasonBars = SEASONS.map(s => bar(s, (f.season[s] / peak) * 100, SEASON_COLORS[s], `${Math.round(f.season[s] * 100)}%`)).join('');
@@ -455,6 +474,7 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears 
       </div>
       ${whyHTML(entry)}
       ${altRow}
+      ${layersHTML(f, partners, ctx)}
       <section><h4>Main accords</h4><div class="bars accords">${accordBars}</div></section>
       <section class="two-col">
         <div><h4>${estimated ? 'Season fit' : 'Seasons voted'}</h4><div class="bars">${seasonBars}</div></div>

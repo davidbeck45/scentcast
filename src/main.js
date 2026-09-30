@@ -8,6 +8,7 @@ import { loadMine, saveMine, loadActive, saveActive, shareURL, parseShare, local
 import { apiReady, searchFragrances, fetchFragrances } from './api.js';
 import { isFragellaId } from './fragella.js';
 import { customRecord, isCustomId, fromShareToken, MAX_CUSTOM_ACCORDS } from './custom.js';
+import { layerPicks } from './layering.js';
 import { sceneTint } from './scene.js';
 import * as ui from './ui.js';
 
@@ -380,6 +381,7 @@ function renderSheet({ keepScroll = false } = {}) {
       wears: wearInfo(s.id),
       todayISO: state.wx?.todayISO,
       alts: ctx.ranked.filter(r => r.fragrance.id !== s.id).slice(0, 4),
+      partners: activeFragrances().length > 1 ? layerPicks(entry.fragrance, activeFragrances()) : null,
     });
   } else if (s.kind === 'collection') {
     el.innerHTML = ui.collectionSheetHTML({

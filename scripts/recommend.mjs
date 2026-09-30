@@ -3,10 +3,12 @@
 //   node scripts/recommend.mjs --city "New York" [--occasion date] [--slot day|night] [--json]
 //   node scripts/recommend.mjs --loc 40.71,-74.01 --exclude "Sauvage,Jake"
 //   node scripts/recommend.mjs --city "New York" --week   (day + night plan for the next 7 days)
+//   node scripts/recommend.mjs --layer "Liquid Brun"       (what layers with it; --layer all for the best pairs)
 // Bottles hidden in the app live in the phone's storage; pass them via --exclude.
 import { readFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 import { rank, planWindows } from '../src/engine.js';
+import { layerPicks } from '../src/layering.js';
 import { OCCASIONS, occasionById } from '../src/occasions.js';
 import { fetchForecast, summarize, week } from '../src/weather.js';
 import { searchCities } from '../src/location.js';
@@ -20,11 +22,53 @@ const { values: args } = parseArgs({
     exclude: { type: 'string', default: '' },
     json: { type: 'boolean', default: false },
     week: { type: 'boolean', default: false },
+    layer: { type: 'string' },
   },
 });
 
+const excluded = args.exclude.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+const fragrances = JSON.parse(readFileSync(new URL('../data/collection.json', import.meta.url))).fragrances
+  .filter(f => !excluded.includes(f.name.toLowerCase()));
+
+// Layering needs no weather: partners for one bottle, or the best pairs overall.
+if (args.layer) {
+  const pairLine = (a, p) => `${a.name} + ${p.fragrance.name} (${Math.round(p.score * 100)}%): ${p.reasons.map(r => r.text).join('; ')}. Spray ${p.first.name} first.`;
+  let rows;
+  if (args.layer.toLowerCase() === 'all') {
+    // Each direction discounts the partner's all-round pairing, so keeping the
+    // lower of the two discounts both bottles.
+    const pairs = new Map();
+    for (const f of fragrances) {
+      for (const p of layerPicks(f, fragrances, Infinity)) {
+        const key = [f.id, p.fragrance.id].sort().join('+');
+        if (!pairs.has(key) || pairs.get(key).pair.score > p.score) pairs.set(key, { base: f, pair: p });
+      }
+    }
+    rows = [...pairs.values()].sort((x, y) => y.pair.score - x.pair.score).slice(0, 10);
+  } else {
+    const q = args.layer.toLowerCase();
+    const base = fragrances.find(f => f.name.toLowerCase() === q) ?? fragrances.find(f => f.name.toLowerCase().includes(q));
+    if (!base) { console.error(`No bottle matches "${args.layer}"`); process.exit(1); }
+    rows = layerPicks(base, fragrances, 5).map(pair => ({ base, pair }));
+  }
+  if (args.json) {
+    console.log(JSON.stringify(rows.map(({ base, pair }) => ({
+      bottle: base.name,
+      partner: pair.fragrance.name,
+      brand: pair.fragrance.brand,
+      score: +pair.score.toFixed(3),
+      sprayFirst: pair.first.name,
+      reasons: pair.reasons.map(x => `${x.tone === 'good' ? '+' : '-'} ${x.text}`),
+    })), null, 2));
+  } else {
+    console.log(rows.length ? rows.map(({ base, pair }) => pairLine(base, pair)).join('\n') : 'Nothing in the collection layers well with it.');
+  }
+  process.exit(0);
+}
+
 if (!args.city && !args.loc) {
-  console.error(`usage: node scripts/recommend.mjs (--city NAME | --loc LAT,LON) [--occasion ${OCCASIONS.map(o => o.id).join('|')}] [--slot day|night] [--week] [--exclude NAME,NAME] [--json]`);
+  console.error(`usage: node scripts/recommend.mjs (--city NAME | --loc LAT,LON) [--occasion ${OCCASIONS.map(o => o.id).join('|')}] [--slot day|night] [--week] [--exclude NAME,NAME] [--json]
+       node scripts/recommend.mjs --layer NAME|all [--exclude NAME,NAME] [--json]`);
   process.exit(1);
 }
 
@@ -41,9 +85,6 @@ if (args.loc) {
 const occasion = args.occasion ? occasionById(args.occasion) : null;
 if (args.occasion && !occasion) { console.error(`Unknown occasion "${args.occasion}"`); process.exit(1); }
 
-const excluded = args.exclude.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
-const fragrances = JSON.parse(readFileSync(new URL('../data/collection.json', import.meta.url))).fragrances
-  .filter(f => !excluded.includes(f.name.toLowerCase()));
 const forecast = await fetchForecast(place);
 
 if (args.week) {
