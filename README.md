@@ -5,6 +5,7 @@ A quick look at what to wear from my own collection, based on today's weather, t
 - **Today** — live local weather (Open-Meteo, no key), a scene drawn for the conditions, and S/A/B/C tiers for daytime and tonight. Each pick shows a match score and, in its detail sheet, why it ranks where it does and what else fits.
 - **Week** — a day and night pick for each of the next 7 days, planned against the forecast so nothing repeats back to back.
 - **Occasion** — Everyday, Office, Date Night, Night Out, Formal, Outdoors, Cozy, for daytime or tonight.
+- **Layering** — each bottle's detail sheet suggests which of your other bottles to layer it with, names the notes that complement each other, and says which to spray first.
 - **Wear this** — logs what you wore so picks rotate over the next couple of days. The wear journal shows a calendar, your most-worn bottles and the ones gathering dust.
 - °F or °C (defaults from your locale), recent locations, and home-screen shortcuts for Today, Week and Occasion.
 - **Your own collection** — search 80k+ fragrances (via [Fragella](https://api.fragella.com)) plus indie bottles added from Fragrantica, paste a list, or add a bottle no database has by picking its accords. Share it as a link. The demo shows my wardrobe.
@@ -19,6 +20,7 @@ npm test
 MOCK=1 node worker/dev.mjs   # local API on :8787 from saved responses
 node scripts/recommend.mjs --city "New York" --occasion date
 node scripts/recommend.mjs --city "New York" --week
+node scripts/recommend.mjs --layer "Liquid Brun"   # or --layer all
 ```
 
 Live at **https://davidbeck45.github.io/scentcast/** (GitHub Pages from `main`; every push redeploys). Add it to your phone's home screen to use it like an app.
