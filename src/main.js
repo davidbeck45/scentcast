@@ -2,7 +2,7 @@ import { rank, planWindows, comfortRange } from './engine.js';
 import { occasionById } from './occasions.js';
 import { getForecast, summarize, week } from './weather.js';
 import { loadLocation, saveLocation, loadRecent, deviceLocation, searchCities } from './location.js';
-import { loadHistory, toggleWear, wornIn, clearHistory, journalStats, journalCalendar, shiftISO } from './history.js';
+import { loadHistory, toggleWear, wornIn, clearHistory, journalStats, journalCalendar, journalExport, shiftISO } from './history.js';
 import { loadHidden, saveHidden } from './hidden.js';
 import { loadMine, saveMine, loadActive, saveActive, shareURL, parseShare, localMatches, nameMatches, sameBottle, importLines, MAX_IMPORT_LINES } from './collections.js';
 import { apiReady, searchFragrances, fetchFragrances } from './api.js';
@@ -726,7 +726,7 @@ document.addEventListener('click', async e => {
     closeSheet();
   } else if (d.wear !== undefined) {
     const ctx = state.contexts[d.ctx];
-    state.history = toggleWear(d.id, ctx.win.dateISO, ctx.win.slot);
+    state.history = toggleWear(d.id, ctx.win.dateISO, ctx.win.slot, state.loc);
     if (wornIn(state.history, ctx.win.dateISO, ctx.win.slot)) navigator.vibrate?.(12);
     computeToday();
     const picks = $('.hero-picks');
@@ -741,6 +741,13 @@ document.addEventListener('click', async e => {
     render();
   } else if (d.action === 'journal') {
     openSheet({ kind: 'journal' });
+  } else if (d.action === 'journal-export') {
+    const data = journalExport(state.history, state.loc, state.hidden);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+    a.download = `scentcast-journal-${data.exported.slice(0, 10)}.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   } else if (d.action === 'journal-clear') {
     if (!state.sheet?.confirmClear) return updateSheet({ confirmClear: true });
     state.history = clearHistory();

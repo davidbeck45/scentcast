@@ -74,6 +74,10 @@ Layering (`src/layering.js`, the "Layer it with" section of a bottle's detail sh
 
 `planWindows` plans several windows in time order (Today's day + night, the Week tab, `--week`): each pick counts as a `planned` wear for later windows, and a bottle not yet in the plan takes the slot when it scores within `PLAN_MARGIN` of the top. A wear already logged for a window stays its pick.
 
+## Checking picks against real wears
+
+The wear journal keeps a year of wears, each with roughly where it happened. Its Export button downloads them, with the device's place and hidden bottles. `node scripts/journal-check.mjs <export.json>` looks up each wear's weather in Open-Meteo's archive, ranks the demo as the app would have, and reports where the worn bottle landed (average rank against random, top-pick and S/A rates). Use it before and after tuning the engine.
+
 ## Deploy
 
 GitHub Pages serves `main` at https://davidbeck45.github.io/scentcast/, so pushing to `main` publishes. Commit data refreshes (`data/collection.json`) for the live site to see them.

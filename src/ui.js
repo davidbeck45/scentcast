@@ -354,7 +354,10 @@ export function journalSheetHTML({ stats, calendar, dusty, confirmClear, todayIS
     <section><h4>Gathering dust</h4>${dustList}</section>
     <div class="sheet-footer spread">
       <span class="muted small">History stays on this device.</span>
-      <button class="ghost-btn quiet${confirmClear ? ' danger' : ''}" data-action="journal-clear">${icon.remove}${confirmClear ? 'Tap again to clear' : 'Clear history'}</button>
+      <span class="footer-actions">
+        <button class="ghost-btn quiet" data-action="journal-export">${icon.share}Export</button>
+        <button class="ghost-btn quiet${confirmClear ? ' danger' : ''}" data-action="journal-clear">${icon.remove}${confirmClear ? 'Tap again to clear' : 'Clear history'}</button>
+      </span>
     </div>`);
 }
 
