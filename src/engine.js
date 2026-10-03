@@ -6,10 +6,16 @@ import { estimateSeason, estimateNight } from './custom.js';
 
 export const SEASONS = ['winter', 'spring', 'summer', 'fall'];
 
-// Feels-like temperature (°F) each season's votes are centered on.
-const SEASON_CENTER_F = { winter: 35, fall: 58, spring: 64, summer: 84 };
-const SEASON_WIDTH_F = 13;
-// Spring and fall overlap in temperature; the calendar breaks the tie.
+// Feels-like temperature (°F) of each season's day and night windows, mean and
+// spread, over 2023–2025 in ten temperate cities (scripts/fit-seasons.mjs,
+// from Open-Meteo's archive): the weather voters mean by "a summer scent".
+const SEASON_CLIMATE = { winter: [34, 12], spring: [51, 13], summer: [76, 10.5], fall: [56, 14.5] };
+// Spring and fall share a temperature range, so the calendar splits it: up to
+// 0.5 + TRANSITION_SPLIT to fall in mid-October, to spring in mid-April, and
+// evenly at midsummer and midwinter.
+const TRANSITION_SPLIT = 0.35;
+const FALL_PEAK_DAY = 288; // Oct 15
+// A winter or summer day still leans a little toward its calendar season.
 const CALENDAR_BOOST = 1.35;
 
 const DAILY_WEIGHTS = { season: 0.5, time: 0.25, weather: 0.2, quality: 0.05 };
@@ -32,16 +38,25 @@ export function calendarSeason(date, lat = 1) {
   return { winter: 'summer', spring: 'fall', summer: 'winter', fall: 'spring' }[north];
 }
 
-// How much each season "is" right now, normalized to sum to 1.
+const dayOfYear = date => (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 86_400_000;
+
+// How much each season "is" right now, normalized to sum to 1: how typical
+// this temperature is of each season's weather, then the calendar's say.
 export function targetSeasonWeights(feelsF, date, lat) {
-  const cal = calendarSeason(date, lat);
   const w = {};
-  let total = 0;
   for (const s of SEASONS) {
-    const z = (feelsF - SEASON_CENTER_F[s]) / SEASON_WIDTH_F;
-    w[s] = Math.exp(-0.5 * z * z) * (s === cal ? CALENDAR_BOOST : 1);
-    total += w[s];
+    const [mean, spread] = SEASON_CLIMATE[s];
+    const z = (feelsF - mean) / spread;
+    w[s] = Math.exp(-0.5 * z * z) / spread;
   }
+  const cal = calendarSeason(date, lat);
+  if (cal === 'winter' || cal === 'summer') w[cal] *= CALENDAR_BOOST;
+  const shift = lat < 0 ? 365.25 / 2 : 0;
+  const fallShare = 0.5 + TRANSITION_SPLIT * Math.cos((2 * Math.PI * (dayOfYear(date) - FALL_PEAK_DAY - shift)) / 365.25);
+  const transition = w.spring + w.fall;
+  w.fall = transition * fallShare;
+  w.spring = transition * (1 - fallShare);
+  const total = SEASONS.reduce((sum, s) => sum + w[s], 0);
   for (const s of SEASONS) w[s] = total ? w[s] / total : 0.25;
   return w;
 }
