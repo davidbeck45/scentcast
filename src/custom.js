@@ -1,17 +1,17 @@
 // Bottles no database has, entered by their owner: the main accords (strongest
 // first) and, optionally, the seasons and time of day they wear it. Season and
 // day/night shares blend those picks with an estimate from how heavy the
-// accords are, fitted on the demo collection's votes.
+// accords are, fitted on the votes of the bottles in data/.
 import { ACCORDS, heaviness } from './accords.js';
 
 export const CUSTOM_PREFIX = 'my:';
 export const MAX_CUSTOM_ACCORDS = 6;
 
 const SEASONS = ['winter', 'spring', 'summer', 'fall'];
-// share = a + b * heaviness, least squares over data/collection.json
-// (R² ≈ 0.7 for seasons, 0.6 for night).
-const SEASON_FIT = { winter: [0.229, 0.365], spring: [0.277, -0.223], summer: [0.226, -0.362], fall: [0.267, 0.219] };
-const NIGHT_FIT = [0.453, 0.379];
+// share = a + b * heaviness, least squares over the voted bottles in data/ (`npm run fit`)
+// (R² ≈ 0.7 for seasons, 0.4 for night).
+const SEASON_FIT = { winter: [0.203, 0.347], spring: [0.291, -0.267], summer: [0.25, -0.359], fall: [0.256, 0.279] };
+const NIGHT_FIT = [0.401, 0.325];
 const SEASON_FLOOR = 0.03;
 // How much the owner's own season and time picks count against the estimate.
 const PICK_WEIGHT = 0.5;
