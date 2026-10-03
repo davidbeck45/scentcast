@@ -95,7 +95,8 @@ const NOTE_FAMILIES = [
   [/paper|ink|pencil/, 'paper'],
 ];
 const SECONDARY_SHARE = 0.5;
-const FAMILY_ALIAS = { chocolate: 'cacao', cinnamon: 'warm spicy' };
+// Accords that layer like a family the rules already cover.
+const FAMILY_ALIAS = { chocolate: 'cacao', cinnamon: 'warm spicy', patchouli: 'earthy', smoky: 'balsamic' };
 
 // Families that work together (+) or fight (−), symmetric.
 const PAIRS = [

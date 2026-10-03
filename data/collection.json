@@ -1,6 +1,6 @@
 {
   "source": "fragrantica.com/@doeszen wardrobe (Have)",
-  "fetched": "2026-09-28",
+  "fetched": "2026-10-03",
   "fragrances": [
     {
       "id": 98689,
@@ -407,6 +407,71 @@
           "Ambroxan",
           "Cedar",
           "Labdanum"
+        ]
+      }
+    },
+    {
+      "id": 61631,
+      "name": "Sticky Fingers",
+      "brand": "Francesca Bianchi",
+      "year": 2020,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Francesca-Bianchi/Sticky-Fingers-61631.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.61631.2x.webp",
+      "rating": 4.1,
+      "ratingVotes": 1557,
+      "accords": {
+        "woody": 100,
+        "patchouli": 86,
+        "leather": 83,
+        "warm spicy": 81,
+        "powdery": 78,
+        "earthy": 66,
+        "tobacco": 64,
+        "iris": 64,
+        "smoky": 59,
+        "sweet": 58
+      },
+      "seasonVotes": {
+        "winter": 678,
+        "spring": 215,
+        "summer": 72,
+        "fall": 649
+      },
+      "timeVotes": {
+        "day": 299,
+        "night": 595
+      },
+      "season": {
+        "winter": 0.42,
+        "spring": 0.133,
+        "summer": 0.045,
+        "fall": 0.402
+      },
+      "dayNight": {
+        "day": 0.334,
+        "night": 0.666
+      },
+      "sentiment": {
+        "love": 723,
+        "like": 476,
+        "ok": 186,
+        "dislike": 132,
+        "hate": 40
+      },
+      "notes": {
+        "all": [
+          "Patchouli",
+          "Tobacco",
+          "Orris",
+          "Leather",
+          "Castoreum",
+          "Tonka Bean",
+          "Sandalwood",
+          "Musk",
+          "Cinnamon",
+          "Heliotrope",
+          "Coriander"
         ]
       }
     },
