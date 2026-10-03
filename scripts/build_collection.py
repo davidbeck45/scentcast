@@ -4,6 +4,9 @@
 - data/collection.jsonl -> data/collection.json: David's wardrobe (the demo).
 - data/catalog.jsonl -> data/catalog.json: bottles outside the wardrobe that
   Fragella lacks (friends' niche and indie bottles), searchable in the app.
+- data/calibration.jsonl -> data/calibration.json: well-voted bottles across
+  every accord family, used only to fit the engine (scripts/fit-accords.mjs);
+  the app never loads them.
 
 Each jsonl line is the output of scripts/fragrantica-extract.js for one
 perfume page. Re-run this after adding or removing lines.
@@ -18,6 +21,7 @@ SEASONS = ("winter", "spring", "summer", "fall")
 FILES = (
     ("collection", "fragrantica.com/@doeszen wardrobe (Have)"),
     ("catalog", "fragrantica.com, bottles added for other people's collections"),
+    ("calibration", "fragrantica.com, well-voted bottles for fitting the engine"),
 )
 
 

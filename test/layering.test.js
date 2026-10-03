@@ -124,10 +124,19 @@ test('tea dries out vanilla, iris takes oud, and two aquatics only double up', (
   assert.ok(!layerPair(WOODY, marine2).reasons.some(r => /aquatics/.test(r.text)));
 });
 
+test('without the weather, two heavy scents take a flat penalty that a cold night lifts', () => {
+  const winter = { winter: 0.5, spring: 0.1, summer: 0.05, fall: 0.35 };
+  const heavy = (id, accords) => ({ ...bottle(id, accords, { base: ['Vanilla'] }), season: winter, dayNight: { day: 0.3, night: 0.7 } });
+  const a = heavy('a', { vanilla: 100, tobacco: 80, 'warm spicy': 70 }), b = heavy('b', { leather: 100, oud: 80, amber: 70 });
+  const flat = layerPair(a, b);
+  assert.ok(flat.reasons.some(r => /Two heavy scents/.test(r.text)), JSON.stringify(flat.reasons));
+  assert.ok(layerPair(a, b, coldNight).score > flat.score);
+});
+
 test('the weather lifts rich pairs on cold nights and fresh ones on hot days', () => {
-  const [amber, cream] = [named('Amber Empire'), named('Cream Velvet')];
-  const cold = layerPair(amber, cream, coldNight), hot = layerPair(amber, cream, hotHumidDay);
-  assert.ok(cold.score > layerPair(amber, cream).score, 'the weather replaces the flat two-heavy penalty');
+  // The two heaviest bottles in the demo, whichever they are after a refit.
+  const [rich, richer] = [...demo].sort((x, y) => heaviness(y.accords) - heaviness(x.accords));
+  const cold = layerPair(rich, richer, coldNight), hot = layerPair(rich, richer, hotHumidDay);
   assert.ok(cold.score > hot.score + 0.2, `${cold.score} vs ${hot.score}`);
   assert.ok(hot.reasons.some(r => r.tone === 'bad' && /heat/.test(r.text)));
   assert.ok(!cold.reasons.some(r => r.tone === 'bad'), JSON.stringify(cold.reasons));

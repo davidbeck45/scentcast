@@ -14,13 +14,13 @@ import { parseArgs } from 'node:util';
 import { ACCORDS } from '../src/accords.js';
 
 // How hard weights are pulled back to their priors. Leave-one-out error is
-// flat from about 0.1 to 0.3 on 32 bottles; the higher end trusts the votes less.
+// lowest around 0.1–0.3 on 85 bottles; the higher end trusts the votes less.
 const LAMBDA = 0.3;
 const SEASONS = ['winter', 'spring', 'summer', 'fall'];
 
 const load = stem => JSON.parse(readFileSync(new URL(`../data/${stem}.json`, import.meta.url))).fragrances;
-/** Every bottle in data/ with Fragrantica season votes. */
-export const votedBottles = () => [...load('collection'), ...load('catalog')].filter(f => f.seasonVotes);
+/** Every bottle in data/ with Fragrantica season votes, calibration set included. */
+export const votedBottles = () => [...load('collection'), ...load('catalog'), ...load('calibration')].filter(f => f.seasonVotes);
 const names = Object.keys(ACCORDS);
 const prior = names.map(n => ACCORDS[n].prior);
 

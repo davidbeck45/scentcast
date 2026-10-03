@@ -1,0 +1,3595 @@
+{
+  "source": "fragrantica.com, well-voted bottles for fitting the engine",
+  "fetched": "2026-10-03",
+  "fragrances": [
+    {
+      "id": 62615,
+      "name": "Angels' Share",
+      "brand": "By Kilian",
+      "year": 2020,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/By-Kilian/Angels-Share-62615.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.62615.2x.webp",
+      "rating": 4.35,
+      "ratingVotes": 23953,
+      "accords": {
+        "warm spicy": 100,
+        "woody": 100,
+        "sweet": 90,
+        "vanilla": 81,
+        "cinnamon": 79,
+        "amber": 51,
+        "powdery": 48
+      },
+      "seasonVotes": {
+        "winter": 13100,
+        "spring": 2500,
+        "summer": 1400,
+        "fall": 11600
+      },
+      "timeVotes": {
+        "day": 4400,
+        "night": 10700
+      },
+      "season": {
+        "winter": 0.458,
+        "spring": 0.087,
+        "summer": 0.049,
+        "fall": 0.406
+      },
+      "dayNight": {
+        "day": 0.291,
+        "night": 0.709
+      },
+      "sentiment": {
+        "love": 14800,
+        "like": 5300,
+        "ok": 2000,
+        "dislike": 1300,
+        "hate": 597
+      },
+      "notes": {
+        "top": [
+          "Cognac"
+        ],
+        "mid": [
+          "Cinnamon",
+          "Tonka Bean",
+          "Oak",
+          "Hedione"
+        ],
+        "base": [
+          "Vanilla",
+          "Praline",
+          "Sandalwood",
+          "Candied Almond"
+        ]
+      }
+    },
+    {
+      "id": 276,
+      "name": "CK One",
+      "brand": "Calvin Klein",
+      "year": 1994,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Calvin-Klein/CK-One-276.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.276.2x.webp",
+      "rating": 3.82,
+      "ratingVotes": 23306,
+      "accords": {
+        "citrus": 100,
+        "green": 72,
+        "powdery": 56,
+        "woody": 56,
+        "white floral": 54,
+        "fresh": 53,
+        "aromatic": 53,
+        "fresh spicy": 48,
+        "floral": 48,
+        "musky": 47
+      },
+      "seasonVotes": {
+        "winter": 1500,
+        "spring": 8800,
+        "summer": 11900,
+        "fall": 2400
+      },
+      "timeVotes": {
+        "day": 11900,
+        "night": 1800
+      },
+      "season": {
+        "winter": 0.061,
+        "spring": 0.358,
+        "summer": 0.484,
+        "fall": 0.098
+      },
+      "dayNight": {
+        "day": 0.869,
+        "night": 0.131
+      },
+      "sentiment": {
+        "love": 5200,
+        "like": 12000,
+        "ok": 3200,
+        "dislike": 2500,
+        "hate": 376
+      },
+      "notes": {
+        "top": [
+          "Lemon",
+          "Green Notes",
+          "Bergamot",
+          "Mandarin Orange",
+          "Pineapple",
+          "Cardamom",
+          "Papaya"
+        ],
+        "mid": [
+          "Lily-of-the-Valley",
+          "Jasmine",
+          "Violet",
+          "Rose",
+          "Nutmeg",
+          "Freesia",
+          "Orris Root"
+        ],
+        "base": [
+          "Green Accord",
+          "Musk",
+          "Cedar",
+          "Green Tea",
+          "Sandalwood",
+          "Oakmoss",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 39681,
+      "name": "Good Girl",
+      "brand": "Carolina Herrera",
+      "year": 2016,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/Good-Girl-39681.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.39681.2x.webp",
+      "rating": 3.95,
+      "ratingVotes": 25986,
+      "accords": {
+        "sweet": 100,
+        "white floral": 99,
+        "vanilla": 92,
+        "warm spicy": 92,
+        "amber": 69,
+        "cacao": 67,
+        "woody": 66,
+        "tuberose": 63,
+        "almond": 61,
+        "powdery": 61
+      },
+      "seasonVotes": {
+        "winter": 9600,
+        "spring": 3700,
+        "summer": 2200,
+        "fall": 8700
+      },
+      "timeVotes": {
+        "day": 4200,
+        "night": 10700
+      },
+      "season": {
+        "winter": 0.397,
+        "spring": 0.153,
+        "summer": 0.091,
+        "fall": 0.36
+      },
+      "dayNight": {
+        "day": 0.282,
+        "night": 0.718
+      },
+      "sentiment": {
+        "love": 10500,
+        "like": 8600,
+        "ok": 2800,
+        "dislike": 3400,
+        "hate": 746
+      },
+      "notes": {
+        "top": [
+          "Almond",
+          "Coffee",
+          "Bergamot",
+          "Lemon"
+        ],
+        "mid": [
+          "Tuberose",
+          "Jasmine Sambac",
+          "Orange Blossom",
+          "Bulgarian Rose",
+          "Orris"
+        ],
+        "base": [
+          "Tonka Bean",
+          "Cacao",
+          "Vanilla",
+          "Praline",
+          "Sandalwood",
+          "Musk",
+          "Amber",
+          "Cashmere Wood",
+          "Patchouli",
+          "Cinnamon",
+          "Cedar"
+        ]
+      }
+    },
+    {
+      "id": 25967,
+      "name": "Bleu de Chanel Eau de Parfum",
+      "brand": "Chanel",
+      "year": 2014,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Chanel/Bleu-de-Chanel-Eau-de-Parfum-25967.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.25967.2x.webp",
+      "rating": 4.42,
+      "ratingVotes": 23233,
+      "accords": {
+        "citrus": 100,
+        "amber": 89,
+        "woody": 75,
+        "fresh spicy": 70,
+        "aromatic": 62,
+        "warm spicy": 52,
+        "fresh": 50,
+        "smoky": 50,
+        "balsamic": 49,
+        "powdery": 44
+      },
+      "seasonVotes": {
+        "winter": 9500,
+        "spring": 12400,
+        "summer": 12000,
+        "fall": 11600
+      },
+      "timeVotes": {
+        "day": 12200,
+        "night": 11300
+      },
+      "season": {
+        "winter": 0.209,
+        "spring": 0.273,
+        "summer": 0.264,
+        "fall": 0.255
+      },
+      "dayNight": {
+        "day": 0.519,
+        "night": 0.481
+      },
+      "sentiment": {
+        "love": 14200,
+        "like": 6100,
+        "ok": 1500,
+        "dislike": 1000,
+        "hate": 286
+      },
+      "notes": {
+        "top": [
+          "Grapefruit",
+          "Lemon",
+          "Mint",
+          "Bergamot",
+          "Pink Pepper",
+          "Aldehydes",
+          "Coriander"
+        ],
+        "mid": [
+          "Ginger",
+          "Jasmine",
+          "Nutmeg",
+          "Melon"
+        ],
+        "base": [
+          "Incense",
+          "Amber",
+          "Cedar",
+          "Sandalwood",
+          "Amberwood",
+          "Patchouli",
+          "Labdanum"
+        ]
+      }
+    },
+    {
+      "id": 8069,
+      "name": "Chance Eau Tendre",
+      "brand": "Chanel",
+      "year": 2010,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Chanel/Chance-Eau-Tendre-8069.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.8069.2x.webp",
+      "rating": 4.12,
+      "ratingVotes": 20220,
+      "accords": {
+        "floral": 100,
+        "fruity": 83,
+        "citrus": 80,
+        "sweet": 73,
+        "fresh spicy": 70,
+        "powdery": 70,
+        "white floral": 65,
+        "musky": 64,
+        "green": 60,
+        "iris": 59
+      },
+      "seasonVotes": {
+        "winter": 1300,
+        "spring": 7600,
+        "summer": 6200,
+        "fall": 1900
+      },
+      "timeVotes": {
+        "day": 7800,
+        "night": 1400
+      },
+      "season": {
+        "winter": 0.076,
+        "spring": 0.447,
+        "summer": 0.365,
+        "fall": 0.112
+      },
+      "dayNight": {
+        "day": 0.848,
+        "night": 0.152
+      },
+      "sentiment": {
+        "love": 8400,
+        "like": 8300,
+        "ok": 1200,
+        "dislike": 2100,
+        "hate": 126
+      },
+      "notes": {
+        "top": [
+          "Quince",
+          "Grapefruit"
+        ],
+        "mid": [
+          "Hyacinth",
+          "Jasmine"
+        ],
+        "base": [
+          "Musk",
+          "Iris",
+          "Virginia Cedar",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 40069,
+      "name": "Chanel No 5 Eau de Parfum",
+      "brand": "Chanel",
+      "year": 1986,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Chanel/Chanel-No-5-Eau-de-Parfum-40069.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.40069.2x.webp",
+      "rating": 3.57,
+      "ratingVotes": 12413,
+      "accords": {
+        "woody": 100,
+        "aldehydic": 85,
+        "fresh": 80,
+        "white floral": 78,
+        "powdery": 69,
+        "earthy": 67,
+        "yellow floral": 66,
+        "iris": 60,
+        "citrus": 56,
+        "floral": 56
+      },
+      "seasonVotes": {
+        "winter": 3600,
+        "spring": 2300,
+        "summer": 1400,
+        "fall": 3500
+      },
+      "timeVotes": {
+        "day": 3000,
+        "night": 3400
+      },
+      "season": {
+        "winter": 0.333,
+        "spring": 0.213,
+        "summer": 0.13,
+        "fall": 0.324
+      },
+      "dayNight": {
+        "day": 0.469,
+        "night": 0.531
+      },
+      "sentiment": {
+        "love": 4700,
+        "like": 2800,
+        "ok": 1200,
+        "dislike": 2200,
+        "hate": 1500
+      },
+      "notes": {
+        "top": [
+          "Aldehydes",
+          "Ylang-Ylang",
+          "Neroli",
+          "Bergamot",
+          "Peach"
+        ],
+        "mid": [
+          "Iris",
+          "Jasmine",
+          "Rose",
+          "Lily-of-the-Valley"
+        ],
+        "base": [
+          "Sandalwood",
+          "Oakmoss",
+          "Vanilla",
+          "Patchouli",
+          "Vetiver"
+        ]
+      }
+    },
+    {
+      "id": 611,
+      "name": "Coco Mademoiselle",
+      "brand": "Chanel",
+      "year": 2001,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Chanel/Coco-Mademoiselle-611.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.611.2x.webp",
+      "rating": 4.1,
+      "ratingVotes": 33511,
+      "accords": {
+        "citrus": 100,
+        "woody": 63,
+        "patchouli": 62,
+        "sweet": 62,
+        "white floral": 60,
+        "rose": 53,
+        "earthy": 49,
+        "vanilla": 48,
+        "warm spicy": 48,
+        "yellow floral": 48
+      },
+      "seasonVotes": {
+        "winter": 7600,
+        "spring": 9400,
+        "summer": 5300,
+        "fall": 8800
+      },
+      "timeVotes": {
+        "day": 10900,
+        "night": 7400
+      },
+      "season": {
+        "winter": 0.244,
+        "spring": 0.302,
+        "summer": 0.17,
+        "fall": 0.283
+      },
+      "dayNight": {
+        "day": 0.596,
+        "night": 0.404
+      },
+      "sentiment": {
+        "love": 15200,
+        "like": 11800,
+        "ok": 1900,
+        "dislike": 4100,
+        "hate": 530
+      },
+      "notes": {
+        "top": [
+          "Orange",
+          "Mandarin Orange",
+          "Bergamot",
+          "Orange Blossom"
+        ],
+        "mid": [
+          "Turkish Rose",
+          "Jasmine",
+          "Mimosa",
+          "Ylang-Ylang"
+        ],
+        "base": [
+          "Patchouli",
+          "White Musk",
+          "Vanilla",
+          "Vetiver",
+          "Tonka Bean",
+          "Opoponax"
+        ]
+      }
+    },
+    {
+      "id": 371,
+      "name": "Aromatics Elixir",
+      "brand": "Clinique",
+      "year": 1971,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Clinique/Aromatics-Elixir-371.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.371.2x.webp",
+      "rating": 3.79,
+      "ratingVotes": 6932,
+      "accords": {
+        "aromatic": 100,
+        "woody": 98,
+        "earthy": 80,
+        "warm spicy": 72,
+        "herbal": 66,
+        "mossy": 64,
+        "floral": 63,
+        "patchouli": 58,
+        "balsamic": 55,
+        "fresh spicy": 55
+      },
+      "seasonVotes": {
+        "winter": 1800,
+        "spring": 818,
+        "summer": 595,
+        "fall": 1900
+      },
+      "timeVotes": {
+        "day": 1500,
+        "night": 1600
+      },
+      "season": {
+        "winter": 0.352,
+        "spring": 0.16,
+        "summer": 0.116,
+        "fall": 0.372
+      },
+      "dayNight": {
+        "day": 0.484,
+        "night": 0.516
+      },
+      "sentiment": {
+        "love": 2800,
+        "like": 2100,
+        "ok": 251,
+        "dislike": 1600,
+        "hate": 269
+      },
+      "notes": {
+        "top": [
+          "Chamomile",
+          "Aldehydes",
+          "Clary Sage",
+          "Coriander",
+          "Geranium",
+          "Lemon Verbena",
+          "Brazilian Rosewood",
+          "Bergamot"
+        ],
+        "mid": [
+          "Carnation",
+          "Rose",
+          "Ylang-Ylang",
+          "Orris Root",
+          "Jasmine",
+          "Tuberose",
+          "Orange Blossom"
+        ],
+        "base": [
+          "Oakmoss",
+          "Patchouli",
+          "Incense",
+          "Vetiver",
+          "Sandalwood",
+          "Musk"
+        ]
+      }
+    },
+    {
+      "id": 9828,
+      "name": "Aventus",
+      "brand": "Creed",
+      "year": 2010,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Creed/Aventus-9828.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.9828.2x.webp",
+      "rating": 4.31,
+      "ratingVotes": 28647,
+      "accords": {
+        "fruity": 100,
+        "sweet": 69,
+        "woody": 68,
+        "leather": 64,
+        "citrus": 59,
+        "smoky": 57,
+        "musky": 55,
+        "fresh": 52,
+        "tropical": 52,
+        "mossy": 47
+      },
+      "seasonVotes": {
+        "winter": 6000,
+        "spring": 13200,
+        "summer": 13600,
+        "fall": 10000
+      },
+      "timeVotes": {
+        "day": 13500,
+        "night": 9200
+      },
+      "season": {
+        "winter": 0.14,
+        "spring": 0.308,
+        "summer": 0.318,
+        "fall": 0.234
+      },
+      "dayNight": {
+        "day": 0.595,
+        "night": 0.405
+      },
+      "sentiment": {
+        "love": 16800,
+        "like": 7200,
+        "ok": 2200,
+        "dislike": 1900,
+        "hate": 636
+      },
+      "notes": {
+        "top": [
+          "Bergamot",
+          "Black Currant",
+          "Apple",
+          "Lemon",
+          "Pink Pepper"
+        ],
+        "mid": [
+          "Pineapple",
+          "Patchouli",
+          "Moroccan Jasmine"
+        ],
+        "base": [
+          "Birch",
+          "Musk",
+          "oak moss",
+          "Cedarwood",
+          "Ambroxan"
+        ]
+      }
+    },
+    {
+      "id": 472,
+      "name": "Silver Mountain Water",
+      "brand": "Creed",
+      "year": 1995,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Creed/Silver-Mountain-Water-472.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.472.2x.webp",
+      "rating": 4.16,
+      "ratingVotes": 11507,
+      "accords": {
+        "citrus": 100,
+        "green": 95,
+        "fruity": 73,
+        "musky": 70,
+        "woody": 68,
+        "aromatic": 65,
+        "powdery": 63,
+        "fresh spicy": 61,
+        "fresh": 46,
+        "floral": 45
+      },
+      "seasonVotes": {
+        "winter": 1000,
+        "spring": 5100,
+        "summer": 5100,
+        "fall": 1700
+      },
+      "timeVotes": {
+        "day": 5100,
+        "night": 1300
+      },
+      "season": {
+        "winter": 0.078,
+        "spring": 0.395,
+        "summer": 0.395,
+        "fall": 0.132
+      },
+      "dayNight": {
+        "day": 0.797,
+        "night": 0.203
+      },
+      "sentiment": {
+        "love": 5500,
+        "like": 3700,
+        "ok": 1200,
+        "dislike": 990,
+        "hate": 175
+      },
+      "notes": {
+        "top": [
+          "Bergamot",
+          "Mandarin Orange"
+        ],
+        "mid": [
+          "Green Tea",
+          "Black Currant"
+        ],
+        "base": [
+          "Musk",
+          "Petitgrain",
+          "Sandalwood",
+          "Galbanum"
+        ]
+      }
+    },
+    {
+      "id": 507,
+      "name": "Cool Water",
+      "brand": "Davidoff",
+      "year": 1988,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Davidoff/Cool-Water-507.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.507.2x.webp",
+      "rating": 3.89,
+      "ratingVotes": 20735,
+      "accords": {
+        "aromatic": 100,
+        "green": 73,
+        "marine": 68,
+        "fresh spicy": 64,
+        "lavender": 55,
+        "woody": 53,
+        "salty": 45
+      },
+      "seasonVotes": {
+        "winter": 1300,
+        "spring": 8600,
+        "summer": 12200,
+        "fall": 2700
+      },
+      "timeVotes": {
+        "day": 11300,
+        "night": 2500
+      },
+      "season": {
+        "winter": 0.052,
+        "spring": 0.347,
+        "summer": 0.492,
+        "fall": 0.109
+      },
+      "dayNight": {
+        "day": 0.819,
+        "night": 0.181
+      },
+      "sentiment": {
+        "love": 5800,
+        "like": 9900,
+        "ok": 2400,
+        "dislike": 2300,
+        "hate": 367
+      },
+      "notes": {
+        "top": [
+          "Sea water",
+          "Lavender",
+          "Mint",
+          "Green Notes",
+          "Rosemary",
+          "Calone",
+          "Coriander"
+        ],
+        "mid": [
+          "Sandalwood",
+          "Neroli",
+          "Geranium",
+          "Jasmine"
+        ],
+        "base": [
+          "Musk",
+          "Oakmoss",
+          "Cedar",
+          "Tobacco",
+          "Ambergris"
+        ]
+      }
+    },
+    {
+      "id": 230,
+      "name": "Dior Homme 2005",
+      "brand": "Dior",
+      "year": 2005,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Dior/Dior-Homme-2005-230.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.230.2x.webp",
+      "rating": 4.42,
+      "ratingVotes": 3899,
+      "accords": {
+        "iris": 100,
+        "warm spicy": 89,
+        "aromatic": 87,
+        "earthy": 79,
+        "cacao": 78,
+        "powdery": 78,
+        "woody": 73,
+        "lavender": 66,
+        "violet": 65,
+        "leather": 64
+      },
+      "seasonVotes": {
+        "winter": 1100,
+        "spring": 745,
+        "summer": 316,
+        "fall": 1100
+      },
+      "timeVotes": {
+        "day": 931,
+        "night": 1200
+      },
+      "season": {
+        "winter": 0.337,
+        "spring": 0.228,
+        "summer": 0.097,
+        "fall": 0.337
+      },
+      "dayNight": {
+        "day": 0.437,
+        "night": 0.563
+      },
+      "sentiment": {
+        "love": 2300,
+        "like": 1200,
+        "ok": 29,
+        "dislike": 301,
+        "hate": 17
+      },
+      "notes": {
+        "top": [
+          "Lavender",
+          "Bergamot",
+          "Sage"
+        ],
+        "mid": [
+          "Iris",
+          "Cacao",
+          "Amber",
+          "Cardamom"
+        ],
+        "base": [
+          "Leather",
+          "Tahitian Vetiver",
+          "Patchouli"
+        ]
+      }
+    },
+    {
+      "id": 228,
+      "name": "Fahrenheit",
+      "brand": "Dior",
+      "year": 1988,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Dior/Fahrenheit-228.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.228.2x.webp",
+      "rating": 3.98,
+      "ratingVotes": 23174,
+      "accords": {
+        "leather": 100,
+        "woody": 91,
+        "ozonic": 81,
+        "fresh spicy": 78,
+        "aromatic": 74,
+        "animalic": 74,
+        "aquatic": 67,
+        "floral": 66,
+        "citrus": 63,
+        "green": 57
+      },
+      "seasonVotes": {
+        "winter": 8500,
+        "spring": 4600,
+        "summer": 2300,
+        "fall": 8400
+      },
+      "timeVotes": {
+        "day": 5800,
+        "night": 8300
+      },
+      "season": {
+        "winter": 0.357,
+        "spring": 0.193,
+        "summer": 0.097,
+        "fall": 0.353
+      },
+      "dayNight": {
+        "day": 0.411,
+        "night": 0.589
+      },
+      "sentiment": {
+        "love": 11100,
+        "like": 6400,
+        "ok": 1100,
+        "dislike": 3500,
+        "hate": 1100
+      },
+      "notes": {
+        "top": [
+          "Nutmeg Flower",
+          "Lavender",
+          "Cedar",
+          "Mandarin Orange",
+          "Chamomile",
+          "Bergamot",
+          "Hawthorn",
+          "Lemon"
+        ],
+        "mid": [
+          "Violet Leaf",
+          "Nutmeg",
+          "Cedar",
+          "Sandalwood",
+          "Carnation",
+          "Honeysuckle",
+          "Jasmine",
+          "Lily-of-the-Valley"
+        ],
+        "base": [
+          "Leather",
+          "Vetiver",
+          "Musk",
+          "Amber",
+          "Patchouli",
+          "Tonka Bean"
+        ]
+      }
+    },
+    {
+      "id": 219,
+      "name": "Hypnotic Poison",
+      "brand": "Dior",
+      "year": 1998,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Dior/Hypnotic-Poison-219.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.219.2x.webp",
+      "rating": 4.08,
+      "ratingVotes": 30691,
+      "accords": {
+        "vanilla": 100,
+        "sweet": 86,
+        "almond": 85,
+        "fruity": 74,
+        "nutty": 69,
+        "powdery": 68,
+        "woody": 62,
+        "coconut": 60,
+        "white floral": 53,
+        "balsamic": 50
+      },
+      "seasonVotes": {
+        "winter": 12000,
+        "spring": 2400,
+        "summer": 1600,
+        "fall": 8800
+      },
+      "timeVotes": {
+        "day": 4500,
+        "night": 11700
+      },
+      "season": {
+        "winter": 0.484,
+        "spring": 0.097,
+        "summer": 0.065,
+        "fall": 0.355
+      },
+      "dayNight": {
+        "day": 0.278,
+        "night": 0.722
+      },
+      "sentiment": {
+        "love": 15200,
+        "like": 8700,
+        "ok": 1700,
+        "dislike": 4400,
+        "hate": 687
+      },
+      "notes": {
+        "top": [
+          "Coconut",
+          "Plum",
+          "Apricot"
+        ],
+        "mid": [
+          "Brazilian Rosewood",
+          "Jasmine",
+          "Tuberose",
+          "Caraway",
+          "Rose",
+          "Lily-of-the-Valley"
+        ],
+        "base": [
+          "Vanilla",
+          "Almond",
+          "Sandalwood",
+          "Musk"
+        ]
+      }
+    },
+    {
+      "id": 210,
+      "name": "J'adore",
+      "brand": "Dior",
+      "year": 1999,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Dior/J-adore-210.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.210.2x.webp",
+      "rating": 3.8,
+      "ratingVotes": 29887,
+      "accords": {
+        "white floral": 100,
+        "floral": 87,
+        "fruity": 82,
+        "sweet": 65,
+        "fresh": 64,
+        "aquatic": 55,
+        "citrus": 55,
+        "powdery": 52,
+        "ozonic": 47,
+        "tuberose": 47
+      },
+      "seasonVotes": {
+        "winter": 4300,
+        "spring": 8500,
+        "summer": 5100,
+        "fall": 6100
+      },
+      "timeVotes": {
+        "day": 9100,
+        "night": 5700
+      },
+      "season": {
+        "winter": 0.179,
+        "spring": 0.354,
+        "summer": 0.212,
+        "fall": 0.254
+      },
+      "dayNight": {
+        "day": 0.615,
+        "night": 0.385
+      },
+      "sentiment": {
+        "love": 9300,
+        "like": 12000,
+        "ok": 2200,
+        "dislike": 5800,
+        "hate": 525
+      },
+      "notes": {
+        "top": [
+          "Pear",
+          "Melon",
+          "Magnolia",
+          "Peach",
+          "Mandarin Orange",
+          "Bergamot"
+        ],
+        "mid": [
+          "Jasmine",
+          "Lily-of-the-Valley",
+          "Tuberose",
+          "Freesia",
+          "Rose",
+          "Orchid",
+          "Violet",
+          "Plum"
+        ],
+        "base": [
+          "Musk",
+          "Vanilla",
+          "Cedar",
+          "Blackberry"
+        ]
+      }
+    },
+    {
+      "id": 3865,
+      "name": "Philosykos Eau de Parfum",
+      "brand": "Diptyque",
+      "year": 1996,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Diptyque/Philosykos-Eau-de-Parfum-3865.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.3865.2x.webp",
+      "rating": 4.15,
+      "ratingVotes": 12087,
+      "accords": {
+        "green": 100,
+        "woody": 83,
+        "sweet": 61,
+        "fresh": 58,
+        "fruity": 54,
+        "lactonic": 52,
+        "coconut": 51
+      },
+      "seasonVotes": {
+        "winter": 600,
+        "spring": 4200,
+        "summer": 4300,
+        "fall": 1500
+      },
+      "timeVotes": {
+        "day": 4200,
+        "night": 835
+      },
+      "season": {
+        "winter": 0.057,
+        "spring": 0.396,
+        "summer": 0.406,
+        "fall": 0.142
+      },
+      "dayNight": {
+        "day": 0.834,
+        "night": 0.166
+      },
+      "sentiment": {
+        "love": 5500,
+        "like": 4300,
+        "ok": 1000,
+        "dislike": 1100,
+        "hate": 180
+      },
+      "notes": {
+        "top": [
+          "Fig Leaf",
+          "Fig"
+        ],
+        "mid": [
+          "Green Notes",
+          "Coconut"
+        ],
+        "base": [
+          "Fig Tree",
+          "Woody Notes",
+          "Cedar"
+        ]
+      }
+    },
+    {
+      "id": 485,
+      "name": "Light Blue",
+      "brand": "Dolce&Gabbana",
+      "year": 2001,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Dolce-Gabbana/Light-Blue-485.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.485.2x.webp",
+      "rating": 3.86,
+      "ratingVotes": 37014,
+      "accords": {
+        "citrus": 100,
+        "woody": 74,
+        "fresh": 63,
+        "fruity": 59,
+        "aromatic": 54,
+        "musky": 49,
+        "powdery": 47,
+        "green": 44
+      },
+      "seasonVotes": {
+        "winter": 1800,
+        "spring": 9200,
+        "summer": 16900,
+        "fall": 2100
+      },
+      "timeVotes": {
+        "day": 16000,
+        "night": 2000
+      },
+      "season": {
+        "winter": 0.06,
+        "spring": 0.307,
+        "summer": 0.563,
+        "fall": 0.07
+      },
+      "dayNight": {
+        "day": 0.889,
+        "night": 0.111
+      },
+      "sentiment": {
+        "love": 12000,
+        "like": 15400,
+        "ok": 2800,
+        "dislike": 6200,
+        "hate": 653
+      },
+      "notes": {
+        "top": [
+          "Sicilian Lemon",
+          "Apple",
+          "Cedar",
+          "Bellflower"
+        ],
+        "mid": [
+          "Bamboo",
+          "Jasmine",
+          "White Rose"
+        ],
+        "base": [
+          "Cedar",
+          "Musk",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 410,
+      "name": "Acqua di Gio",
+      "brand": "Giorgio Armani",
+      "year": 1996,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Giorgio-Armani/Acqua-di-Gio-410.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.410.2x.webp",
+      "rating": 4.13,
+      "ratingVotes": 25847,
+      "accords": {
+        "citrus": 100,
+        "aromatic": 66,
+        "marine": 58,
+        "fresh spicy": 51,
+        "floral": 47,
+        "woody": 46,
+        "fresh": 45
+      },
+      "seasonVotes": {
+        "winter": 1400,
+        "spring": 9800,
+        "summer": 14200,
+        "fall": 2600
+      },
+      "timeVotes": {
+        "day": 13100,
+        "night": 2800
+      },
+      "season": {
+        "winter": 0.05,
+        "spring": 0.35,
+        "summer": 0.507,
+        "fall": 0.093
+      },
+      "dayNight": {
+        "day": 0.824,
+        "night": 0.176
+      },
+      "sentiment": {
+        "love": 10300,
+        "like": 11100,
+        "ok": 2000,
+        "dislike": 2100,
+        "hate": 278
+      },
+      "notes": {
+        "top": [
+          "Lime",
+          "Lemon",
+          "Bergamot",
+          "Jasmine",
+          "Orange",
+          "Mandarin Orange",
+          "Neroli"
+        ],
+        "mid": [
+          "Sea Notes",
+          "Jasmine",
+          "Calone",
+          "Rosemary",
+          "Peach",
+          "Freesia",
+          "Hiacynth",
+          "Violet",
+          "Cyclamen",
+          "Coriander",
+          "Rose",
+          "Nutmeg",
+          "Mignonette"
+        ],
+        "base": [
+          "White Musk",
+          "Cedar",
+          "Oakmoss",
+          "Patchouli",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 37735,
+      "name": "L’Homme Idéal Eau de Parfum",
+      "brand": "Guerlain",
+      "year": 2016,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Guerlain/L-Homme-Ideal-Eau-de-Parfum-37735.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.37735.2x.webp",
+      "rating": 4.44,
+      "ratingVotes": 10460,
+      "accords": {
+        "sweet": 100,
+        "cherry": 93,
+        "vanilla": 91,
+        "almond": 89,
+        "nutty": 76,
+        "warm spicy": 69,
+        "fruity": 67,
+        "amber": 67,
+        "aromatic": 61,
+        "leather": 61
+      },
+      "seasonVotes": {
+        "winter": 5800,
+        "spring": 3400,
+        "summer": 971,
+        "fall": 5800
+      },
+      "timeVotes": {
+        "day": 3800,
+        "night": 5400
+      },
+      "season": {
+        "winter": 0.363,
+        "spring": 0.213,
+        "summer": 0.061,
+        "fall": 0.363
+      },
+      "dayNight": {
+        "day": 0.413,
+        "night": 0.587
+      },
+      "sentiment": {
+        "love": 6500,
+        "like": 2700,
+        "ok": 671,
+        "dislike": 480,
+        "hate": 92
+      },
+      "notes": {
+        "top": [
+          "Almond",
+          "Spices",
+          "Lavender",
+          "Bergamot",
+          "Rosemary",
+          "Thyme"
+        ],
+        "mid": [
+          "Cherry",
+          "Vanilla",
+          "Incense",
+          "Bulgarian Rose"
+        ],
+        "base": [
+          "Tonka Bean",
+          "Leather",
+          "Sandalwood"
+        ]
+      }
+    },
+    {
+      "id": 207,
+      "name": "Mitsouko Eau de Toilette",
+      "brand": "Guerlain",
+      "year": 1919,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Guerlain/Mitsouko-Eau-de-Toilette-207.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.207.2x.webp",
+      "rating": 4.03,
+      "ratingVotes": 5285,
+      "accords": {
+        "earthy": 100,
+        "mossy": 99,
+        "warm spicy": 89,
+        "woody": 87,
+        "citrus": 73,
+        "floral": 66,
+        "aromatic": 63,
+        "fruity": 63,
+        "cinnamon": 59,
+        "sweet": 57
+      },
+      "seasonVotes": {
+        "winter": 779,
+        "spring": 691,
+        "summer": 420,
+        "fall": 1300
+      },
+      "timeVotes": {
+        "day": 1200,
+        "night": 975
+      },
+      "season": {
+        "winter": 0.244,
+        "spring": 0.217,
+        "summer": 0.132,
+        "fall": 0.408
+      },
+      "dayNight": {
+        "day": 0.552,
+        "night": 0.448
+      },
+      "sentiment": {
+        "love": 2300,
+        "like": 1800,
+        "ok": 137,
+        "dislike": 1000,
+        "hate": 16
+      },
+      "notes": {
+        "top": [
+          "Bergamot",
+          "Rose",
+          "Jasmine",
+          "Citruses"
+        ],
+        "mid": [
+          "Peach",
+          "Ylang-Ylang",
+          "Rose",
+          "Lilac",
+          "Jasmine"
+        ],
+        "base": [
+          "Oakmoss",
+          "Spices",
+          "Vetiver",
+          "Cinnamon",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 53,
+      "name": "Shalimar Eau de Parfum",
+      "brand": "Guerlain",
+      "year": 1990,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Guerlain/Shalimar-Eau-de-Parfum-53.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.53.2x.webp",
+      "rating": 3.97,
+      "ratingVotes": 18698,
+      "accords": {
+        "citrus": 100,
+        "amber": 99,
+        "woody": 87,
+        "vanilla": 82,
+        "powdery": 80,
+        "balsamic": 79,
+        "smoky": 74,
+        "leather": 66,
+        "animalic": 65,
+        "warm spicy": 63
+      },
+      "seasonVotes": {
+        "winter": 5300,
+        "spring": 1600,
+        "summer": 1400,
+        "fall": 4900
+      },
+      "timeVotes": {
+        "day": 2900,
+        "night": 5600
+      },
+      "season": {
+        "winter": 0.402,
+        "spring": 0.121,
+        "summer": 0.106,
+        "fall": 0.371
+      },
+      "dayNight": {
+        "day": 0.341,
+        "night": 0.659
+      },
+      "sentiment": {
+        "love": 8800,
+        "like": 5100,
+        "ok": 788,
+        "dislike": 3500,
+        "hate": 513
+      },
+      "notes": {
+        "top": [
+          "Citruses",
+          "Bergamot",
+          "Lemon",
+          "Cedar",
+          "Mandarin Orange"
+        ],
+        "mid": [
+          "Iris",
+          "Patchouli",
+          "Vetiver",
+          "Jasmine",
+          "Rose"
+        ],
+        "base": [
+          "Incense",
+          "Vanilla",
+          "Leather",
+          "Opoponax",
+          "Civet",
+          "Sandalwood",
+          "Tonka Bean",
+          "Musk"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "name": "Terre d'Hermès Hermès",
+      "brand": "Hermes",
+      "year": 2006,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Hermes/Terre-d-Hermes-17.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.17.2x.webp",
+      "rating": 4.28,
+      "ratingVotes": 29168,
+      "accords": {
+        "citrus": 100,
+        "woody": 92,
+        "fresh spicy": 79,
+        "aromatic": 77,
+        "earthy": 60,
+        "warm spicy": 54
+      },
+      "seasonVotes": {
+        "winter": 6600,
+        "spring": 12400,
+        "summer": 9800,
+        "fall": 12200
+      },
+      "timeVotes": {
+        "day": 13200,
+        "night": 7100
+      },
+      "season": {
+        "winter": 0.161,
+        "spring": 0.302,
+        "summer": 0.239,
+        "fall": 0.298
+      },
+      "dayNight": {
+        "day": 0.65,
+        "night": 0.35
+      },
+      "sentiment": {
+        "love": 15700,
+        "like": 9000,
+        "ok": 1800,
+        "dislike": 2300,
+        "hate": 395
+      },
+      "notes": {
+        "top": [
+          "Orange",
+          "Grapefruit"
+        ],
+        "mid": [
+          "Pepper",
+          "Pelargonium",
+          "Flint"
+        ],
+        "base": [
+          "Vetiver",
+          "Cedar",
+          "Patchouli",
+          "Benzoin"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "name": "Un Jardin Sur Le Nil Hermès",
+      "brand": "Hermes",
+      "year": 2005,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Hermes/Un-Jardin-sur-le-Nil-18.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.18.2x.webp",
+      "rating": 4.1,
+      "ratingVotes": 15611,
+      "accords": {
+        "citrus": 100,
+        "aromatic": 85,
+        "floral": 78,
+        "fresh spicy": 74,
+        "green": 69,
+        "fruity": 64,
+        "tropical": 63,
+        "powdery": 61,
+        "sweet": 58,
+        "herbal": 58
+      },
+      "seasonVotes": {
+        "winter": 417,
+        "spring": 4800,
+        "summer": 6700,
+        "fall": 934
+      },
+      "timeVotes": {
+        "day": 6200,
+        "night": 673
+      },
+      "season": {
+        "winter": 0.032,
+        "spring": 0.374,
+        "summer": 0.521,
+        "fall": 0.073
+      },
+      "dayNight": {
+        "day": 0.902,
+        "night": 0.098
+      },
+      "sentiment": {
+        "love": 6200,
+        "like": 6600,
+        "ok": 1100,
+        "dislike": 1500,
+        "hate": 142
+      },
+      "notes": {
+        "top": [
+          "Grapefruit",
+          "Green Mango",
+          "Tomato",
+          "Carrot"
+        ],
+        "mid": [
+          "Lotus",
+          "Bulrush",
+          "Orange",
+          "Hiacynth",
+          "Peony"
+        ],
+        "base": [
+          "Musk",
+          "Iris",
+          "Incense",
+          "Labdanum",
+          "Cinnamon"
+        ]
+      }
+    },
+    {
+      "id": 430,
+      "name": "Le Male",
+      "brand": "Jean Paul Gaultier",
+      "year": 1995,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Jean-Paul-Gaultier/Le-Male-430.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.430.2x.webp",
+      "rating": 4,
+      "ratingVotes": 25681,
+      "accords": {
+        "aromatic": 100,
+        "vanilla": 96,
+        "fresh spicy": 76,
+        "lavender": 75,
+        "warm spicy": 70,
+        "green": 67,
+        "powdery": 57,
+        "sweet": 55,
+        "amber": 55,
+        "woody": 53
+      },
+      "seasonVotes": {
+        "winter": 10100,
+        "spring": 9100,
+        "summer": 6000,
+        "fall": 10000
+      },
+      "timeVotes": {
+        "day": 9700,
+        "night": 10000
+      },
+      "season": {
+        "winter": 0.287,
+        "spring": 0.259,
+        "summer": 0.17,
+        "fall": 0.284
+      },
+      "dayNight": {
+        "day": 0.492,
+        "night": 0.508
+      },
+      "sentiment": {
+        "love": 10400,
+        "like": 9300,
+        "ok": 2100,
+        "dislike": 3400,
+        "hate": 527
+      },
+      "notes": {
+        "top": [
+          "Lavender",
+          "Mint",
+          "Cardamom",
+          "Bergamot",
+          "Artemisia"
+        ],
+        "mid": [
+          "Cinnamon",
+          "Orange Blossom",
+          "Caraway"
+        ],
+        "base": [
+          "Vanilla",
+          "Tonka Bean",
+          "Amber",
+          "Sandalwood",
+          "Cedar"
+        ]
+      }
+    },
+    {
+      "id": 25529,
+      "name": "Wood Sage & Sea Salt",
+      "brand": "Jo Malone London",
+      "year": 2014,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Jo-Malone-London/Wood-Sage-Sea-Salt-25529.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.25529.2x.webp",
+      "rating": 4.21,
+      "ratingVotes": 16225,
+      "accords": {
+        "aromatic": 100,
+        "salty": 80,
+        "marine": 79,
+        "citrus": 74,
+        "musky": 71,
+        "herbal": 69,
+        "soft spicy": 58,
+        "floral": 52,
+        "aquatic": 47
+      },
+      "seasonVotes": {
+        "winter": 1200,
+        "spring": 5100,
+        "summer": 7100,
+        "fall": 2500
+      },
+      "timeVotes": {
+        "day": 6700,
+        "night": 1200
+      },
+      "season": {
+        "winter": 0.075,
+        "spring": 0.321,
+        "summer": 0.447,
+        "fall": 0.157
+      },
+      "dayNight": {
+        "day": 0.848,
+        "night": 0.152
+      },
+      "sentiment": {
+        "love": 7400,
+        "like": 6100,
+        "ok": 1800,
+        "dislike": 821,
+        "hate": 147
+      },
+      "notes": {
+        "all": [
+          "Sea Salt",
+          "Sage",
+          "Grapefruit",
+          "Ambrette (Musk Mallow)",
+          "Seaweed"
+        ]
+      }
+    },
+    {
+      "id": 1834,
+      "name": "Encre Noire",
+      "brand": "Lalique",
+      "year": 2006,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Lalique/Encre-Noire-1834.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.1834.2x.webp",
+      "rating": 4.14,
+      "ratingVotes": 25776,
+      "accords": {
+        "woody": 100,
+        "aromatic": 80,
+        "earthy": 54,
+        "musky": 51,
+        "fresh spicy": 43
+      },
+      "seasonVotes": {
+        "winter": 11000,
+        "spring": 6200,
+        "summer": 2600,
+        "fall": 12600
+      },
+      "timeVotes": {
+        "day": 8100,
+        "night": 10500
+      },
+      "season": {
+        "winter": 0.34,
+        "spring": 0.191,
+        "summer": 0.08,
+        "fall": 0.389
+      },
+      "dayNight": {
+        "day": 0.435,
+        "night": 0.565
+      },
+      "sentiment": {
+        "love": 12000,
+        "like": 8800,
+        "ok": 2000,
+        "dislike": 2300,
+        "hate": 611
+      },
+      "notes": {
+        "top": [
+          "Cypress"
+        ],
+        "mid": [
+          "Vetiver"
+        ],
+        "base": [
+          "Cashmere Wood",
+          "Musk"
+        ]
+      }
+    },
+    {
+      "id": 14982,
+      "name": "La Vie Est Belle Lancôme",
+      "brand": "Lancome",
+      "year": 2012,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Lancome/La-Vie-Est-Belle-14982.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.14982.2x.webp",
+      "rating": 3.65,
+      "ratingVotes": 35861,
+      "accords": {
+        "sweet": 100,
+        "vanilla": 82,
+        "fruity": 66,
+        "patchouli": 58,
+        "woody": 58,
+        "white floral": 55,
+        "powdery": 53,
+        "iris": 49,
+        "earthy": 49,
+        "warm spicy": 48
+      },
+      "seasonVotes": {
+        "winter": 11000,
+        "spring": 6200,
+        "summer": 3400,
+        "fall": 9500
+      },
+      "timeVotes": {
+        "day": 9400,
+        "night": 9600
+      },
+      "season": {
+        "winter": 0.365,
+        "spring": 0.206,
+        "summer": 0.113,
+        "fall": 0.316
+      },
+      "dayNight": {
+        "day": 0.495,
+        "night": 0.505
+      },
+      "sentiment": {
+        "love": 11700,
+        "like": 11300,
+        "ok": 3000,
+        "dislike": 8300,
+        "hate": 1600
+      },
+      "notes": {
+        "top": [
+          "Black Currant",
+          "Pear"
+        ],
+        "mid": [
+          "Iris",
+          "Jasmine",
+          "Orange Blossom"
+        ],
+        "base": [
+          "Praline",
+          "Vanilla",
+          "Patchouli",
+          "Tonka Bean"
+        ]
+      }
+    },
+    {
+      "id": 12201,
+      "name": "Santal 33",
+      "brand": "Le Labo",
+      "year": 2011,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Le-Labo/Santal-33-12201.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.12201.2x.webp",
+      "rating": 3.74,
+      "ratingVotes": 13734,
+      "accords": {
+        "woody": 100,
+        "powdery": 65,
+        "leather": 59,
+        "warm spicy": 55,
+        "violet": 48
+      },
+      "seasonVotes": {
+        "winter": 3500,
+        "spring": 3700,
+        "summer": 2400,
+        "fall": 4700
+      },
+      "timeVotes": {
+        "day": 4300,
+        "night": 3100
+      },
+      "season": {
+        "winter": 0.245,
+        "spring": 0.259,
+        "summer": 0.168,
+        "fall": 0.329
+      },
+      "dayNight": {
+        "day": 0.581,
+        "night": 0.419
+      },
+      "sentiment": {
+        "love": 5300,
+        "like": 3600,
+        "ok": 1800,
+        "dislike": 2100,
+        "hate": 961
+      },
+      "notes": {
+        "all": [
+          "Sandalwood",
+          "Leather",
+          "Papyrus",
+          "Virginia Cedar",
+          "Cardamom",
+          "Violet",
+          "Iris",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 33519,
+      "name": "Baccarat Rouge 540",
+      "brand": "Maison Francis Kurkdjian",
+      "year": 2015,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Baccarat-Rouge-540-33519.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.33519.2x.webp",
+      "rating": 3.74,
+      "ratingVotes": 29947,
+      "accords": {
+        "woody": 100,
+        "amber": 99,
+        "warm spicy": 71,
+        "metallic": 47,
+        "fresh spicy": 46,
+        "aromatic": 46,
+        "white floral": 45,
+        "animalic": 45,
+        "fresh": 45
+      },
+      "seasonVotes": {
+        "winter": 10100,
+        "spring": 6300,
+        "summer": 4100,
+        "fall": 10100
+      },
+      "timeVotes": {
+        "day": 7300,
+        "night": 9600
+      },
+      "season": {
+        "winter": 0.33,
+        "spring": 0.206,
+        "summer": 0.134,
+        "fall": 0.33
+      },
+      "dayNight": {
+        "day": 0.432,
+        "night": 0.568
+      },
+      "sentiment": {
+        "love": 12900,
+        "like": 6600,
+        "ok": 3400,
+        "dislike": 4000,
+        "hate": 3100
+      },
+      "notes": {
+        "top": [
+          "Saffron",
+          "Jasmine"
+        ],
+        "mid": [
+          "Amberwood",
+          "Ambergris",
+          "Hedione"
+        ],
+        "base": [
+          "Fir Resin",
+          "Cedar",
+          "Sugar",
+          "Ambroxan",
+          "Oakmoss"
+        ]
+      }
+    },
+    {
+      "id": 15261,
+      "name": "Beach Walk",
+      "brand": "Maison Martin Margiela",
+      "year": 2012,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Maison-Martin-Margiela/Beach-Walk-15261.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.15261.2x.webp",
+      "rating": 3.79,
+      "ratingVotes": 9534,
+      "accords": {
+        "yellow floral": 100,
+        "sweet": 99,
+        "coconut": 95,
+        "powdery": 82,
+        "vanilla": 78,
+        "musky": 77,
+        "woody": 72,
+        "citrus": 70,
+        "lactonic": 56,
+        "floral": 50
+      },
+      "seasonVotes": {
+        "winter": 180,
+        "spring": 1700,
+        "summer": 4900,
+        "fall": 438
+      },
+      "timeVotes": {
+        "day": 4000,
+        "night": 501
+      },
+      "season": {
+        "winter": 0.025,
+        "spring": 0.236,
+        "summer": 0.679,
+        "fall": 0.061
+      },
+      "dayNight": {
+        "day": 0.889,
+        "night": 0.111
+      },
+      "sentiment": {
+        "love": 2700,
+        "like": 3800,
+        "ok": 1600,
+        "dislike": 1200,
+        "hate": 202
+      },
+      "notes": {
+        "top": [
+          "Bergamot",
+          "Lemon",
+          "Pink Pepper"
+        ],
+        "mid": [
+          "Ylang-Ylang",
+          "Coconut Milk",
+          "Heliotrope"
+        ],
+        "base": [
+          "Musk",
+          "Benzoin",
+          "Cedar"
+        ]
+      }
+    },
+    {
+      "id": 31623,
+      "name": "By the Fireplace",
+      "brand": "Maison Martin Margiela",
+      "year": 2015,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Maison-Martin-Margiela/By-the-Fireplace-31623.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.31623.2x.webp",
+      "rating": 4.2,
+      "ratingVotes": 27336,
+      "accords": {
+        "woody": 100,
+        "vanilla": 79,
+        "balsamic": 77,
+        "warm spicy": 72,
+        "amber": 64,
+        "powdery": 58,
+        "nutty": 52,
+        "musky": 46,
+        "soft spicy": 46,
+        "sweet": 45
+      },
+      "seasonVotes": {
+        "winter": 15400,
+        "spring": 1400,
+        "summer": 897,
+        "fall": 14000
+      },
+      "timeVotes": {
+        "day": 5300,
+        "night": 12200
+      },
+      "season": {
+        "winter": 0.486,
+        "spring": 0.044,
+        "summer": 0.028,
+        "fall": 0.442
+      },
+      "dayNight": {
+        "day": 0.303,
+        "night": 0.697
+      },
+      "sentiment": {
+        "love": 14500,
+        "like": 7600,
+        "ok": 2500,
+        "dislike": 2000,
+        "hate": 815
+      },
+      "notes": {
+        "top": [
+          "Cloves",
+          "Pink Pepper",
+          "Orange Blossom"
+        ],
+        "mid": [
+          "Chestnut",
+          "Guaiac Wood",
+          "Juniper"
+        ],
+        "base": [
+          "Vanilla",
+          "Peru Balsam",
+          "Cashmeran"
+        ]
+      }
+    },
+    {
+      "id": 20541,
+      "name": "Jazz Club",
+      "brand": "Maison Martin Margiela",
+      "year": 2013,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Maison-Martin-Margiela/Jazz-Club-20541.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.20541.2x.webp",
+      "rating": 4.19,
+      "ratingVotes": 21939,
+      "accords": {
+        "tobacco": 100,
+        "sweet": 89,
+        "vanilla": 83,
+        "rum": 82,
+        "woody": 71,
+        "aromatic": 67,
+        "soft spicy": 64,
+        "amber": 51,
+        "powdery": 46,
+        "warm spicy": 45
+      },
+      "seasonVotes": {
+        "winter": 11400,
+        "spring": 2400,
+        "summer": 1200,
+        "fall": 11600
+      },
+      "timeVotes": {
+        "day": 3400,
+        "night": 11000
+      },
+      "season": {
+        "winter": 0.429,
+        "spring": 0.09,
+        "summer": 0.045,
+        "fall": 0.436
+      },
+      "dayNight": {
+        "day": 0.236,
+        "night": 0.764
+      },
+      "sentiment": {
+        "love": 11100,
+        "like": 6500,
+        "ok": 2200,
+        "dislike": 1600,
+        "hate": 512
+      },
+      "notes": {
+        "top": [
+          "Pink Pepper",
+          "Neroli",
+          "Lemon"
+        ],
+        "mid": [
+          "Rum",
+          "Java vetiver oil",
+          "Clary Sage"
+        ],
+        "base": [
+          "Tobacco Leaf",
+          "Vanilla Bean",
+          "Styrax"
+        ]
+      }
+    },
+    {
+      "id": 20542,
+      "name": "Lazy Sunday Morning",
+      "brand": "Maison Martin Margiela",
+      "year": 2013,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Maison-Martin-Margiela/Lazy-Sunday-Morning-20542.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.20542.2x.webp",
+      "rating": 3.82,
+      "ratingVotes": 10149,
+      "accords": {
+        "musky": 100,
+        "fresh": 89,
+        "white floral": 81,
+        "aldehydic": 81,
+        "rose": 73,
+        "powdery": 72,
+        "floral": 60,
+        "soapy": 56,
+        "iris": 53,
+        "sweet": 49
+      },
+      "seasonVotes": {
+        "winter": 1100,
+        "spring": 4200,
+        "summer": 3400,
+        "fall": 1400
+      },
+      "timeVotes": {
+        "day": 4300,
+        "night": 639
+      },
+      "season": {
+        "winter": 0.109,
+        "spring": 0.416,
+        "summer": 0.337,
+        "fall": 0.139
+      },
+      "dayNight": {
+        "day": 0.871,
+        "night": 0.129
+      },
+      "sentiment": {
+        "love": 3000,
+        "like": 4000,
+        "ok": 1800,
+        "dislike": 1100,
+        "hate": 239
+      },
+      "notes": {
+        "top": [
+          "Aldehydes",
+          "Lily-of-the-Valley",
+          "Pear"
+        ],
+        "mid": [
+          "Rose",
+          "Iris",
+          "Orange Blossom"
+        ],
+        "base": [
+          "White Musk",
+          "Ambrette (Musk Mallow)",
+          "Indonesian Patchouli Leaf"
+        ]
+      }
+    },
+    {
+      "id": 705,
+      "name": "A*Men",
+      "brand": "Mugler",
+      "year": 1996,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Mugler/A-Men-705.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.705.2x.webp",
+      "rating": 4.02,
+      "ratingVotes": 10974,
+      "accords": {
+        "warm spicy": 100,
+        "sweet": 100,
+        "caramel": 95,
+        "vanilla": 86,
+        "coffee": 81,
+        "woody": 79,
+        "patchouli": 76,
+        "amber": 67,
+        "aromatic": 65,
+        "honey": 64
+      },
+      "seasonVotes": {
+        "winter": 5100,
+        "spring": 1100,
+        "summer": 537,
+        "fall": 3500
+      },
+      "timeVotes": {
+        "day": 2100,
+        "night": 4700
+      },
+      "season": {
+        "winter": 0.498,
+        "spring": 0.107,
+        "summer": 0.052,
+        "fall": 0.342
+      },
+      "dayNight": {
+        "day": 0.309,
+        "night": 0.691
+      },
+      "sentiment": {
+        "love": 5200,
+        "like": 3200,
+        "ok": 382,
+        "dislike": 2000,
+        "hate": 211
+      },
+      "notes": {
+        "top": [
+          "Lavender",
+          "Mint",
+          "Fruity and Spicy Notes",
+          "Coriander",
+          "Green Notes",
+          "Bergamot"
+        ],
+        "mid": [
+          "Caramel",
+          "Patchouli",
+          "Honey",
+          "Milk",
+          "Cedar",
+          "Jasmine",
+          "Lily-of-the-Valley"
+        ],
+        "base": [
+          "Coffee",
+          "Patchouli",
+          "Vanilla",
+          "Tonka Bean",
+          "Benzoin",
+          "Amber",
+          "Sandalwood",
+          "Musk"
+        ]
+      }
+    },
+    {
+      "id": 707,
+      "name": "Alien",
+      "brand": "Mugler",
+      "year": 2005,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Mugler/Alien-707.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.707.2x.webp",
+      "rating": 3.99,
+      "ratingVotes": 36213,
+      "accords": {
+        "white floral": 100,
+        "amber": 73,
+        "floral": 44,
+        "animalic": 42,
+        "powdery": 39
+      },
+      "seasonVotes": {
+        "winter": 12100,
+        "spring": 5200,
+        "summer": 3000,
+        "fall": 10000
+      },
+      "timeVotes": {
+        "day": 6200,
+        "night": 12900
+      },
+      "season": {
+        "winter": 0.399,
+        "spring": 0.172,
+        "summer": 0.099,
+        "fall": 0.33
+      },
+      "dayNight": {
+        "day": 0.325,
+        "night": 0.675
+      },
+      "sentiment": {
+        "love": 16300,
+        "like": 10900,
+        "ok": 2300,
+        "dislike": 5500,
+        "hate": 1200
+      },
+      "notes": {
+        "top": [
+          "Jasmine Sambac"
+        ],
+        "mid": [
+          "Cashmeran"
+        ],
+        "base": [
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 704,
+      "name": "Angel",
+      "brand": "Mugler",
+      "year": 1992,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Mugler/Angel-704.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.704.2x.webp",
+      "rating": 3.54,
+      "ratingVotes": 35468,
+      "accords": {
+        "sweet": 100,
+        "patchouli": 63,
+        "fruity": 61,
+        "warm spicy": 61,
+        "caramel": 59,
+        "vanilla": 57,
+        "woody": 55,
+        "honey": 50,
+        "powdery": 50,
+        "chocolate": 48
+      },
+      "seasonVotes": {
+        "winter": 11800,
+        "spring": 3100,
+        "summer": 2100,
+        "fall": 7000
+      },
+      "timeVotes": {
+        "day": 5200,
+        "night": 10700
+      },
+      "season": {
+        "winter": 0.492,
+        "spring": 0.129,
+        "summer": 0.087,
+        "fall": 0.292
+      },
+      "dayNight": {
+        "day": 0.327,
+        "night": 0.673
+      },
+      "sentiment": {
+        "love": 12600,
+        "like": 8800,
+        "ok": 1700,
+        "dislike": 9700,
+        "hate": 2600
+      },
+      "notes": {
+        "top": [
+          "Cotton Candy",
+          "Coconut",
+          "Cassis",
+          "Melon",
+          "Jasmine",
+          "Bergamot",
+          "Pineapple",
+          "Mandarin Orange"
+        ],
+        "mid": [
+          "Honey",
+          "Red Berries",
+          "Blackberry",
+          "Plum",
+          "Apricot",
+          "Jasmine",
+          "Peach",
+          "Nutmeg",
+          "Caraway",
+          "Orchid",
+          "Rose",
+          "Lily-of-the-Valley"
+        ],
+        "base": [
+          "Patchouli",
+          "Chocolate",
+          "Caramel",
+          "Vanilla",
+          "Tonka Bean",
+          "Amber",
+          "Musk",
+          "Sandalwood"
+        ]
+      }
+    },
+    {
+      "id": 1795,
+      "name": "Infusion d'Iris",
+      "brand": "Prada",
+      "year": 2007,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Prada/Infusion-d-Iris-1795.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.1795.2x.webp",
+      "rating": 4.1,
+      "ratingVotes": 11549,
+      "accords": {
+        "iris": 100,
+        "woody": 96,
+        "powdery": 78,
+        "amber": 77,
+        "citrus": 76,
+        "earthy": 70,
+        "aromatic": 68,
+        "balsamic": 67,
+        "violet": 65,
+        "white floral": 62
+      },
+      "seasonVotes": {
+        "winter": 1300,
+        "spring": 3500,
+        "summer": 2400,
+        "fall": 2000
+      },
+      "timeVotes": {
+        "day": 3900,
+        "night": 982
+      },
+      "season": {
+        "winter": 0.141,
+        "spring": 0.38,
+        "summer": 0.261,
+        "fall": 0.217
+      },
+      "dayNight": {
+        "day": 0.799,
+        "night": 0.201
+      },
+      "sentiment": {
+        "love": 4900,
+        "like": 4500,
+        "ok": 554,
+        "dislike": 1500,
+        "hate": 86
+      },
+      "notes": {
+        "top": [
+          "African Orange Flower",
+          "Neroli",
+          "Orange",
+          "Mandarin Orange"
+        ],
+        "mid": [
+          "Iris",
+          "Galbanum",
+          "Mastic or Lentisque"
+        ],
+        "base": [
+          "Virginia Cedar",
+          "Incense",
+          "Benzoin",
+          "Vetiver"
+        ]
+      }
+    },
+    {
+      "id": 6697,
+      "name": "Grey Vetiver",
+      "brand": "Tom Ford",
+      "year": 2009,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Grey-Vetiver-6697.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.6697.2x.webp",
+      "rating": 4.26,
+      "ratingVotes": 8732,
+      "accords": {
+        "woody": 100,
+        "aromatic": 82,
+        "earthy": 77,
+        "citrus": 64,
+        "fresh spicy": 48,
+        "mossy": 45
+      },
+      "seasonVotes": {
+        "winter": 883,
+        "spring": 3600,
+        "summer": 3300,
+        "fall": 2400
+      },
+      "timeVotes": {
+        "day": 3700,
+        "night": 1200
+      },
+      "season": {
+        "winter": 0.087,
+        "spring": 0.354,
+        "summer": 0.324,
+        "fall": 0.236
+      },
+      "dayNight": {
+        "day": 0.755,
+        "night": 0.245
+      },
+      "sentiment": {
+        "love": 4300,
+        "like": 3200,
+        "ok": 567,
+        "dislike": 609,
+        "hate": 85
+      },
+      "notes": {
+        "top": [
+          "Grapefruit",
+          "Orange Blossom",
+          "Sage"
+        ],
+        "mid": [
+          "Nutmeg",
+          "Orris Root",
+          "Pimento"
+        ],
+        "base": [
+          "Vetiver",
+          "Woodsy Notes",
+          "Oakmoss",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 51411,
+      "name": "Lost Cherry",
+      "brand": "Tom Ford",
+      "year": 2018,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Lost-Cherry-51411.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.51411.2x.webp",
+      "rating": 4.05,
+      "ratingVotes": 18412,
+      "accords": {
+        "cherry": 100,
+        "sweet": 92,
+        "almond": 85,
+        "nutty": 75,
+        "fruity": 72,
+        "vanilla": 63,
+        "warm spicy": 58,
+        "amber": 54,
+        "woody": 53,
+        "balsamic": 48
+      },
+      "seasonVotes": {
+        "winter": 6600,
+        "spring": 3600,
+        "summer": 2300,
+        "fall": 6800
+      },
+      "timeVotes": {
+        "day": 4300,
+        "night": 6400
+      },
+      "season": {
+        "winter": 0.342,
+        "spring": 0.187,
+        "summer": 0.119,
+        "fall": 0.352
+      },
+      "dayNight": {
+        "day": 0.402,
+        "night": 0.598
+      },
+      "sentiment": {
+        "love": 8600,
+        "like": 5400,
+        "ok": 2100,
+        "dislike": 1700,
+        "hate": 719
+      },
+      "notes": {
+        "top": [
+          "Bitter Almond",
+          "Black Cherry",
+          "Cherry Liqueur"
+        ],
+        "mid": [
+          "Sour Cherry",
+          "Plum",
+          "Turkish Rose",
+          "Jasmine Sambac"
+        ],
+        "base": [
+          "Vanilla",
+          "Tonka Bean",
+          "Cinnamon",
+          "Peru Balsam",
+          "Sandalwood",
+          "Benzoin",
+          "Cloves",
+          "Cedar",
+          "Patchouli",
+          "Vetiver"
+        ]
+      }
+    },
+    {
+      "id": 12192,
+      "name": "Neroli Portofino",
+      "brand": "Tom Ford",
+      "year": 2011,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Neroli-Portofino-12192.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.12192.2x.webp",
+      "rating": 3.96,
+      "ratingVotes": 9841,
+      "accords": {
+        "citrus": 100,
+        "white floral": 72,
+        "aromatic": 53,
+        "fresh spicy": 52,
+        "fresh": 41
+      },
+      "seasonVotes": {
+        "winter": 265,
+        "spring": 2900,
+        "summer": 4600,
+        "fall": 535
+      },
+      "timeVotes": {
+        "day": 4000,
+        "night": 750
+      },
+      "season": {
+        "winter": 0.032,
+        "spring": 0.349,
+        "summer": 0.554,
+        "fall": 0.064
+      },
+      "dayNight": {
+        "day": 0.842,
+        "night": 0.158
+      },
+      "sentiment": {
+        "love": 3900,
+        "like": 3400,
+        "ok": 1000,
+        "dislike": 1300,
+        "hate": 209
+      },
+      "notes": {
+        "top": [
+          "Bergamot",
+          "Mandarin Orange",
+          "Lemon",
+          "Bitter Orange",
+          "Lavender",
+          "Rosemary",
+          "Myrtle"
+        ],
+        "mid": [
+          "African Orange Flower",
+          "Neroli",
+          "Jasmine",
+          "Pitosporum"
+        ],
+        "base": [
+          "Amber",
+          "Ambrette (Musk Mallow)",
+          "Angelica"
+        ]
+      }
+    },
+    {
+      "id": 50239,
+      "name": "Ombré Leather (2018)",
+      "brand": "Tom Ford",
+      "year": 2018,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Ombre-Leather-2018-50239.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.50239.2x.webp",
+      "rating": 4.32,
+      "ratingVotes": 18834,
+      "accords": {
+        "leather": 100,
+        "animalic": 71,
+        "warm spicy": 59,
+        "white floral": 57,
+        "amber": 54,
+        "smoky": 51,
+        "earthy": 48,
+        "mossy": 46,
+        "patchouli": 45,
+        "woody": 44
+      },
+      "seasonVotes": {
+        "winter": 10300,
+        "spring": 3900,
+        "summer": 1500,
+        "fall": 9600
+      },
+      "timeVotes": {
+        "day": 4600,
+        "night": 9300
+      },
+      "season": {
+        "winter": 0.407,
+        "spring": 0.154,
+        "summer": 0.059,
+        "fall": 0.379
+      },
+      "dayNight": {
+        "day": 0.331,
+        "night": 0.669
+      },
+      "sentiment": {
+        "love": 11400,
+        "like": 4500,
+        "ok": 1300,
+        "dislike": 1100,
+        "hate": 642
+      },
+      "notes": {
+        "top": [
+          "Cardamom"
+        ],
+        "mid": [
+          "Leather",
+          "Jasmine Sambac"
+        ],
+        "base": [
+          "Amber",
+          "Moss",
+          "Patchouli"
+        ]
+      }
+    },
+    {
+      "id": 1826,
+      "name": "Oud Wood",
+      "brand": "Tom Ford",
+      "year": 2007,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Oud-Wood-1826.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.1826.2x.webp",
+      "rating": 4.28,
+      "ratingVotes": 17786,
+      "accords": {
+        "woody": 100,
+        "warm spicy": 78,
+        "oud": 78,
+        "aromatic": 65,
+        "vanilla": 61,
+        "balsamic": 58,
+        "fresh spicy": 57,
+        "amber": 54,
+        "powdery": 52,
+        "sweet": 51
+      },
+      "seasonVotes": {
+        "winter": 7800,
+        "spring": 4300,
+        "summer": 1800,
+        "fall": 8000
+      },
+      "timeVotes": {
+        "day": 5100,
+        "night": 7300
+      },
+      "season": {
+        "winter": 0.356,
+        "spring": 0.196,
+        "summer": 0.082,
+        "fall": 0.365
+      },
+      "dayNight": {
+        "day": 0.411,
+        "night": 0.589
+      },
+      "sentiment": {
+        "love": 9900,
+        "like": 5000,
+        "ok": 1400,
+        "dislike": 1200,
+        "hate": 340
+      },
+      "notes": {
+        "all": [
+          "Agarwood (Oud)",
+          "Brazilian Rosewood",
+          "Cardamom",
+          "Sandalwood",
+          "Sichuan Pepper",
+          "Vanilla",
+          "Vetiver",
+          "Tonka Bean",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 34893,
+      "name": "Soleil Blanc",
+      "brand": "Tom Ford",
+      "year": 2016,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Soleil-Blanc-34893.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.34893.2x.webp",
+      "rating": 4.06,
+      "ratingVotes": 9274,
+      "accords": {
+        "white floral": 100,
+        "coconut": 94,
+        "sweet": 87,
+        "tuberose": 77,
+        "amber": 75,
+        "yellow floral": 73,
+        "vanilla": 68,
+        "woody": 64,
+        "warm spicy": 62,
+        "citrus": 55
+      },
+      "seasonVotes": {
+        "winter": 467,
+        "spring": 2000,
+        "summer": 4300,
+        "fall": 763
+      },
+      "timeVotes": {
+        "day": 3700,
+        "night": 1000
+      },
+      "season": {
+        "winter": 0.062,
+        "spring": 0.266,
+        "summer": 0.571,
+        "fall": 0.101
+      },
+      "dayNight": {
+        "day": 0.787,
+        "night": 0.213
+      },
+      "sentiment": {
+        "love": 3900,
+        "like": 3200,
+        "ok": 1200,
+        "dislike": 829,
+        "hate": 193
+      },
+      "notes": {
+        "top": [
+          "Pistachio",
+          "Bergamot",
+          "Cardamom",
+          "Pink Pepper"
+        ],
+        "mid": [
+          "Tuberose",
+          "Ylang-Ylang",
+          "Jasmine"
+        ],
+        "base": [
+          "Coconut",
+          "Amber",
+          "Tonka Bean",
+          "Benzoin"
+        ]
+      }
+    },
+    {
+      "id": 1825,
+      "name": "Tobacco Vanille",
+      "brand": "Tom Ford",
+      "year": 2007,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Tobacco-Vanille-1825.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.1825.2x.webp",
+      "rating": 4.17,
+      "ratingVotes": 31861,
+      "accords": {
+        "vanilla": 100,
+        "sweet": 94,
+        "tobacco": 85,
+        "warm spicy": 72,
+        "fruity": 60,
+        "woody": 54,
+        "cacao": 53,
+        "powdery": 49
+      },
+      "seasonVotes": {
+        "winter": 15300,
+        "spring": 2700,
+        "summer": 1600,
+        "fall": 12500
+      },
+      "timeVotes": {
+        "day": 5300,
+        "night": 13100
+      },
+      "season": {
+        "winter": 0.477,
+        "spring": 0.084,
+        "summer": 0.05,
+        "fall": 0.389
+      },
+      "dayNight": {
+        "day": 0.288,
+        "night": 0.712
+      },
+      "sentiment": {
+        "love": 17100,
+        "like": 8300,
+        "ok": 2200,
+        "dislike": 3200,
+        "hate": 1100
+      },
+      "notes": {
+        "top": [
+          "Tobacco Leaf",
+          "Spicy Notes"
+        ],
+        "mid": [
+          "Vanilla",
+          "Cacao",
+          "Tonka Bean",
+          "Tobacco Blossom"
+        ],
+        "base": [
+          "Dried Fruits",
+          "Woody Notes"
+        ]
+      }
+    },
+    {
+      "id": 1849,
+      "name": "Tuscan Leather",
+      "brand": "Tom Ford",
+      "year": 2007,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Tuscan-Leather-1849.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.1849.2x.webp",
+      "rating": 4.25,
+      "ratingVotes": 10659,
+      "accords": {
+        "leather": 100,
+        "fruity": 56,
+        "animalic": 55,
+        "sweet": 48,
+        "amber": 47,
+        "smoky": 45,
+        "warm spicy": 45,
+        "woody": 44
+      },
+      "seasonVotes": {
+        "winter": 4000,
+        "spring": 1400,
+        "summer": 564,
+        "fall": 3900
+      },
+      "timeVotes": {
+        "day": 2100,
+        "night": 3700
+      },
+      "season": {
+        "winter": 0.406,
+        "spring": 0.142,
+        "summer": 0.057,
+        "fall": 0.395
+      },
+      "dayNight": {
+        "day": 0.362,
+        "night": 0.638
+      },
+      "sentiment": {
+        "love": 5900,
+        "like": 3000,
+        "ok": 563,
+        "dislike": 991,
+        "hate": 207
+      },
+      "notes": {
+        "top": [
+          "Raspberry",
+          "Saffron",
+          "Thyme"
+        ],
+        "mid": [
+          "Olibanum",
+          "Jasmine"
+        ],
+        "base": [
+          "Leather",
+          "Suede",
+          "Woody Notes",
+          "Amber"
+        ]
+      }
+    },
+    {
+      "id": 16657,
+      "name": "Eros",
+      "brand": "Versace",
+      "year": 2012,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Versace/Eros-16657.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.16657.2x.webp",
+      "rating": 4.05,
+      "ratingVotes": 30981,
+      "accords": {
+        "vanilla": 100,
+        "aromatic": 94,
+        "green": 89,
+        "fresh spicy": 67,
+        "amber": 62,
+        "citrus": 56,
+        "fruity": 56,
+        "woody": 53,
+        "sweet": 52,
+        "fresh": 51
+      },
+      "seasonVotes": {
+        "winter": 12400,
+        "spring": 13800,
+        "summer": 11100,
+        "fall": 12900
+      },
+      "timeVotes": {
+        "day": 11900,
+        "night": 14700
+      },
+      "season": {
+        "winter": 0.247,
+        "spring": 0.275,
+        "summer": 0.221,
+        "fall": 0.257
+      },
+      "dayNight": {
+        "day": 0.447,
+        "night": 0.553
+      },
+      "sentiment": {
+        "love": 12500,
+        "like": 11800,
+        "ok": 3000,
+        "dislike": 2900,
+        "hate": 712
+      },
+      "notes": {
+        "top": [
+          "Mint",
+          "Green Apple",
+          "Lemon"
+        ],
+        "mid": [
+          "Tonka Bean",
+          "Ambroxan",
+          "Geranium"
+        ],
+        "base": [
+          "Madagascar Vanilla",
+          "Virginian Cedar",
+          "Atlas Cedar",
+          "Vetiver",
+          "Oakmoss"
+        ]
+      }
+    },
+    {
+      "id": 1460,
+      "name": "Flowerbomb",
+      "brand": "Viktor&Rolf",
+      "year": 2005,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Viktor-Rolf/Flowerbomb-1460.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.1460.2x.webp",
+      "rating": 3.92,
+      "ratingVotes": 21234,
+      "accords": {
+        "floral": 100,
+        "patchouli": 75,
+        "white floral": 70,
+        "woody": 59,
+        "powdery": 58,
+        "citrus": 58,
+        "sweet": 54,
+        "musky": 53,
+        "warm spicy": 52,
+        "rose": 51
+      },
+      "seasonVotes": {
+        "winter": 4800,
+        "spring": 4600,
+        "summer": 2600,
+        "fall": 4500
+      },
+      "timeVotes": {
+        "day": 5400,
+        "night": 4900
+      },
+      "season": {
+        "winter": 0.291,
+        "spring": 0.279,
+        "summer": 0.158,
+        "fall": 0.273
+      },
+      "dayNight": {
+        "day": 0.524,
+        "night": 0.476
+      },
+      "sentiment": {
+        "love": 8300,
+        "like": 7400,
+        "ok": 1700,
+        "dislike": 3500,
+        "hate": 446
+      },
+      "notes": {
+        "top": [
+          "Tea",
+          "Bergamot",
+          "Osmanthus"
+        ],
+        "mid": [
+          "Orchid",
+          "Jasmine",
+          "Rose",
+          "Freesia",
+          "African Orange Flower"
+        ],
+        "base": [
+          "Patchouli",
+          "Musk",
+          "Vanilla"
+        ]
+      }
+    },
+    {
+      "id": 30499,
+      "name": "Spicebomb Extreme",
+      "brand": "Viktor&Rolf",
+      "year": 2015,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Viktor-Rolf/Spicebomb-Extreme-30499.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.30499.2x.webp",
+      "rating": 4.49,
+      "ratingVotes": 17505,
+      "accords": {
+        "vanilla": 100,
+        "tobacco": 92,
+        "warm spicy": 77,
+        "sweet": 73,
+        "cinnamon": 61,
+        "powdery": 51,
+        "fresh spicy": 45
+      },
+      "seasonVotes": {
+        "winter": 12600,
+        "spring": 2100,
+        "summer": 965,
+        "fall": 9900
+      },
+      "timeVotes": {
+        "day": 4500,
+        "night": 10300
+      },
+      "season": {
+        "winter": 0.493,
+        "spring": 0.082,
+        "summer": 0.038,
+        "fall": 0.387
+      },
+      "dayNight": {
+        "day": 0.304,
+        "night": 0.696
+      },
+      "sentiment": {
+        "love": 11700,
+        "like": 3800,
+        "ok": 1100,
+        "dislike": 654,
+        "hate": 282
+      },
+      "notes": {
+        "all": [
+          "Vanilla",
+          "Tobacco",
+          "Cinnamon",
+          "Cumin",
+          "Bourbon Whiskey",
+          "Saffron"
+        ]
+      }
+    },
+    {
+      "id": 25324,
+      "name": "Black Opium",
+      "brand": "Yves Saint Laurent",
+      "year": 2014,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Yves-Saint-Laurent/Black-Opium-25324.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.25324.2x.webp",
+      "rating": 3.94,
+      "ratingVotes": 35174,
+      "accords": {
+        "vanilla": 100,
+        "coffee": 87,
+        "sweet": 83,
+        "white floral": 77,
+        "warm spicy": 75,
+        "soft spicy": 66,
+        "woody": 64,
+        "fruity": 62,
+        "balsamic": 54,
+        "powdery": 53
+      },
+      "seasonVotes": {
+        "winter": 14100,
+        "spring": 3300,
+        "summer": 2100,
+        "fall": 12100
+      },
+      "timeVotes": {
+        "day": 5300,
+        "night": 14300
+      },
+      "season": {
+        "winter": 0.446,
+        "spring": 0.104,
+        "summer": 0.066,
+        "fall": 0.383
+      },
+      "dayNight": {
+        "day": 0.27,
+        "night": 0.73
+      },
+      "sentiment": {
+        "love": 13700,
+        "like": 12400,
+        "ok": 3500,
+        "dislike": 4600,
+        "hate": 1000
+      },
+      "notes": {
+        "top": [
+          "Pear",
+          "Pink Pepper",
+          "Orange Blossom"
+        ],
+        "mid": [
+          "Coffee",
+          "Jasmine",
+          "Bitter Almond",
+          "Licorice"
+        ],
+        "base": [
+          "Vanilla",
+          "Patchouli",
+          "Cashmere Wood",
+          "Cedar"
+        ]
+      }
+    },
+    {
+      "id": 735,
+      "name": "Kouros",
+      "brand": "Yves Saint Laurent",
+      "year": 1981,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Yves-Saint-Laurent/Kouros-735.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.735.2x.webp",
+      "rating": 3.57,
+      "ratingVotes": 9310,
+      "accords": {
+        "musky": 100,
+        "animalic": 89,
+        "aromatic": 75,
+        "powdery": 72,
+        "earthy": 58,
+        "leather": 56,
+        "honey": 55,
+        "warm spicy": 54,
+        "woody": 53,
+        "aldehydic": 52
+      },
+      "seasonVotes": {
+        "winter": 3100,
+        "spring": 1700,
+        "summer": 1100,
+        "fall": 2700
+      },
+      "timeVotes": {
+        "day": 2200,
+        "night": 2800
+      },
+      "season": {
+        "winter": 0.36,
+        "spring": 0.198,
+        "summer": 0.128,
+        "fall": 0.314
+      },
+      "dayNight": {
+        "day": 0.44,
+        "night": 0.56
+      },
+      "sentiment": {
+        "love": 3700,
+        "like": 2100,
+        "ok": 445,
+        "dislike": 2100,
+        "hate": 1000
+      },
+      "notes": {
+        "top": [
+          "Aldehydes",
+          "Coriander",
+          "Clary Sage",
+          "Artemisia",
+          "Bergamot"
+        ],
+        "mid": [
+          "Patchouli",
+          "Carnation",
+          "Vetiver",
+          "Jasmine",
+          "Geranium",
+          "Orris Root",
+          "Cinnamon",
+          "Lavender"
+        ],
+        "base": [
+          "Civet",
+          "Musk",
+          "Leather",
+          "Honey",
+          "Oakmoss",
+          "Amber",
+          "Tonka Bean",
+          "Vanilla"
+        ]
+      }
+    },
+    {
+      "id": 5521,
+      "name": "La Nuit de l'Homme",
+      "brand": "Yves Saint Laurent",
+      "year": 2009,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Yves-Saint-Laurent/La-Nuit-de-l-Homme-5521.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.5521.2x.webp",
+      "rating": 4.45,
+      "ratingVotes": 25085,
+      "accords": {
+        "aromatic": 100,
+        "warm spicy": 86,
+        "lavender": 69,
+        "woody": 66,
+        "fresh spicy": 63,
+        "citrus": 49
+      },
+      "seasonVotes": {
+        "winter": 11400,
+        "spring": 7100,
+        "summer": 3100,
+        "fall": 11600
+      },
+      "timeVotes": {
+        "day": 4900,
+        "night": 12700
+      },
+      "season": {
+        "winter": 0.343,
+        "spring": 0.214,
+        "summer": 0.093,
+        "fall": 0.349
+      },
+      "dayNight": {
+        "day": 0.278,
+        "night": 0.722
+      },
+      "sentiment": {
+        "love": 15300,
+        "like": 7300,
+        "ok": 1200,
+        "dislike": 1200,
+        "hate": 167
+      },
+      "notes": {
+        "top": [
+          "Cardamom"
+        ],
+        "mid": [
+          "Lavender",
+          "Virginia Cedar",
+          "Bergamot"
+        ],
+        "base": [
+          "Vetiver",
+          "Caraway"
+        ]
+      }
+    },
+    {
+      "id": 56077,
+      "name": "Libre",
+      "brand": "Yves Saint Laurent",
+      "year": 2019,
+      "gender": "women",
+      "url": "https://www.fragrantica.com/perfume/Yves-Saint-Laurent/Libre-56077.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.56077.2x.webp",
+      "rating": 3.92,
+      "ratingVotes": 22684,
+      "accords": {
+        "white floral": 100,
+        "citrus": 81,
+        "lavender": 75,
+        "vanilla": 64,
+        "aromatic": 57,
+        "sweet": 56,
+        "powdery": 53,
+        "animalic": 52,
+        "musky": 50,
+        "woody": 50
+      },
+      "seasonVotes": {
+        "winter": 6700,
+        "spring": 6300,
+        "summer": 3800,
+        "fall": 8200
+      },
+      "timeVotes": {
+        "day": 7400,
+        "night": 6800
+      },
+      "season": {
+        "winter": 0.268,
+        "spring": 0.252,
+        "summer": 0.152,
+        "fall": 0.328
+      },
+      "dayNight": {
+        "day": 0.521,
+        "night": 0.479
+      },
+      "sentiment": {
+        "love": 9000,
+        "like": 7200,
+        "ok": 2900,
+        "dislike": 2800,
+        "hate": 784
+      },
+      "notes": {
+        "top": [
+          "Lavender",
+          "Mandarin Orange",
+          "Black Currant",
+          "Petitgrain"
+        ],
+        "mid": [
+          "Lavender",
+          "Orange Blossom",
+          "Jasmine"
+        ],
+        "base": [
+          "Madagascar Vanilla",
+          "Musk",
+          "Cedar",
+          "Ambergris"
+        ]
+      }
+    }
+  ]
+}

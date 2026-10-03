@@ -23,6 +23,8 @@ To add or refresh a bottle (David is logged in to Fragrantica in Chrome as @does
 
 Bottles a first-time visitor never sees (demo-safe) are `DEFAULT_HIDDEN` in `src/hidden.js`; a device's own Manage choices override it.
 
+`data/calibration.jsonl` (built to `data/calibration.json`) holds 52 well-voted bottles from across the accord families (Tobacco Vanille, Acqua di Gio, Angel, Terre d'Hermès…). Only `scripts/fit-accords.mjs` reads them, to fit accord heaviness on more than the wardrobe's own votes; the app never loads them. Add bottles the same way, aiming for accords with few bottles behind them (the fit prints the count per accord).
+
 The full owned list is the "Perfumes I Have" shelf at `https://www.fragrantica.com/@doeszen#wardrobe`. The profile home mixes in his Want list.
 
 Fragrantica gotchas:
@@ -32,6 +34,9 @@ Fragrantica gotchas:
 - Fragrantica sometimes shows a Cloudflare "Verify you are human" check; ask David to click it.
 - To find a bottle's page, open `https://www.fragrantica.com/search/?query=<name brand>` and read the `/perfume/` links once results render (the sidebar also lists David's own bottles).
 - Bottle images hotlink `fimgs.net/mdimg/perfume-thumbs/dark-m.<id>.2x.webp` (transparent background).
+- A brand page (`/designers/<Brand>.html`) lists its perfume links in the raw HTML, so `fetch` from a Fragrantica tab finds page URLs without the slow search. Fetch one at a time: a burst of about 40 got HTTP 429.
+- Chrome throttles timers in a background tab, so client-rendered search results crawl there; perfume pages still render their cards.
+- Newer pages use accords like cherry, tuberose, yellow floral, marine, salty, aldehydic, coffee, rum, smoky and patchouli. Each needs a row in `src/accords.js` and a `FAMILY_ALIAS` in `src/layering.js` (the family it layers like); `test/accords.test.js` names any that are missing.
 
 ## Catalog (other people's Fragrantica bottles)
 

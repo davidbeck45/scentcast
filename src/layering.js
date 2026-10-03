@@ -96,7 +96,11 @@ const NOTE_FAMILIES = [
 ];
 const SECONDARY_SHARE = 0.5;
 // Accords that layer like a family the rules already cover.
-const FAMILY_ALIAS = { chocolate: 'cacao', cinnamon: 'warm spicy', patchouli: 'earthy', smoky: 'balsamic' };
+const FAMILY_ALIAS = {
+  chocolate: 'cacao', coffee: 'cacao', cinnamon: 'warm spicy', patchouli: 'earthy', smoky: 'balsamic', rum: 'whiskey',
+  cherry: 'fruity', tuberose: 'white floral', 'yellow floral': 'white floral', marine: 'aquatic', salty: 'aquatic',
+  metallic: 'ozonic', aldehydic: 'powdery', soapy: 'musky',
+};
 
 // Families that work together (+) or fight (−), symmetric.
 const PAIRS = [
