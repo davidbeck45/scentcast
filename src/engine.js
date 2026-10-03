@@ -83,6 +83,38 @@ export function weatherFit(frag, conditions) {
   return clamp(fit + rain, 0, 1);
 }
 
+// Feels-like range a bottle suits on its own: its season and weather fit,
+// weighted as in daily picks, scanned in 1°F steps. The range runs out from
+// the peak to where the fit falls COMFORT_DROP below it; lowF / highF are null
+// when it runs off the scan (nothing is too cold for a winter scent). bestF,
+// the middle of the peak, is only given for a range closed on both ends.
+const COMFORT_SCAN = [0, 105];
+const COMFORT_DROP = 0.1;
+
+export function comfortRange(frag, { date = new Date(), lat = 40, humidity = 50 } = {}) {
+  const W = DAILY_WEIGHTS;
+  const fits = [];
+  for (let feelsF = COMFORT_SCAN[0]; feelsF <= COMFORT_SCAN[1]; feelsF++) {
+    const weights = targetSeasonWeights(feelsF, date, lat);
+    const conditions = { feelsF, humidity, category: 'clear' };
+    fits.push((W.season * seasonFit(frag, weights) + W.weather * weatherFit(frag, conditions)) / (W.season + W.weather));
+  }
+  const peak = Math.max(...fits);
+  const at = fits.indexOf(peak);
+  const edge = (step, floor) => {
+    let i = at;
+    while (fits[i + step] !== undefined && fits[i + step] >= floor) i += step;
+    return i;
+  };
+  const [peakLo, peakHi] = [edge(-1, peak - 0.01), edge(1, peak - 0.01)];
+  const [lo, hi] = [edge(-1, peak - COMFORT_DROP), edge(1, peak - COMFORT_DROP)];
+  const toF = i => COMFORT_SCAN[0] + i;
+  const lowF = lo === 0 ? null : toF(lo);
+  const highF = hi === fits.length - 1 ? null : toF(hi);
+  const bestF = lowF !== null && highF !== null ? toF(Math.round((peakLo + peakHi) / 2)) : null;
+  return { lowF, highF, bestF };
+}
+
 // Community rating, trusted more as votes grow; unknowns sit at neutral 0.5.
 export function quality(frag) {
   const confidence = Math.min(1, Math.log10(Math.max(frag.ratingVotes, 1)) / 3);

@@ -38,6 +38,7 @@ export const icon = {
   close: svg('<path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>'),
   chevron: stroke('M9 6l6 6-6 6'),
   search: stroke('M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM20 20l-4-4'),
+  thermo: stroke('M10 13.5V5a2 2 0 1 1 4 0v8.5a4 4 0 1 1-4 0ZM12 9v7'),
   clock: stroke('M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5l3 2'),
   journal: stroke('M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5v-15ZM5 19.5A1.5 1.5 0 0 0 6.5 21H19M9 7h6'),
   calendar: stroke('M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7ZM4 10h16M8 3v4M16 3v4'),
@@ -412,6 +413,16 @@ function wearsHTML(wears, todayISO) {
   return `<div class="wears">${icon.clock}<span>${esc(text)}</span></div>`;
 }
 
+// The feels-like range a bottle suits (engine comfortRange), in the user's units.
+function comfortHTML(range) {
+  if (!range || (range.lowF === null && range.highF === null)) return '';
+  const { lowF, highF } = range;
+  const text = lowF === null ? `Best when it feels ${deg(highF)} or colder`
+    : highF === null ? `Best when it feels ${deg(lowF)} or warmer`
+    : `Best when it feels ${temp(lowF)}–${deg(highF)}`;
+  return `<div class="wears">${icon.thermo}<span>${esc(text)}</span></div>`;
+}
+
 // Partners from the same collection (src/layering.js), heavier one sprayed first.
 function layersHTML(f, layers, ctx) {
   if (!layers) return '';
@@ -431,7 +442,7 @@ function layersHTML(f, layers, ctx) {
     : '<p class="muted small">Nothing else in this collection layers well with it.</p>'}</section>`;
 }
 
-export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears = null, todayISO = '', alts = [], partners = null } = {}) {
+export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears = null, todayISO = '', alts = [], partners = null, comfort = null } = {}) {
   const f = entry.fragrance;
   const peak = Math.max(...SEASONS.map(s => f.season[s]));
   const seasonBars = SEASONS.map(s => bar(s, (f.season[s] / peak) * 100, SEASON_COLORS[s], `${Math.round(f.season[s] * 100)}%`)).join('');
@@ -466,6 +477,7 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears 
         </div>
       </div>
       ${reasonsList(entry.reasons, 'full')}
+      ${comfortHTML(comfort)}
       ${wearsHTML(wears, todayISO)}
       <div class="sheet-actions">
         ${canWear ? wearButton(entry, ctx, wornId) : ''}

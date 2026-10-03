@@ -1,4 +1,4 @@
-import { rank, planWindows } from './engine.js';
+import { rank, planWindows, comfortRange } from './engine.js';
 import { occasionById } from './occasions.js';
 import { getForecast, summarize, week } from './weather.js';
 import { loadLocation, saveLocation, loadRecent, deviceLocation, searchCities } from './location.js';
@@ -382,6 +382,7 @@ function renderSheet({ keepScroll = false } = {}) {
       todayISO: state.wx?.todayISO,
       alts: ctx.ranked.filter(r => r.fragrance.id !== s.id).slice(0, 4),
       partners: activeFragrances().length > 1 ? layerPicks(entry.fragrance, activeFragrances(), 3, ctx.win) : null,
+      comfort: comfortRange(entry.fragrance, { date: ctx.win.date, lat: ctx.win.lat }),
     });
   } else if (s.kind === 'collection') {
     el.innerHTML = ui.collectionSheetHTML({

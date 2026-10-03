@@ -676,6 +676,7 @@ input, textarea { font: inherit; }
 .reasons.full { margin: 16px 0 12px; }
 .wears { display: flex; align-items: center; gap: 7px; margin: -2px 0 14px; color: var(--muted); font-size: 12.5px; }
 .wears svg { width: 14px; height: 14px; flex: none; color: var(--faint); }
+.wears + .wears { margin-top: -8px; }
 .sheet-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .ghost-btn {
   display: inline-flex;
