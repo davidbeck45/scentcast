@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { noteFamily, layerPair, layerPicks } from '../src/layering.js';
+import { noteFamily, layerPair, layerPicks, layerProfile, complementOf } from '../src/layering.js';
 import { heaviness } from '../src/accords.js';
 import { DEFAULT_HIDDEN } from '../src/hidden.js';
 
@@ -37,6 +37,29 @@ test('notes map to accord families, specific names first', () => {
   assert.equal(noteFamily('Fig'), 'fruity');
   const unmapped = [...demo, ...catalog].flatMap(f => Object.values(f.notes).flat()).filter(n => !noteFamily(n));
   assert.deepEqual(unmapped, [], 'every note in the data has a family');
+});
+
+test('pairing rules cover most of how real bottles meet', () => {
+  // A family pair with no rule counts as neither good nor bad, which quietly
+  // favors bottles whose families the table happens to know.
+  const profiles = [...demo, ...catalog].map(f => layerProfile(f).profile);
+  let all = 0, ruled = 0;
+  const missing = {};
+  for (const p of profiles) {
+    for (const q of profiles) {
+      if (p === q) continue;
+      for (const [fa, pa] of Object.entries(p)) {
+        for (const [fb, pb] of Object.entries(q)) {
+          if (fa === fb) continue;
+          all += pa * pb;
+          if (complementOf(fa, fb) !== undefined) ruled += pa * pb;
+          else missing[`${fa} + ${fb}`] = (missing[`${fa} + ${fb}`] ?? 0) + pa * pb;
+        }
+      }
+    }
+  }
+  const top = Object.entries(missing).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([k]) => k);
+  assert.ok(ruled / all >= 0.8, `rules cover ${(100 * ruled / all).toFixed(0)}%; most common gaps: ${top.join(', ')}`);
 });
 
 test('a contrasting partner beats a near-duplicate, and a clash scores lowest', () => {
