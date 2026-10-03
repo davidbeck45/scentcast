@@ -1,7 +1,7 @@
 // Offline support. App files: network first so edits show up immediately,
 // cache as fallback. Bottle images and fonts: cache first. Weather is never
 // cached here; the app keeps its own last forecast in localStorage.
-const CACHE = 'scentcast-v6';
+const CACHE = 'scentcast-v7';
 const SHELL = [
   './',
   'index.html',
