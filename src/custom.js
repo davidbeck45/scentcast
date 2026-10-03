@@ -10,8 +10,8 @@ export const MAX_CUSTOM_ACCORDS = 6;
 const SEASONS = ['winter', 'spring', 'summer', 'fall'];
 // share = a + b * heaviness, least squares over the voted bottles in data/ (`npm run fit`)
 // (R² ≈ 0.7 for seasons, 0.4 for night).
-const SEASON_FIT = { winter: [0.203, 0.347], spring: [0.291, -0.267], summer: [0.25, -0.359], fall: [0.256, 0.279] };
-const NIGHT_FIT = [0.401, 0.325];
+const SEASON_FIT = { winter: [0.203, 0.351], spring: [0.291, -0.269], summer: [0.251, -0.361], fall: [0.255, 0.279] };
+const NIGHT_FIT = [0.401, 0.335];
 const SEASON_FLOOR = 0.03;
 // How much the owner's own season and time picks count against the estimate.
 const PICK_WEIGHT = 0.5;
