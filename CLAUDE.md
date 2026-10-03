@@ -19,7 +19,7 @@ For layering ("what goes with X", "cool layers"): `node scripts/recommend.mjs --
 To add or refresh a bottle (David is logged in to Fragrantica in Chrome as @doeszen):
 1. Open the perfume page with Claude in Chrome.
 2. Run `scripts/fragrantica-extract.js` on the rendered page with the javascript tool; it returns one JSON line.
-3. Append or replace that line in `data/collection.jsonl`, then `npm run build:data` and `npm test`.
+3. Append or replace that line in `data/collection.jsonl`, then `npm run build:data`, `npm run fit` and `npm test`.
 
 Bottles a first-time visitor never sees (demo-safe) are `DEFAULT_HIDDEN` in `src/hidden.js`; a device's own Manage choices override it.
 
@@ -40,7 +40,7 @@ Fragrantica gotchas:
 When someone sends their Fragrantica profile (they follow the guide at https://claude.ai/code/artifact/25b353d3-857f-4341-89b3-230131f8c484):
 1. Open `https://www.fragrantica.com/@<name>#wardrobe` with Claude in Chrome and run `scripts/fragrantica-wardrobe.js`. It lists the pages on their "Perfumes I Have" shelf; `found` below `expected` means the shelf didn't fully load.
 2. Skip pages whose id (the number ending the slug) is already in `data/collection.jsonl` or `data/catalog.jsonl`. Run the extractor on each remaining page and append its line to `data/catalog.jsonl`.
-3. Add any accord the extractor returns that `src/accords.js` lacks (weight and color); the engine ignores unknown accords. Then `npm run build:data` and `npm test`.
+3. Add any accord the extractor returns that `src/accords.js` lacks (prior, weight and color); the engine ignores unknown accords. Then `npm run build:data`, `npm run fit` and `npm test`.
 4. Once pushed, send them `https://davidbeck45.github.io/scentcast/?c=<id>,<id>&n=<Name>` with their bottles' ids; they open it and tap "Save as mine".
 
 ## Other people's collections (Fragella and hand-entered)
@@ -60,7 +60,7 @@ The key lives in `worker/.dev.vars` (ignored) and as the Worker secret `FRAGELLA
 
 ## Engine
 
-`src/engine.js` is pure: fragrances + conditions in, ranked tiers with reasons out. Tiers are by rank (3 S, 5 A, 6 B, rest C). `test/engine.test.js` pins behaviour on the real collection (hot humid day puts fresh scents on top, cold night puts heavy ones on top, occasion sanity), so run `npm test` after any tuning. Accord heaviness and chip colors live in `src/accords.js`: each accord has a hand-set `prior` and a `weight` that `npm run fit` (`scripts/fit-accords.mjs`) pulls toward the season votes of every bottle in `data/`. Rerun it after adding bottles, then `npm test`. A new accord gets `weight` equal to its `prior`. Occasion profiles live in `src/occasions.js`.
+`src/engine.js` is pure: fragrances + conditions in, ranked tiers with reasons out. Tiers are by rank (3 S, 5 A, 6 B, rest C). `test/engine.test.js` pins behaviour on the real collection (hot humid day puts fresh scents on top, cold night puts heavy ones on top, occasion sanity), so run `npm test` after any tuning. Accord heaviness and chip colors live in `src/accords.js`: each accord has a hand-set `prior` and a `weight` that `npm run fit` (`scripts/fit-accords.mjs`) pulls toward the season votes of every bottle in `data/`. Rerun it after adding bottles; `test/accords.test.js` fails until you do, and also when the data has an accord `src/accords.js` lacks. A new accord gets `weight` equal to its `prior`. Occasion profiles live in `src/occasions.js`.
 
 Sticky heat is judged by dew point (`dewF` on forecast windows, from temperature and humidity), not relative humidity: 88°F at 55% is oppressive, 72°F at 85% is not.
 
