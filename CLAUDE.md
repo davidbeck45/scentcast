@@ -45,7 +45,7 @@ When someone sends their Fragrantica profile (they follow the guide at https://c
 
 The app ranks one of three lists: `demo` (David's wardrobe, `data/collection.json`), `mine` (bottles a visitor adds; full records stored in their localStorage) or a shared link (`?c=id,id&n=Name`, opened as a temporary view). Logic lives in `src/collections.js` and `src/main.js`.
 
-Bottles no source has are entered by hand ("Add it yourself", `src/custom.js`): up to 6 accords, strongest first, plus optional seasons and day/night. Season and night shares blend those picks with a linear fit on accord heaviness over the demo's votes; refit `SEASON_FIT` and `NIGHT_FIT` if the demo changes a lot. Their ids are `my:<random>`, and share links carry them whole as `my:<id>~<base64url>`. Pasted lists only tick a Fragella hit whose name words were all typed (`nameMatches`); the rest come unticked with an "Add it yourself" option.
+Bottles no source has are entered by hand ("Add it yourself", `src/custom.js`): up to 6 accords, strongest first, plus optional seasons and day/night. Season and night shares blend those picks with a linear fit on accord heaviness over the votes in `data/`; `npm run fit` refits `SEASON_FIT` and `NIGHT_FIT` along with the accord weights. Their ids are `my:<random>`, and share links carry them whole as `my:<id>~<base64url>`. Pasted lists only tick a Fragella hit whose name words were all typed (`nameMatches`); the rest come unticked with an "Add it yourself" option.
 
 Bottles outside the demo come from the Fragella API through the Cloudflare Worker in `worker/`, which keeps the key server-side, caches each bottle and search in KV for 30 days, and caps upstream lookups per IP per day. Fragella ids are `fg:<slug>`; demo ids are Fragrantica numbers, all compared as strings.
 
@@ -58,7 +58,7 @@ The key lives in `worker/.dev.vars` (ignored) and as the Worker secret `FRAGELLA
 
 ## Engine
 
-`src/engine.js` is pure: fragrances + conditions in, ranked tiers with reasons out. Tiers are by rank (3 S, 5 A, 6 B, rest C). `test/engine.test.js` pins behaviour on the real collection (hot humid day puts fresh scents on top, cold night puts heavy ones on top, occasion sanity), so run `npm test` after any tuning. Accord heaviness and chip colors live in `src/accords.js`; occasion profiles in `src/occasions.js`.
+`src/engine.js` is pure: fragrances + conditions in, ranked tiers with reasons out. Tiers are by rank (3 S, 5 A, 6 B, rest C). `test/engine.test.js` pins behaviour on the real collection (hot humid day puts fresh scents on top, cold night puts heavy ones on top, occasion sanity), so run `npm test` after any tuning. Accord heaviness and chip colors live in `src/accords.js`: each accord has a hand-set `prior` and a `weight` that `npm run fit` (`scripts/fit-accords.mjs`) pulls toward the season votes of every bottle in `data/`. Rerun it after adding bottles, then `npm test`. A new accord gets `weight` equal to its `prior`. Occasion profiles live in `src/occasions.js`.
 
 Season and time fit are half "within its comfort zone" and half "its specialty" (lift over an even vote split). The specialty half keeps flat all-rounders from winning every mild day.
 
