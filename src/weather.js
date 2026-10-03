@@ -82,7 +82,7 @@ function hourlyRows(forecast) {
     humidity: h.relative_humidity_2m[i],
     dew: dewPointF(h.temperature_2m[i], h.relative_humidity_2m[i]),
     code: h.weather_code[i],
-    pop: h.precipitation_probability[i] ?? 0,
+    pop: h.precipitation_probability?.[i] ?? 0,
   }));
 }
 
@@ -119,6 +119,12 @@ function slotWindow(hours, slot, dateISO, fromHour, ctx) {
     condition: cond.label,
     category: cond.category,
   };
+}
+
+// A day or night window on any date the hourly data covers, such as a past
+// date from Open-Meteo's archive (scripts/journal-check.mjs).
+export function windowOn(forecast, dateISO, slot) {
+  return slotWindow(hourlyRows(forecast), slot, dateISO, 0, { todayISO: null, tomorrowISO: null, lat: forecast.latitude });
 }
 
 function clock(forecast, nowMs) {

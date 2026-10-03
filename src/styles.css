@@ -915,6 +915,7 @@ input, textarea { font: inherit; }
 .sheet-footer { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 18px; }
 .sheet-footer.spread { justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--line); }
 .sheet-footer .muted.small { margin: 0; }
+.footer-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .more-search { display: block; margin: 12px auto 0; font-size: 13.5px; }
 .hand-add { text-align: center; }
 
