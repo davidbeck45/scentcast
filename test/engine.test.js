@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { rank, groupTiers, targetSeasonWeights, calendarSeason, rotationPenalty, planWindows, comfortRange, dewPointF, targetHeaviness } from '../src/engine.js';
+import { rank, groupTiers, targetSeasonWeights, calendarSeason, rotationPenalty, planWindows, comfortRange, dewPointF, targetHeaviness, steadyShares } from '../src/engine.js';
 import { occasionById } from '../src/occasions.js';
 import { heaviness } from '../src/accords.js';
 import { summarize, week } from '../src/weather.js';
@@ -46,6 +46,20 @@ test('mugginess follows the dew point, not relative humidity', () => {
     .find(r => r.fragrance.name === 'Amber Empire').reasons.map(r => r.text);
   assert.ok(amberReasons({ dewF: 72 }).includes('Too rich for sticky heat'));
   assert.ok(amberReasons({ dewF: 48 }).includes('Heavy for this heat'));
+});
+
+test('a split from a few votes leans toward what the accords predict', () => {
+  const amber = fragrances.find(f => f.name === 'Amber Empire');
+  const summery = { winter: 0.1, spring: 0.2, summer: 0.6, fall: 0.1 };
+  const few = { ...amber, season: summery, seasonVotes: { winter: 1, spring: 2, summer: 6, fall: 1 } };
+  const many = { ...few, seasonVotes: { winter: 1000, spring: 2000, summer: 6000, fall: 1000 } };
+  assert.ok(steadyShares(few).season.summer < 0.25, 'ten votes barely outweigh heavy amber accords');
+  assert.ok(Math.abs(steadyShares(many).season.summer - 0.6) < 0.01, 'ten thousand votes stand');
+  const shares = steadyShares(few);
+  assert.ok(Math.abs(Object.values(shares.season).reduce((a, b) => a + b) - 1) < 1e-9);
+  assert.ok(Math.abs(shares.dayNight.day + shares.dayNight.night - 1) < 1e-9);
+  const estimated = { ...amber, seasonVotes: undefined, timeVotes: undefined };
+  assert.equal(steadyShares(estimated).season, amber.season, 'unvoted records pass through');
 });
 
 test('hot humid day: fresh scents on top, heavy ones at the bottom', () => {
