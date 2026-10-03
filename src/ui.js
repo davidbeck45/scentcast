@@ -91,8 +91,8 @@ function matchBadge(entry) {
 
 function feelWords(win) {
   const words = [];
-  if (win.feelsF >= 65 && win.humidity >= 75) words.push('muggy');
-  else if (win.feelsF >= 65 && win.humidity >= 62) words.push('humid');
+  if (win.feelsF >= 65 && win.dewF >= 65) words.push('muggy');
+  else if (win.feelsF >= 65 && win.dewF >= 60) words.push('humid');
   else if (win.humidity < 35) words.push('dry');
   if (win.pop >= 30) words.push(`${win.pop}% rain`);
   return words;

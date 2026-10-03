@@ -3,6 +3,7 @@
 // ("2026-09-28T13:00"); we parse them as UTC and shift "now" by the
 // location's UTC offset so all comparisons happen in the location's time.
 import { describe, SEVERITY } from './wmo.js';
+import { dewPointF } from './engine.js';
 
 const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 export const WINDOWS = { day: [10, 17], night: [19, 23] };
@@ -79,6 +80,7 @@ function hourlyRows(forecast) {
     temp: h.temperature_2m[i],
     feels: h.apparent_temperature[i],
     humidity: h.relative_humidity_2m[i],
+    dew: dewPointF(h.temperature_2m[i], h.relative_humidity_2m[i]),
     code: h.weather_code[i],
     pop: h.precipitation_probability[i] ?? 0,
   }));
@@ -111,6 +113,7 @@ function slotWindow(hours, slot, dateISO, fromHour, ctx) {
     hiF: Math.max(...span.map(x => x.temp)),
     loF: Math.min(...span.map(x => x.temp)),
     humidity: avg(span.map(x => x.humidity)),
+    dewF: avg(span.map(x => x.dew)),
     pop: Math.max(...span.map(x => x.pop)),
     code: cond.code,
     condition: cond.label,
