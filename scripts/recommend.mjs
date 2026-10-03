@@ -5,10 +5,11 @@
 //   node scripts/recommend.mjs --city "New York" --week   (day + night plan for the next 7 days)
 //   node scripts/recommend.mjs --layer "Liquid Brun"       (what layers with it; --layer all for the best pairs)
 //   node scripts/recommend.mjs --layer "Liquid Brun" --city "New York" [--slot night]   (for that weather)
+//   node scripts/recommend.mjs --ideal "Amber Empire"     (the temperatures it wears best in)
 // Bottles hidden in the app live in the phone's storage; pass them via --exclude.
 import { readFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
-import { rank, planWindows } from '../src/engine.js';
+import { rank, planWindows, comfortRange } from '../src/engine.js';
 import { layerPicks } from '../src/layering.js';
 import { OCCASIONS, occasionById } from '../src/occasions.js';
 import { fetchForecast, summarize, week } from '../src/weather.js';
@@ -24,6 +25,7 @@ const { values: args } = parseArgs({
     json: { type: 'boolean', default: false },
     week: { type: 'boolean', default: false },
     layer: { type: 'string' },
+    ideal: { type: 'string' },
   },
 });
 
@@ -40,6 +42,13 @@ async function resolvePlace() {
   if (!hit) { console.error(`No city found for "${args.city}"`); process.exit(1); }
   return { name: `${hit.name}, ${hit.region}`, lat: hit.lat, lon: hit.lon };
 }
+
+const findBottle = name => {
+  const q = name.toLowerCase();
+  const hit = fragrances.find(f => f.name.toLowerCase() === q) ?? fragrances.find(f => f.name.toLowerCase().includes(q));
+  if (!hit) { console.error(`No bottle matches "${name}"`); process.exit(1); }
+  return hit;
+};
 
 // Partners for one bottle, or the best pairs overall. The weather is optional:
 // with a place, pairs are scored for the current window (or --slot).
@@ -63,9 +72,7 @@ if (args.layer) {
     }
     rows = [...pairs.values()].sort((x, y) => y.pair.score - x.pair.score).slice(0, 10);
   } else {
-    const q = args.layer.toLowerCase();
-    const base = fragrances.find(f => f.name.toLowerCase() === q) ?? fragrances.find(f => f.name.toLowerCase().includes(q));
-    if (!base) { console.error(`No bottle matches "${args.layer}"`); process.exit(1); }
+    const base = findBottle(args.layer);
     rows = layerPicks(base, fragrances, 5, win).map(pair => ({ base, pair }));
   }
   if (args.json) {
@@ -85,9 +92,46 @@ if (args.layer) {
   process.exit(0);
 }
 
+// The feels-like range a bottle suits on its own, and where it makes the top 3
+// of this collection by day and by night (clear sky, 50% humidity, today's date).
+if (args.ideal) {
+  const f = findBottle(args.ideal);
+  const date = new Date();
+  const lat = args.city || args.loc ? (await resolvePlace()).lat : 40;
+  const SCAN = [0, 105];
+  const runs = temps => temps.reduce((out, t) => {
+    const last = out.at(-1);
+    if (last && last[1] === t - 1) last[1] = t;
+    else out.push([t, t]);
+    return out;
+  }, []).map(([lo, hi]) => ({ lowF: lo === SCAN[0] ? null : lo, highF: hi === SCAN[1] ? null : hi }));
+  const topPick = {};
+  for (const slot of ['day', 'night']) {
+    const temps = [];
+    for (let feelsF = SCAN[0]; feelsF <= SCAN[1]; feelsF++) {
+      const ranked = rank(fragrances, { feelsF, humidity: 50, category: 'clear', date, lat }, slot);
+      if (ranked.slice(0, 3).some(r => r.fragrance.id === f.id)) temps.push(feelsF);
+    }
+    topPick[slot] = runs(temps);
+  }
+  const range = comfortRange(f, { date, lat });
+  if (args.json) {
+    console.log(JSON.stringify({ name: f.name, brand: f.brand, range, topPick }, null, 2));
+  } else {
+    const span = ({ lowF, highF }) => lowF === null && highF === null ? 'any temperature'
+      : lowF === null ? `${highF}°F and colder` : highF === null ? `${lowF}°F and warmer` : `${lowF}–${highF}°F`;
+    console.log(`${f.name} (${f.brand}) wears best at ${span(range)} feels-like${range.bestF !== null ? `, peaking around ${range.bestF}°F` : ''}.`);
+    for (const slot of ['day', 'night']) {
+      console.log(`  Top 3 in this collection by ${slot}: ${topPick[slot].length ? topPick[slot].map(span).join(', ') : 'never'}`);
+    }
+  }
+  process.exit(0);
+}
+
 if (!args.city && !args.loc) {
   console.error(`usage: node scripts/recommend.mjs (--city NAME | --loc LAT,LON) [--occasion ${OCCASIONS.map(o => o.id).join('|')}] [--slot day|night] [--week] [--exclude NAME,NAME] [--json]
-       node scripts/recommend.mjs --layer NAME|all [--city NAME | --loc LAT,LON] [--slot day|night] [--exclude NAME,NAME] [--json]`);
+       node scripts/recommend.mjs --layer NAME|all [--city NAME | --loc LAT,LON] [--slot day|night] [--exclude NAME,NAME] [--json]
+       node scripts/recommend.mjs --ideal NAME [--city NAME | --loc LAT,LON] [--exclude NAME,NAME] [--json]`);
   process.exit(1);
 }
 

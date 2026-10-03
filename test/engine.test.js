@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { rank, groupTiers, targetSeasonWeights, calendarSeason, rotationPenalty, planWindows } from '../src/engine.js';
+import { rank, groupTiers, targetSeasonWeights, calendarSeason, rotationPenalty, planWindows, comfortRange } from '../src/engine.js';
 import { occasionById } from '../src/occasions.js';
 import { summarize, week } from '../src/weather.js';
 import { syntheticForecast } from './fixtures.js';
@@ -43,6 +43,24 @@ test('cold night: heavy scents on top, fresh ones at the bottom', () => {
   const top = [...names(tiers.S), ...names(tiers.A)];
   for (const n of HEAVY) assert.ok(top.includes(n), `${n} should be S/A on a cold night`);
   for (const n of FRESH) assert.ok(names(tiers.C).includes(n), `${n} should be C on a cold night`);
+});
+
+test('comfort range: heavy scents open toward the cold, fresh ones toward the heat', () => {
+  const byName = name => comfortRange(fragrances.find(f => f.name === name), { date: SEP, lat: 40 });
+  const amber = byName('Amber Empire');
+  assert.equal(amber.lowF, null);
+  assert.ok(amber.highF >= 40 && amber.highF <= 58, `Amber Empire tops out at ${amber.highF}°F`);
+  assert.equal(amber.bestF, null, 'no single best for an open range');
+  const fresh = byName('Essence de Blanc');
+  assert.equal(fresh.highF, null);
+  assert.ok(fresh.lowF >= 68, `Essence de Blanc starts at ${fresh.lowF}°F`);
+  const allRounder = byName('Sauvage');
+  assert.ok(allRounder.lowF < 60 && allRounder.highF > 80, JSON.stringify(allRounder));
+  assert.ok(allRounder.bestF > allRounder.lowF && allRounder.bestF < allRounder.highF);
+  for (const f of fragrances) {
+    const { lowF, highF } = comfortRange(f, { date: SEP, lat: 40 });
+    assert.ok(lowF === null || highF === null || lowF < highF, f.name);
+  }
 });
 
 test('tiers are 3 / 5 / 6 / rest', () => {

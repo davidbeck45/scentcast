@@ -8,6 +8,8 @@ Picks fragrances from David's own Fragrantica wardrobe for the weather, time of 
 2. For an occasion no preset covers (job interview, outdoor wedding, a flight), run the nearest preset(s), then adjust using `data/collection.json`: accord strengths (0–100), note pyramid, season and day/night vote shares.
 3. Reply with a short ranked shortlist drawn only from `data/collection.json`: each pick with its reason (weather, votes, accords), plus a runner-up.
 
+For "what temperature suits X": `node scripts/recommend.mjs --ideal "<name>" [--json]` gives the feels-like range it wears best in (`comfortRange` in the engine, also on its detail sheet) and where it makes the wardrobe's top 3 by day and by night.
+
 For layering ("what goes with X", "cool layers"): `node scripts/recommend.mjs --layer "<name>" [--json]`, or `--layer all` for the best pairs in the wardrobe. No city needed; add `--city "<city>" [--slot day|night]` to score the pairs for that window's weather.
 
 ## Collection data
