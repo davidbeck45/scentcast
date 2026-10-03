@@ -2,6 +2,7 @@
 // ranked tiers with reasons out.
 import { ACCORDS, heaviness } from './accords.js';
 import { isWet } from './wmo.js';
+import { estimateSeason, estimateNight } from './custom.js';
 
 export const SEASONS = ['winter', 'spring', 'summer', 'fall'];
 
@@ -45,20 +46,45 @@ export function targetSeasonWeights(feelsF, date, lat) {
   return w;
 }
 
+// A split from few votes is noisy, so voted shares lean toward what the
+// accords predict (src/custom.js), with the estimate counting as this many
+// votes: about how far well-voted bottles stray from it, out of sample.
+// Fragella and hand-entered bottles are estimates already and pass through.
+const SEASON_PRIOR_VOTES = 60;
+const NIGHT_PRIOR_VOTES = 15;
+const steadied = new WeakMap();
+
+export function steadyShares(frag) {
+  if (!frag.seasonVotes || !frag.timeVotes) return frag;
+  if (steadied.has(frag)) return steadied.get(frag);
+  const n = SEASONS.reduce((sum, s) => sum + frag.seasonVotes[s], 0);
+  const w = n / (n + SEASON_PRIOR_VOTES);
+  const est = estimateSeason(frag.accords);
+  const season = Object.fromEntries(SEASONS.map(s => [s, w * frag.season[s] + (1 - w) * est[s]]));
+  const tn = frag.timeVotes.day + frag.timeVotes.night;
+  const wn = tn / (tn + NIGHT_PRIOR_VOTES);
+  const night = wn * frag.dayNight.night + (1 - wn) * estimateNight(frag.accords);
+  const shares = { season, dayNight: { day: 1 - night, night } };
+  steadied.set(frag, shares);
+  return shares;
+}
+
 // Half "is this within the fragrance's comfort zone" (relative to its own best
 // season), half "is this its specialty" (lift over an even 25% split). Without
 // the lift, all-rounders tie specialists in-season and win everywhere else.
 export function seasonFit(frag, weights) {
-  const peak = Math.max(...SEASONS.map(s => frag.season[s])) || 1;
-  const relative = SEASONS.reduce((sum, s) => sum + weights[s] * (frag.season[s] / peak), 0);
-  const lift = SEASONS.reduce((sum, s) => sum + weights[s] * frag.season[s], 0) / 0.25;
+  const { season } = steadyShares(frag);
+  const peak = Math.max(...SEASONS.map(s => season[s])) || 1;
+  const relative = SEASONS.reduce((sum, s) => sum + weights[s] * (season[s] / peak), 0);
+  const lift = SEASONS.reduce((sum, s) => sum + weights[s] * season[s], 0) / 0.25;
   return 0.5 * relative + 0.5 * clamp(lift / 1.6, 0, 1);
 }
 
 export function timeFit(frag, slot) {
-  const peak = Math.max(frag.dayNight.day, frag.dayNight.night) || 1;
-  const lift = frag.dayNight[slot] / 0.5;
-  return 0.5 * (frag.dayNight[slot] / peak) + 0.5 * clamp(lift / 1.3, 0, 1);
+  const { dayNight } = steadyShares(frag);
+  const peak = Math.max(dayNight.day, dayNight.night) || 1;
+  const lift = dayNight[slot] / 0.5;
+  return 0.5 * (dayNight[slot] / peak) + 0.5 * clamp(lift / 1.3, 0, 1);
 }
 
 // Dew point (°F) from temperature (°F) and relative humidity (%), Magnus formula.
@@ -182,9 +208,10 @@ function reasonsFor(frag, parts, ctx) {
   const bad = (text, strength) => out.push({ text, tone: 'bad', strength });
 
   const nowSeason = argmax(weights);
-  const fragSeason = argmax(frag.season);
-  const peakShare = frag.season[fragSeason];
-  const comfort = SEASONS.reduce((sum, s) => sum + weights[s] * (frag.season[s] / peakShare), 0);
+  const { season, dayNight } = steadyShares(frag);
+  const fragSeason = argmax(season);
+  const peakShare = season[fragSeason];
+  const comfort = SEASONS.reduce((sum, s) => sum + weights[s] * (season[s] / peakShare), 0);
   // Only Fragrantica records carry votes; Fragella's and hand-entered seasons are estimates.
   const voted = Boolean(frag.seasonVotes);
   if (fragSeason === nowSeason && peakShare >= 0.3) good(voted ? `Voted a ${nowSeason} scent` : `A ${nowSeason} scent`, W.season * peakShare * 2);
@@ -192,7 +219,7 @@ function reasonsFor(frag, parts, ctx) {
   else if (comfort >= 0.85) good(`Fits ${nowSeason} weather`, W.season * 0.5);
   else if (comfort < 0.55) bad(voted ? `Voted for ${fragSeason}, not ${nowSeason}` : `Better in ${fragSeason} than ${nowSeason}`, W.season * (1 - comfort));
 
-  const share = frag.dayNight[slot];
+  const share = dayNight[slot];
   if (share >= 0.62) good(slot === 'night' ? 'Built for nighttime' : 'Daytime favorite', W.time * share);
   else if (share <= 0.38) bad(slot === 'night' ? 'Better in daylight' : 'More of a night scent', W.time * (1 - share));
 
