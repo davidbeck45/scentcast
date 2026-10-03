@@ -64,6 +64,8 @@ The key lives in `worker/.dev.vars` (ignored) and as the Worker secret `FRAGELLA
 
 Sticky heat is judged by dew point (`dewF` on forecast windows, from temperature and humidity), not relative humidity: 88°F at 55% is oppressive, 72°F at 85% is not.
 
+Which season the weather "is" comes from `SEASON_CLIMATE`: the mean and spread of each season's day and night feels-like over three years in ten temperate cities, fitted by `node scripts/fit-seasons.mjs --write` from Open-Meteo's archive (cached in `.cache/climate/`). Spring and fall weather overlap, so the calendar splits that share (`TRANSITION_SPLIT`).
+
 Season and day/night shares are read through `steadyShares`: a split from few votes leans toward what the bottle's accords predict, the estimate counting as 60 season votes and 15 day/night votes (about how far well-voted bottles stray from it out of sample), so a 100-vote indie bottle can't swing on a handful of votes. The detail sheet still shows the raw votes.
 
 Season and time fit are half "within its comfort zone" and half "its specialty" (lift over an even vote split). The specialty half keeps flat all-rounders from winning every mild day.

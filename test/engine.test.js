@@ -31,6 +31,16 @@ test('calendar breaks the spring/fall tie and flips south of the equator', () =>
   const w = targetSeasonWeights(62, SEP, 40);
   assert.ok(w.fall > w.spring);
   assert.equal(calendarSeason(SEP, -33), 'spring');
+  // Spring and fall weather overlap, so mid-October and mid-April mirror each other.
+  const oct = targetSeasonWeights(50, new Date('2026-10-15T12:00:00'), 40);
+  const apr = targetSeasonWeights(50, new Date('2026-04-15T12:00:00'), 40);
+  assert.ok(oct.fall > 3 * oct.spring && apr.spring > 3 * apr.fall);
+  assert.ok(Math.abs(oct.fall - apr.spring) < 1e-3);
+  const sydneyOct = targetSeasonWeights(50, new Date('2026-10-15T12:00:00'), -33);
+  assert.ok(sydneyOct.spring > 3 * sydneyOct.fall);
+  // A 70°F day is summer weather for most voters, even in October.
+  const warmOct = targetSeasonWeights(70, new Date('2026-10-15T12:00:00'), 40);
+  assert.equal(Object.entries(warmOct).sort((a, b) => b[1] - a[1])[0][0], 'summer');
 });
 
 test('mugginess follows the dew point, not relative humidity', () => {
