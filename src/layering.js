@@ -19,48 +19,82 @@ import { targetSeasonWeights, seasonFit, targetHeaviness } from './engine.js';
 
 // First match wins, so specific names come before the words they contain
 // ("orange blossom" before "orange", "bourbon vanilla" before "bourbon").
+// A note that sits between families lists more than one, main family first;
+// the rest count half as much (labdanum is a resin and the base of amber).
 const NOTE_FAMILIES = [
-  [/vanill|tonka|benzoin|maltol/, 'vanilla'],
+  [/maltol/, 'sweet', 'caramel'],
+  [/tonka/, 'vanilla', 'almond'],
+  [/benzoin/, 'vanilla', 'balsamic'],
+  [/vanill/, 'vanilla'],
   [/civet|castoreum|animalic|indol/, 'animalic'],
-  [/oud|agarwood|kyara/, 'oud'],
-  [/caramel|praline|toffee|butterscotch|dulce/, 'caramel'],
-  [/meringue|sugar|syrup|waffle|marshmallow|candy|cotton|biscuit|cookie|cake|pastry|brown sugar/, 'sweet'],
+  [/oud|agarwood|kyara/, 'oud', 'woody'],
+  [/praline/, 'caramel', 'nutty'],
+  [/caramel|toffee|butterscotch|dulce/, 'caramel'],
+  [/sugar cane/, 'sweet', 'green'],
+  [/meringue|sugar|syrup|waffle|marshmallow|candy|cotton|biscuit|cookie|cake|pastry/, 'sweet'],
   [/honey|beeswax/, 'honey'],
   [/cacao|cocoa|chocolate|coffee|espresso/, 'cacao'],
+  [/almond milk/, 'almond', 'lactonic'],
   [/almond|marzipan|cherry pit/, 'almond'],
-  [/coconut/, 'coconut'],
+  [/coconut milk|coconut cream/, 'coconut', 'lactonic'],
+  [/coconut(?! water)/, 'coconut'],
   [/hazelnut|pistachio|peanut|sesame|chestnut|walnut|\bnuts?\b/, 'nutty'],
   [/milk|cream|rice|butter|lacton|yogurt|cheese/, 'lactonic'],
   [/tobacco/, 'tobacco'],
-  [/whisk|bourbon|rum|cognac|brandy|liquor|wine|champagne|beer/, 'whiskey'],
+  [/whisk|bourbon|\brum\b|cognac|brandy|liquor|wine|champagne|beer/, 'whiskey'],
   [/leather|suede|birch/, 'leather'],
-  [/incense|olibanum|frankincense|myrrh|elemi|labdanum|styrax|opoponax|palo santo|resin|copal|balsam|tolu|peru/, 'balsamic'],
-  [/amber|ambrox|cetalox|moxalone/, 'amber'],
-  [/cinnamon|clove|nutmeg|saffron|cumin|anise|allspice|oriental|spicy notes|immortelle|curry/, 'warm spicy'],
-  [/pepper|cardamom|ginger(?! flower)|coriander|timur|juniper|elemi/, 'fresh spicy'],
-  [/lavender|lavandin/, 'lavender'],
-  [/iris|orris/, 'iris'],
-  [/violet/, 'violet'],
-  [/jasmin|tuberose|orange blossom|neroli|ylang|gardenia|frangipani|hedione|white flower|ginger flower|magnolia|lily/, 'white floral'],
-  [/rose|geranium/, 'rose'],
-  [/peony|lilac|cyclamen|lotus|freesia|osmanthus|mimosa|heliotrope|flower|floral|blossom|petal/, 'floral'],
-  [/musk|ambrett|cashmeran|galaxolide|habanolide/, 'musky'],
+  [/labdanum|cistus/, 'balsamic', 'amber'],
+  [/elemi/, 'balsamic', 'fresh spicy'],
+  [/incense|olibanum|frankincense|myrrh|styrax|opoponax|palo santo|resin|copal|balsam|tolu|peru/, 'balsamic'],
+  [/ambrox|ambergris|cetalox/, 'amber', 'woody', 'musky'],
+  [/amberwood|moxalone/, 'amber', 'woody'],
+  [/amber/, 'amber'],
+  [/saffron/, 'warm spicy', 'leather'],
+  [/immortelle/, 'warm spicy', 'honey'],
+  [/oriental/, 'warm spicy', 'amber'],
+  [/cinnamon|clove|nutmeg|cumin|anise|allspice|spicy notes|curry/, 'warm spicy'],
+  [/mint/, 'herbal', 'fresh'],
+  [/pink pepper/, 'fresh spicy', 'fruity'],
+  [/cardamom/, 'fresh spicy', 'aromatic'],
+  [/ginger(?! flower)/, 'fresh spicy', 'citrus'],
+  [/pepper|coriander|timur|juniper/, 'fresh spicy'],
+  [/lavender|lavandin/, 'lavender', 'aromatic'],
+  [/iris|orris/, 'iris', 'powdery'],
+  [/violet/, 'violet', 'powdery'],
+  [/neroli/, 'white floral', 'citrus'],
+  [/jasmin|tuberose|orange blossom|ylang|gardenia|frangipani|hedione|white flower|ginger flower|magnolia|lily/, 'white floral'],
+  [/geranium/, 'rose', 'herbal'],
+  [/\brose(?!mary|wood)/, 'rose'],
+  [/heliotrope/, 'floral', 'powdery', 'almond'],
+  [/peony|lilac|cyclamen|lotus|freesia|osmanthus|mimosa|flower|floral|blossom|petal/, 'floral'],
+  [/white musk/, 'musky', 'powdery'],
+  [/cashmeran/, 'musky', 'woody'],
+  [/musk|ambrett|galaxolide|habanolide/, 'musky'],
   [/powder|aldehyde/, 'powdery'],
   [/mango|pineapple|passion|papaya|guava|lychee|litchi|banana|coconut water/, 'tropical'],
   [/grapefruit|bergamot|lemon|lime|orange|mandarin|tangerine|clementine|yuzu|pomelo|petitgrain|citrus|verbena|citron/, 'citrus'],
   [/fig lea|fig tree/, 'green'],
-  [/pear|apple|peach|plum|berry|berries|currant|cherry|fig|apricot|grape|melon|quince|pomegranate|rhubarb/, 'fruity'],
+  [/\bfig/, 'fruity', 'lactonic'],
+  [/pear|apple|peach|plum|berry|berries|currant|cherry|apricot|grape|melon|quince|pomegranate|rhubarb/, 'fruity'],
+  [/mung bean|\begg|salted|savory|soy|umami/, 'savory'],
   [/sea|marine|aquatic|salt|water|calone|seaweed|algae/, 'aquatic'],
   [/ozon|steam|air|metallic|mineral/, 'ozonic'],
-  [/\btea\b|matcha|oolong|rooibos|\bchai\b|\bmate\b/, 'tea'],
-  [/mint|basil|sage|thyme|rosemary|artemisia|wormwood|herb|tarragon|clary|bay leaf/, 'herbal'],
+  [/green tea|matcha/, 'tea', 'green'],
+  [/\btea\b|oolong|rooibos|\bchai\b|\bmate\b/, 'tea'],
+  [/sage|clary/, 'herbal', 'aromatic'],
+  [/basil|thyme|rosemary|artemisia|wormwood|herb|tarragon|bay leaf/, 'herbal'],
   [/moss/, 'mossy'],
-  [/patchouli|vetiver|mushroom|earth|dust|soil|truffle|beet/, 'earthy'],
-  [/cedar|sandal|guaiac|wood|oak|hinoki|sequoia|akigalawood|cypress|pine|cashmere|teak|ebony/, 'woody'],
+  [/patchouli|vetiver/, 'earthy', 'woody'],
+  [/mushroom|earth|dust|soil|truffle|beet/, 'earthy'],
+  [/akigalawood/, 'woody', 'fresh spicy'],
+  [/cashmere wood/, 'woody', 'musky'],
+  [/sandal/, 'woody', 'lactonic'],
+  [/guaiac/, 'woody', 'balsamic'],
+  [/cedar|wood|oak|hinoki|sequoia|cypress|pine|cashmere|teak|ebony/, 'woody'],
   [/green|grass|leaf|leaves|galbanum|stem|tomato|ivy/, 'green'],
   [/paper|ink|pencil/, 'paper'],
-  [/mung bean|egg|salted|savory|soy|umami/, 'savory'],
 ];
+const SECONDARY_SHARE = 0.5;
 const FAMILY_ALIAS = { chocolate: 'cacao', cinnamon: 'warm spicy' };
 
 // Families that work together (+) or fight (−), symmetric.
@@ -220,10 +254,16 @@ const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
 const family = name => FAMILY_ALIAS[name] ?? name;
 const cleanNote = n => String(n).toLowerCase().replace(/\s+/g, ' ').trim();
 
-export function noteFamily(note) {
+// [[family, share]] for a note, shares summing to 1; empty when no family fits.
+export function noteFamilies(note) {
   const n = cleanNote(note);
-  return NOTE_FAMILIES.find(([re]) => re.test(n))?.[1] ?? null;
+  const [, ...families] = NOTE_FAMILIES.find(([re]) => re.test(n)) ?? [];
+  const weights = families.map((_, i) => (i === 0 ? 1 : SECONDARY_SHARE));
+  const total = weights.reduce((a, b) => a + b, 0);
+  return families.map((f, i) => [f, weights[i] / total]);
 }
+
+export const noteFamily = note => noteFamilies(note)[0]?.[0] ?? null;
 
 // { family: share } summing to 1, plus the notes behind each family.
 export function layerProfile(frag) {
@@ -236,12 +276,13 @@ export function layerProfile(frag) {
   }
   for (const [layer, list] of Object.entries(frag.notes ?? {})) {
     for (const note of list) {
-      const f = noteFamily(note);
-      if (!f) continue;
       const w = LAYER_WEIGHT[layer] ?? 1;
-      fromNotes[f] = (fromNotes[f] ?? 0) + w;
-      noteTotal += w;
-      (notesBy[f] ??= []).push({ note: cleanNote(note), w });
+      noteFamilies(note).forEach(([f, share], i) => {
+        fromNotes[f] = (fromNotes[f] ?? 0) + w * share;
+        noteTotal += w * share;
+        // For naming a family, a note it's the main family of comes first.
+        (notesBy[f] ??= []).push({ note: cleanNote(note), w: i === 0 ? w : w * share });
+      });
     }
   }
   const noteShare = noteTotal ? NOTES_SHARE : 0;

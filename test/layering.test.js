@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { noteFamily, layerPair, layerPicks, layerProfile, complementOf } from '../src/layering.js';
+import { noteFamily, noteFamilies, layerPair, layerPicks, layerProfile, complementOf } from '../src/layering.js';
 import { heaviness } from '../src/accords.js';
 import { DEFAULT_HIDDEN } from '../src/hidden.js';
 
@@ -35,8 +35,25 @@ test('notes map to accord families, specific names first', () => {
   assert.equal(noteFamily('Tea Rose'), 'rose');
   assert.equal(noteFamily('Fig Leaf'), 'green');
   assert.equal(noteFamily('Fig'), 'fruity');
+  assert.equal(noteFamily('Rosemary'), 'herbal');
+  assert.equal(noteFamily('Rosewood'), 'woody');
+  assert.equal(noteFamily('Peppermint'), 'herbal');
+  assert.equal(noteFamily('Salted Egg Yolk'), 'savory');
+  assert.equal(noteFamily('Sea Salt'), 'aquatic');
   const unmapped = [...demo, ...catalog].flatMap(f => Object.values(f.notes).flat()).filter(n => !noteFamily(n));
   assert.deepEqual(unmapped, [], 'every note in the data has a family');
+});
+
+test('notes between families count toward each, the main one most', () => {
+  assert.deepEqual(noteFamilies('Labdanum').map(([f]) => f), ['balsamic', 'amber']);
+  assert.deepEqual(noteFamilies('Ambroxan').map(([f]) => f), ['amber', 'woody', 'musky']);
+  const [[, main], [, other]] = noteFamilies('Tonka Bean');
+  assert.ok(main > other && Math.abs(main + other - 1) < 1e-9);
+  assert.deepEqual(noteFamilies('Bergamot'), [['citrus', 1]]);
+  assert.deepEqual(noteFamilies('Unobtainium'), []);
+  // The labdanum in a resin bottle bridges to an amber one.
+  const resin = bottle('resin', { balsamic: 100 }, { base: ['Labdanum'] });
+  assert.ok(layerProfile(resin).profile.amber > 0);
 });
 
 test('pairing rules cover most of how real bottles meet', () => {
