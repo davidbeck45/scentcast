@@ -1,6 +1,9 @@
 // Offline support. App files: network first so edits show up immediately,
 // cache as fallback. Bottle images and fonts: cache first. Weather is never
 // cached here; the app keeps its own last forecast in localStorage.
+// App files always revalidate with the server: GitHub Pages lets browsers
+// keep files for 10 minutes, and a fresh main.js importing a stale module
+// fails to load at all.
 const CACHE = 'scentcast-v7';
 const SHELL = [
   './',
@@ -30,7 +33,7 @@ const SHELL = [
 const CACHE_FIRST_HOSTS = ['fimgs.net', 'cdn.fragella.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL.map(path => new Request(path, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
@@ -48,7 +51,7 @@ self.addEventListener('fetch', e => {
 
   if (url.origin === self.location.origin) {
     e.respondWith(
-      fetch(req)
+      fetch(req.mode === 'navigate' ? req.url : req, { cache: 'no-cache' })
         .then(res => {
           const copy = res.clone();
           caches.open(CACHE).then(c => c.put(req, copy));
