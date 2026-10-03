@@ -65,70 +65,128 @@ const FAMILY_ALIAS = { chocolate: 'cacao', cinnamon: 'warm spicy' };
 
 // Families that work together (+) or fight (−), symmetric.
 const PAIRS = [
-  ['vanilla', 'woody', 0.9], ['vanilla', 'tobacco', 1], ['vanilla', 'lavender', 0.9], ['vanilla', 'fresh spicy', 0.7],
-  ['vanilla', 'citrus', 0.6], ['vanilla', 'fruity', 0.7], ['vanilla', 'warm spicy', 0.7], ['vanilla', 'rose', 0.5],
-  ['vanilla', 'oud', 0.7], ['vanilla', 'leather', 0.5], ['vanilla', 'musky', 0.5], ['vanilla', 'coconut', 0.6],
-  ['vanilla', 'tropical', 0.5], ['vanilla', 'cacao', 0.7], ['vanilla', 'almond', 0.6], ['vanilla', 'nutty', 0.5],
-  ['vanilla', 'whiskey', 0.7], ['vanilla', 'iris', 0.5], ['vanilla', 'powdery', 0.4], ['vanilla', 'amber', 0.5],
-  ['vanilla', 'earthy', 0.5], ['vanilla', 'balsamic', 0.5], ['vanilla', 'lactonic', 0.6],
+  ['vanilla', 'woody', 0.9], ['vanilla', 'tobacco', 1], ['vanilla', 'lavender', 0.9],
+  ['vanilla', 'fresh spicy', 0.7], ['vanilla', 'citrus', 0.6], ['vanilla', 'fruity', 0.7],
+  ['vanilla', 'warm spicy', 0.7], ['vanilla', 'rose', 0.5], ['vanilla', 'oud', 0.7], ['vanilla', 'leather', 0.5],
+  ['vanilla', 'musky', 0.5], ['vanilla', 'coconut', 0.6], ['vanilla', 'tropical', 0.5], ['vanilla', 'cacao', 0.7],
+  ['vanilla', 'almond', 0.6], ['vanilla', 'nutty', 0.5], ['vanilla', 'whiskey', 0.7], ['vanilla', 'iris', 0.5],
+  ['vanilla', 'powdery', 0.4], ['vanilla', 'amber', 0.5], ['vanilla', 'earthy', 0.5], ['vanilla', 'balsamic', 0.5],
+  ['vanilla', 'lactonic', 0.6], ['vanilla', 'aromatic', 0.7], ['vanilla', 'white floral', 0.7],
+  ['vanilla', 'floral', 0.5], ['vanilla', 'herbal', 0.5], ['vanilla', 'honey', 0.5], ['vanilla', 'fresh', 0.4],
+  ['vanilla', 'green', 0.3], ['vanilla', 'mossy', 0.3], ['vanilla', 'sweet', 0], ['vanilla', 'savory', 0.6],
+  ['vanilla', 'animalic', 0.5], ['vanilla', 'caramel', 0],
   ['sweet', 'woody', 0.6], ['sweet', 'citrus', 0.6], ['sweet', 'fresh spicy', 0.5], ['sweet', 'savory', 0.7],
   ['sweet', 'musky', 0.4], ['sweet', 'earthy', 0.5], ['sweet', 'herbal', 0.4], ['sweet', 'fruity', 0.3],
+  ['sweet', 'warm spicy', 0.6], ['sweet', 'aromatic', 0.4], ['sweet', 'white floral', 0.4],
+  ['sweet', 'balsamic', 0.4], ['sweet', 'lavender', 0.5], ['sweet', 'rose', 0.4], ['sweet', 'coconut', 0.4],
+  ['sweet', 'lactonic', 0.3], ['sweet', 'iris', 0.3], ['sweet', 'oud', 0.4], ['sweet', 'tropical', 0.3],
+  ['sweet', 'mossy', 0.2], ['sweet', 'honey', 0], ['sweet', 'powdery', 0.3], ['sweet', 'floral', 0.3],
+  ['sweet', 'fresh', 0.3], ['sweet', 'amber', 0.2], ['sweet', 'green', 0.2],
   ['caramel', 'woody', 0.7], ['caramel', 'savory', 0.9], ['caramel', 'tobacco', 0.8], ['caramel', 'citrus', 0.4],
   ['caramel', 'whiskey', 0.8], ['caramel', 'nutty', 0.7], ['caramel', 'fruity', 0.4], ['caramel', 'lactonic', 0.5],
-  ['honey', 'tobacco', 0.9], ['honey', 'white floral', 0.6], ['honey', 'woody', 0.6], ['honey', 'floral', 0.5], ['honey', 'leather', 0.5],
+  ['honey', 'tobacco', 0.9], ['honey', 'white floral', 0.6], ['honey', 'woody', 0.6], ['honey', 'floral', 0.5],
+  ['honey', 'leather', 0.5], ['honey', 'powdery', 0.3],
   ['cacao', 'fruity', 0.7], ['cacao', 'rose', 0.5], ['cacao', 'woody', 0.6], ['cacao', 'warm spicy', 0.6],
   ['cacao', 'earthy', 0.7], ['cacao', 'citrus', 0.5],
   ['almond', 'fruity', 0.6], ['almond', 'woody', 0.5], ['almond', 'lactonic', 0.5], ['almond', 'floral', 0.4],
   ['nutty', 'woody', 0.5], ['nutty', 'lactonic', 0.4],
-  ['lactonic', 'fruity', 0.7], ['lactonic', 'tropical', 0.7], ['lactonic', 'woody', 0.5], ['lactonic', 'white floral', 0.5],
-  ['coconut', 'tropical', 0.9], ['coconut', 'white floral', 0.8], ['coconut', 'aquatic', 0.5], ['coconut', 'lactonic', 0.5],
-  ['tropical', 'white floral', 0.7], ['tropical', 'musky', 0.5], ['tropical', 'citrus', 0.5],
+  ['lactonic', 'fruity', 0.7], ['lactonic', 'tropical', 0.7], ['lactonic', 'woody', 0.5],
+  ['lactonic', 'white floral', 0.5], ['lactonic', 'amber', 0.4], ['lactonic', 'musky', 0.5],
+  ['lactonic', 'powdery', 0.5], ['lactonic', 'warm spicy', 0.4],
+  ['coconut', 'tropical', 0.9], ['coconut', 'white floral', 0.8], ['coconut', 'aquatic', 0.5],
+  ['coconut', 'lactonic', 0.5], ['coconut', 'woody', 0.5], ['coconut', 'amber', 0.4], ['coconut', 'musky', 0.5],
+  ['coconut', 'powdery', 0.3], ['coconut', 'fresh spicy', 0.2], ['coconut', 'warm spicy', 0.3],
+  ['tropical', 'woody', 0.4], ['tropical', 'amber', 0.3], ['tropical', 'white floral', 0.7],
+  ['tropical', 'musky', 0.5], ['tropical', 'citrus', 0.5],
   ['fruity', 'musky', 0.7], ['fruity', 'woody', 0.6], ['fruity', 'floral', 0.6], ['fruity', 'rose', 0.7],
-  ['fruity', 'powdery', 0.4], ['fruity', 'earthy', 0.5], ['fruity', 'amber', 0.4],
-  ['rose', 'oud', 1], ['rose', 'amber', 0.7], ['rose', 'woody', 0.6], ['rose', 'citrus', 0.5], ['rose', 'musky', 0.6],
-  ['rose', 'powdery', 0.5], ['rose', 'leather', 0.6], ['rose', 'earthy', 0.7], ['rose', 'warm spicy', 0.6],
+  ['fruity', 'powdery', 0.4], ['fruity', 'earthy', 0.5], ['fruity', 'amber', 0.4], ['fruity', 'citrus', 0.5],
+  ['fruity', 'warm spicy', 0.5], ['fruity', 'white floral', 0.5], ['fruity', 'fresh spicy', 0.4],
+  ['fruity', 'green', 0.5], ['fruity', 'fresh', 0.4], ['fruity', 'herbal', 0.3], ['fruity', 'lavender', 0.2],
+  ['fruity', 'coconut', 0.5], ['fruity', 'aromatic', 0.4], ['fruity', 'balsamic', 0.4],
+  ['rose', 'oud', 1], ['rose', 'amber', 0.7], ['rose', 'woody', 0.6], ['rose', 'citrus', 0.5],
+  ['rose', 'musky', 0.6], ['rose', 'powdery', 0.5], ['rose', 'leather', 0.6], ['rose', 'earthy', 0.7],
+  ['rose', 'warm spicy', 0.6],
   ['oud', 'amber', 0.7], ['oud', 'leather', 0.6], ['oud', 'balsamic', 0.6], ['oud', 'warm spicy', 0.5],
+  ['oud', 'woody', 0.6],
   ['citrus', 'woody', 0.8], ['citrus', 'aromatic', 0.7], ['citrus', 'fresh spicy', 0.7], ['citrus', 'musky', 0.6],
   ['citrus', 'amber', 0.6], ['citrus', 'white floral', 0.6], ['citrus', 'green', 0.5], ['citrus', 'herbal', 0.5],
-  ['citrus', 'earthy', 0.4], ['citrus', 'mossy', 0.6],
-  ['aquatic', 'woody', 0.7], ['aquatic', 'citrus', 0.5], ['aquatic', 'aromatic', 0.6], ['aquatic', 'musky', 0.6], ['aquatic', 'amber', 0.5],
+  ['citrus', 'earthy', 0.4], ['citrus', 'mossy', 0.6], ['citrus', 'warm spicy', 0.6], ['citrus', 'balsamic', 0.6],
+  ['citrus', 'lavender', 0.6], ['citrus', 'floral', 0.5], ['citrus', 'iris', 0.5], ['citrus', 'honey', 0.4],
+  ['citrus', 'oud', 0.4], ['citrus', 'almond', 0.4], ['citrus', 'savory', 0.3], ['citrus', 'leather', 0.3],
+  ['citrus', 'powdery', 0.4], ['citrus', 'fresh', 0.4], ['citrus', 'coconut', 0.4], ['citrus', 'lactonic', 0.3],
+  ['aquatic', 'woody', 0.7], ['aquatic', 'citrus', 0.5], ['aquatic', 'aromatic', 0.6], ['aquatic', 'musky', 0.6],
+  ['aquatic', 'amber', 0.5],
   ['ozonic', 'woody', 0.5], ['ozonic', 'citrus', 0.5],
   ['green', 'woody', 0.6], ['green', 'floral', 0.6], ['green', 'earthy', 0.6], ['green', 'white floral', 0.5],
+  ['green', 'amber', 0.3], ['green', 'musky', 0.4], ['green', 'powdery', 0.3], ['green', 'warm spicy', 0.2],
   ['lavender', 'tobacco', 0.8], ['lavender', 'amber', 0.7], ['lavender', 'woody', 0.6], ['lavender', 'musky', 0.5],
   ['lavender', 'leather', 0.5], ['lavender', 'powdery', 0.4],
-  ['aromatic', 'woody', 0.7], ['aromatic', 'amber', 0.6], ['aromatic', 'leather', 0.6], ['aromatic', 'fresh spicy', 0.5],
-  ['herbal', 'woody', 0.6], ['herbal', 'citrus', 0.5],
+  ['aromatic', 'woody', 0.7], ['aromatic', 'amber', 0.6], ['aromatic', 'leather', 0.6],
+  ['aromatic', 'fresh spicy', 0.5], ['aromatic', 'earthy', 0.6], ['aromatic', 'musky', 0.5],
+  ['aromatic', 'warm spicy', 0.5], ['aromatic', 'balsamic', 0.5], ['aromatic', 'fresh', 0.5],
+  ['aromatic', 'green', 0.5], ['aromatic', 'rose', 0.4], ['aromatic', 'lactonic', 0.2], ['aromatic', 'lavender', 0],
+  ['aromatic', 'herbal', 0], ['aromatic', 'powdery', 0.4], ['aromatic', 'floral', 0.4],
+  ['aromatic', 'white floral', 0.3],
+  ['herbal', 'woody', 0.6], ['herbal', 'amber', 0.4], ['herbal', 'musky', 0.4], ['herbal', 'warm spicy', 0.3],
+  ['herbal', 'powdery', 0.3], ['herbal', 'white floral', 0.3],
   ['fresh spicy', 'woody', 0.7], ['fresh spicy', 'amber', 0.7], ['fresh spicy', 'leather', 0.5],
-  ['warm spicy', 'amber', 0.8], ['warm spicy', 'woody', 0.7], ['warm spicy', 'tobacco', 0.7], ['warm spicy', 'balsamic', 0.6],
+  ['fresh spicy', 'earthy', 0.6], ['fresh spicy', 'balsamic', 0.6], ['fresh spicy', 'musky', 0.5],
+  ['fresh spicy', 'white floral', 0.4], ['fresh spicy', 'lavender', 0.6], ['fresh spicy', 'rose', 0.6],
+  ['fresh spicy', 'green', 0.5], ['fresh spicy', 'herbal', 0.5], ['fresh spicy', 'oud', 0.5],
+  ['fresh spicy', 'mossy', 0.5], ['fresh spicy', 'aquatic', 0.5], ['fresh spicy', 'iris', 0.4],
+  ['fresh spicy', 'honey', 0.3], ['fresh spicy', 'tropical', 0.3], ['fresh spicy', 'lactonic', 0.2],
+  ['fresh spicy', 'floral', 0.4], ['fresh spicy', 'fresh', 0.4], ['fresh spicy', 'warm spicy', 0.3],
+  ['fresh spicy', 'powdery', 0.3],
+  ['warm spicy', 'amber', 0.8], ['warm spicy', 'woody', 0.7], ['warm spicy', 'tobacco', 0.7],
+  ['warm spicy', 'balsamic', 0.6], ['warm spicy', 'white floral', 0.5], ['warm spicy', 'floral', 0.5],
+  ['warm spicy', 'earthy', 0.5], ['warm spicy', 'musky', 0.4], ['warm spicy', 'lavender', 0.5],
+  ['warm spicy', 'fresh', 0.3], ['warm spicy', 'honey', 0.6], ['warm spicy', 'mossy', 0.4],
+  ['warm spicy', 'powdery', 0.4],
   ['soft spicy', 'woody', 0.6], ['soft spicy', 'floral', 0.5], ['soft spicy', 'amber', 0.5],
   ['tobacco', 'leather', 0.7], ['tobacco', 'woody', 0.7], ['tobacco', 'whiskey', 0.8], ['tobacco', 'amber', 0.6],
   ['whiskey', 'woody', 0.7], ['whiskey', 'amber', 0.6],
   ['leather', 'iris', 0.7], ['leather', 'woody', 0.6], ['leather', 'amber', 0.6],
-  ['iris', 'powdery', 0.5], ['iris', 'woody', 0.6], ['iris', 'musky', 0.6], ['iris', 'violet', 0.6], ['iris', 'oud', 0.7],
+  ['iris', 'powdery', 0.5], ['iris', 'woody', 0.6], ['iris', 'musky', 0.6], ['iris', 'violet', 0.6],
+  ['iris', 'oud', 0.7],
   ['tea', 'vanilla', 0.8], ['tea', 'citrus', 0.7], ['tea', 'honey', 0.6], ['tea', 'white floral', 0.6],
   ['tea', 'lactonic', 0.5], ['tea', 'woody', 0.5], ['tea', 'fruity', 0.4],
   ['violet', 'powdery', 0.5], ['violet', 'woody', 0.5],
-  ['powdery', 'musky', 0.6], ['powdery', 'woody', 0.4],
+  ['powdery', 'musky', 0.6], ['powdery', 'woody', 0.4], ['powdery', 'amber', 0.5], ['powdery', 'white floral', 0.5],
+  ['powdery', 'floral', 0.5], ['powdery', 'balsamic', 0.5], ['powdery', 'earthy', 0.4],
   ['musky', 'woody', 0.6], ['musky', 'floral', 0.7], ['musky', 'white floral', 0.6], ['musky', 'amber', 0.6],
-  ['white floral', 'woody', 0.6], ['white floral', 'amber', 0.5],
-  ['floral', 'woody', 0.6], ['floral', 'amber', 0.4],
-  ['amber', 'woody', 0.7], ['amber', 'balsamic', 0.6], ['balsamic', 'woody', 0.6],
-  ['earthy', 'woody', 0.6], ['mossy', 'woody', 0.6], ['mossy', 'floral', 0.5],
-  ['animalic', 'floral', 0.6], ['animalic', 'rose', 0.6], ['animalic', 'amber', 0.6], ['animalic', 'white floral', 0.7],
-  ['savory', 'woody', 0.4], ['paper', 'woody', 0.5], ['paper', 'musky', 0.5],
+  ['musky', 'fresh', 0.6], ['musky', 'earthy', 0.5], ['musky', 'balsamic', 0.5], ['musky', 'honey', 0.4],
+  ['musky', 'mossy', 0.4],
+  ['white floral', 'woody', 0.6], ['white floral', 'amber', 0.5], ['white floral', 'earthy', 0.5],
+  ['white floral', 'balsamic', 0.5], ['white floral', 'fresh', 0.4], ['white floral', 'floral', 0],
+  ['floral', 'fresh', 0.4], ['floral', 'woody', 0.6], ['floral', 'amber', 0.4], ['floral', 'earthy', 0.5],
+  ['floral', 'balsamic', 0.4],
+  ['amber', 'woody', 0.7], ['amber', 'balsamic', 0.6], ['amber', 'earthy', 0.6], ['amber', 'fresh', 0.6],
+  ['amber', 'mossy', 0.7], ['amber', 'honey', 0.6], ['amber', 'iris', 0.5], ['amber', 'cacao', 0.6],
+  ['amber', 'almond', 0.4], ['amber', 'savory', 0.4],
+  ['balsamic', 'woody', 0.6], ['balsamic', 'earthy', 0.6], ['balsamic', 'fresh', 0.3],
+  ['fresh', 'woody', 0.7], ['fresh', 'powdery', 0.3], ['fresh', 'earthy', 0.4],
+  ['mossy', 'powdery', 0.4], ['mossy', 'woody', 0.6], ['mossy', 'floral', 0.5],
+  ['animalic', 'woody', 0.5], ['animalic', 'floral', 0.6], ['animalic', 'rose', 0.6], ['animalic', 'amber', 0.6],
+  ['animalic', 'white floral', 0.7],
+  ['earthy', 'woody', 0.6],
+  ['savory', 'woody', 0.4],
+  ['paper', 'woody', 0.5], ['paper', 'musky', 0.5],
   ['terpenic', 'woody', 0.6], ['terpenic', 'citrus', 0.5],
-  ['aquatic', 'caramel', -0.8], ['aquatic', 'cacao', -0.8], ['aquatic', 'honey', -0.6], ['aquatic', 'vanilla', -0.3],
-  ['aquatic', 'oud', -0.6], ['aquatic', 'tobacco', -0.6], ['aquatic', 'animalic', -0.7],
-  ['ozonic', 'caramel', -0.8], ['ozonic', 'honey', -0.6], ['ozonic', 'oud', -0.6], ['ozonic', 'cacao', -0.6],
-  ['green', 'caramel', -0.5], ['lavender', 'tropical', -0.5], ['citrus', 'animalic', -0.4],
-  ['tropical', 'leather', -0.6], ['tropical', 'oud', -0.5], ['tropical', 'tobacco', -0.5],
-  ['coconut', 'leather', -0.5], ['coconut', 'oud', -0.5],
+  ['sweet', 'aquatic', -0.2], ['aquatic', 'caramel', -0.8], ['aquatic', 'cacao', -0.8], ['aquatic', 'honey', -0.6],
+  ['aquatic', 'vanilla', -0.3], ['aquatic', 'oud', -0.6], ['aquatic', 'tobacco', -0.6],
+  ['aquatic', 'animalic', -0.7], ['ozonic', 'caramel', -0.8], ['ozonic', 'honey', -0.6], ['ozonic', 'oud', -0.6],
+  ['ozonic', 'cacao', -0.6], ['aquatic', 'warm spicy', -0.4], ['green', 'caramel', -0.5],
+  ['lavender', 'tropical', -0.5], ['citrus', 'animalic', -0.4], ['tropical', 'leather', -0.6],
+  ['tropical', 'oud', -0.5], ['tropical', 'tobacco', -0.5], ['coconut', 'leather', -0.5], ['coconut', 'oud', -0.5],
 ];
 const COMPLEMENT = new Map();
 for (const [a, b, v] of PAIRS) {
   COMPLEMENT.set(`${a}|${b}`, v);
   COMPLEMENT.set(`${b}|${a}`, v);
 }
+
+/** The pairing rule for two families, or undefined when the table has none. */
+export const complementOf = (a, b) => COMPLEMENT.get(`${a}|${b}`);
 
 // What the partner's family does to this bottle, for reason text.
 const EFFECT = {
@@ -146,8 +204,8 @@ const SWEET = ['vanilla', 'sweet', 'caramel', 'honey', 'cacao', 'almond', 'nutty
 const MARINE = ['aquatic', 'ozonic'];
 const LAYER_WEIGHT = { top: 0.6, mid: 1, base: 1.2, all: 1 };
 const NOTES_SHARE = 0.4; // of a profile, the rest from accords
-const COMPLEMENT_FLOOR = 0.15;
-const COMPLEMENT_SPAN = 0.25;
+const COMPLEMENT_FLOOR = 0.34;
+const COMPLEMENT_SPAN = 0.17;
 const MIN_SCORE = 0.4;
 const GENERALIST_DAMPING = 1;
 const GENERIC_NOTE = /notes?$|accord$|^(citruses|white flowers|flowers|spices|woods)$/;
@@ -262,7 +320,7 @@ export function layerPair(frag, other, conditions = null) {
   const marineA = MARINE.reduce((s, f) => s + (a.profile[f] ?? 0), 0);
   const marineB = MARINE.reduce((s, f) => s + (b.profile[f] ?? 0), 0);
 
-  // Across the demo and catalog, complement runs about 0.19 (10th percentile) to 0.38 (90th).
+  // Across the demo and catalog, complement runs about 0.34 (10th percentile) to 0.51 (90th).
   const complementScore = clamp((complement - COMPLEMENT_FLOOR) / COMPLEMENT_SPAN, 0, 1);
   const bridgeScore = bridge < 0.15 ? bridge / 0.15 : bridge <= 0.45 ? 1 : clamp(1 - (bridge - 0.45) / 0.4, 0, 1);
   const contrastScore = clamp(Math.abs(ha - hb) / 0.4, 0, 1);
