@@ -93,7 +93,7 @@ if (args.layer) {
 }
 
 // The feels-like range a bottle suits on its own, and where it makes the top 3
-// of this collection by day and by night (clear sky, 50% humidity, today's date).
+// of this collection by day and by night (clear sky, comfortable dew point, today's date).
 if (args.ideal) {
   const f = findBottle(args.ideal);
   const date = new Date();
@@ -109,7 +109,7 @@ if (args.ideal) {
   for (const slot of ['day', 'night']) {
     const temps = [];
     for (let feelsF = SCAN[0]; feelsF <= SCAN[1]; feelsF++) {
-      const ranked = rank(fragrances, { feelsF, humidity: 50, category: 'clear', date, lat }, slot);
+      const ranked = rank(fragrances, { feelsF, humidity: 50, dewF: 55, category: 'clear', date, lat }, slot);
       if (ranked.slice(0, 3).some(r => r.fragrance.id === f.id)) temps.push(feelsF);
     }
     topPick[slot] = runs(temps);

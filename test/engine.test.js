@@ -1,8 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { rank, groupTiers, targetSeasonWeights, calendarSeason, rotationPenalty, planWindows, comfortRange } from '../src/engine.js';
+import { rank, groupTiers, targetSeasonWeights, calendarSeason, rotationPenalty, planWindows, comfortRange, dewPointF, targetHeaviness } from '../src/engine.js';
 import { occasionById } from '../src/occasions.js';
+import { heaviness } from '../src/accords.js';
 import { summarize, week } from '../src/weather.js';
 import { syntheticForecast } from './fixtures.js';
 
@@ -30,6 +31,21 @@ test('calendar breaks the spring/fall tie and flips south of the equator', () =>
   const w = targetSeasonWeights(62, SEP, 40);
   assert.ok(w.fall > w.spring);
   assert.equal(calendarSeason(SEP, -33), 'spring');
+});
+
+test('mugginess follows the dew point, not relative humidity', () => {
+  assert.ok(Math.abs(dewPointF(86, 50) - 65) < 1, `${dewPointF(86, 50)}`);
+  assert.ok(Math.abs(dewPointF(70, 100) - 70) < 0.1);
+  // 88°F at 55% is oppressive (dew ~70°F); 72°F at 85% is merely damp (~67°F).
+  assert.ok(targetHeaviness({ feelsF: 88, dewF: 71 }) < targetHeaviness({ feelsF: 88, dewF: 50 }) - 0.2);
+  assert.equal(targetHeaviness({ feelsF: 100, dewF: 40 }), targetHeaviness({ feelsF: 100, dewF: 55 }), 'dry heat adds nothing');
+  const top = c => rank(fragrances, { ...hotHumidDay, feelsF: 86, ...c }, 'day').slice(0, 5);
+  const avgH = list => list.reduce((sum, r) => sum + heaviness(r.fragrance.accords), 0) / list.length;
+  assert.ok(avgH(top({ dewF: 72 })) <= avgH(top({ dewF: 48 })), 'muggy days pick fresher');
+  const amberReasons = c => rank(fragrances, { ...hotHumidDay, feelsF: 86, ...c }, 'day')
+    .find(r => r.fragrance.name === 'Amber Empire').reasons.map(r => r.text);
+  assert.ok(amberReasons({ dewF: 72 }).includes('Too rich for sticky heat'));
+  assert.ok(amberReasons({ dewF: 48 }).includes('Heavy for this heat'));
 });
 
 test('hot humid day: fresh scents on top, heavy ones at the bottom', () => {
@@ -127,6 +143,7 @@ test('summarize splits the forecast into day and night windows in local time', (
   assert.equal(wx.todayISO, '2026-09-28');
   assert.equal(wx.day.label, 'Today');
   assert.equal(wx.day.feelsF, 77);
+  assert.ok(Math.abs(wx.day.dewF - dewPointF(75, 50)) < 0.01, 'windows carry the dew point');
   assert.equal(wx.night.label, 'Tonight');
   assert.equal(wx.night.category, 'rain');
   assert.equal(wx.now.phase, 'day');

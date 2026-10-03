@@ -15,7 +15,7 @@
 // bottles' season votes, and their average heaviness against what the weather
 // calls for, so one heavy and one light bottle meet in the middle.
 import { heaviness } from './accords.js';
-import { targetSeasonWeights, seasonFit, targetHeaviness } from './engine.js';
+import { targetSeasonWeights, seasonFit, targetHeaviness, isSticky } from './engine.js';
 
 // First match wins, so specific names come before the words they contain
 // ("orange blossom" before "orange", "bourbon vanilla" before "bourbon").
@@ -319,7 +319,7 @@ const pluralVerb = phrase => phrase.replace(/^(\w+?)(ies|s)\b/, (m, stem, end) =
 
 /**
  * How well the pair suits the conditions, 0..1, read the way the engine reads
- * one bottle. conditions: { feelsF, humidity, date, lat }
+ * one bottle. conditions: { feelsF, humidity, dewF?, date, lat }
  */
 export function blendFit(frag, other, conditions) {
   const weights = targetSeasonWeights(conditions.feelsF, conditions.date, conditions.lat);
@@ -397,7 +397,7 @@ export function layerPair(frag, other, conditions = null) {
     if (fit >= 0.85 && hot) reasons.push({ text: 'Light enough for the heat', tone: 'good' });
     if (fit >= 0.85 && cold) reasons.push({ text: 'Rich enough for the cold', tone: 'good' });
     if (offWeather >= 0.06) {
-      const sticky = conditions.feelsF > 75 && conditions.humidity > 65;
+      const sticky = isSticky(conditions);
       const text = (ha + hb) / 2 > targetHeaviness(conditions)
         ? (hot ? `Too rich for ${sticky ? 'sticky' : 'this'} heat` : 'Too rich for this weather')
         : (cold ? 'Too light for the cold' : 'Too light for this weather');

@@ -61,10 +61,25 @@ export function timeFit(frag, slot) {
   return 0.5 * (frag.dayNight[slot] / peak) + 0.5 * clamp(lift / 1.3, 0, 1);
 }
 
+// Dew point (°F) from temperature (°F) and relative humidity (%), Magnus formula.
+export function dewPointF(tempF, humidity) {
+  const c = ((tempF - 32) * 5) / 9;
+  const g = Math.log(clamp(humidity, 1, 100) / 100) + (17.62 * c) / (243.12 + c);
+  return ((243.12 * g) / (17.62 - g)) * 9 / 5 + 32;
+}
+
+// Mugginess follows the dew point, not relative humidity: about 55°F feels
+// comfortable, 65°F sticky, 70°F and up oppressive, whatever the temperature.
+// Forecast windows carry dewF; other conditions estimate it from feels-like.
+const MUGGY_DEW_F = 60;
+const dewOf = c => c.dewF ?? dewPointF(c.feelsF, c.humidity);
+export const isSticky = c => c.feelsF > 75 && dewOf(c) >= 65;
+
 // Heaviness the weather calls for: -1 (as fresh as possible) .. +1 (rich).
-export function targetHeaviness({ feelsF, humidity }) {
+export function targetHeaviness(conditions) {
+  const { feelsF } = conditions;
   let t = clamp((65 - feelsF) / 35, -1, 1);
-  if (feelsF > 70 && humidity > 60) t -= (humidity - 60) / 100; // sticky heat
+  if (feelsF > 70) t -= clamp((dewOf(conditions) - MUGGY_DEW_F) / 40, 0, 0.4); // sticky heat
   return clamp(t, -1, 1);
 }
 
@@ -91,12 +106,12 @@ export function weatherFit(frag, conditions) {
 const COMFORT_SCAN = [0, 105];
 const COMFORT_DROP = 0.1;
 
-export function comfortRange(frag, { date = new Date(), lat = 40, humidity = 50 } = {}) {
+export function comfortRange(frag, { date = new Date(), lat = 40, dewF = 55 } = {}) {
   const W = DAILY_WEIGHTS;
   const fits = [];
   for (let feelsF = COMFORT_SCAN[0]; feelsF <= COMFORT_SCAN[1]; feelsF++) {
     const weights = targetSeasonWeights(feelsF, date, lat);
-    const conditions = { feelsF, humidity, category: 'clear' };
+    const conditions = { feelsF, dewF, category: 'clear' };
     fits.push((W.season * seasonFit(frag, weights) + W.weather * weatherFit(frag, conditions)) / (W.season + W.weather));
   }
   const peak = Math.max(...fits);
@@ -182,7 +197,7 @@ function reasonsFor(frag, parts, ctx) {
   else if (share <= 0.38) bad(slot === 'night' ? 'Better in daylight' : 'More of a night scent', W.time * (1 - share));
 
   const h = heaviness(frag.accords);
-  const sticky = conditions.feelsF > 75 && conditions.humidity > 65;
+  const sticky = isSticky(conditions);
   if (conditions.feelsF >= 78) {
     const fresh = topAccord(frag.accords, w => w <= -0.3);
     if (h <= -0.1) good(fresh ? `Fresh ${fresh} cuts the heat` : 'Fresh notes cut the heat', W.weather * 0.8);
@@ -220,7 +235,7 @@ function reasonsFor(frag, parts, ctx) {
 
 /**
  * Rank a collection for one time slot.
- * conditions: { feelsF, humidity, category, date: Date, lat }
+ * conditions: { feelsF, humidity, dewF?, category, date: Date, lat }
  * slot: 'day' | 'night'
  * opts: { occasion?, history?: [{id, date: 'YYYY-MM-DD'}], todayISO? }
  */
