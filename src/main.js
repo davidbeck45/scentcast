@@ -420,7 +420,8 @@ function refocus(el) {
   if (attrs) document.querySelector(`#app ${el.tagName.toLowerCase()}${attrs}`)?.focus({ preventScroll: true });
 }
 
-function openSheet(sheet) {
+// `instant` skips the slide, for when a view transition animates the change.
+function openSheet(sheet, { instant = false } = {}) {
   const wasOpen = !!state.sheet;
   const sameKind = state.sheet?.kind === sheet.kind;
   const sameBottle = sameKind && sheet.kind === 'detail' && state.sheet.id === sheet.id;
@@ -431,7 +432,10 @@ function openSheet(sheet) {
   el.hidden = false;
   document.body.classList.add('sheet-open');
   $('#app').inert = true;
-  if (!wasOpen) requestAnimationFrame(() => el.classList.add('open'));
+  if (!wasOpen) {
+    if (instant) el.classList.add('open');
+    else requestAnimationFrame(() => el.classList.add('open'));
+  }
   if (!sameKind || (sheet.kind === 'detail' && !sameBottle)) {
     // Don't pop the keyboard on phones just for opening a sheet.
     const typing = ['add', 'import', 'custom', 'location'].includes(sheet.kind) && matchMedia('(hover: hover)').matches;
@@ -445,7 +449,7 @@ function updateSheet(patch) {
   renderSheet({ keepScroll: true });
 }
 
-function closeSheet() {
+function closeSheet({ instant = false } = {}) {
   const el = $('#sheet');
   state.sheet = null;
   el.classList.remove('open');
@@ -453,7 +457,52 @@ function closeSheet() {
   $('#app').inert = false;
   refocus(sheetOpener);
   sheetOpener = null;
-  setTimeout(() => { if (!state.sheet) { el.hidden = true; el.innerHTML = ''; } }, 260);
+  const hide = () => { if (!state.sheet) { el.hidden = true; el.innerHTML = ''; } };
+  if (instant) hide();
+  else setTimeout(hide, 260);
+}
+
+// Opening a bottle flies its photo from the card into the sheet, and closing
+// flies it back (View Transitions). Without the API, or with reduced motion,
+// the sheet just slides.
+const BOTTLE_VT = 'sc-bottle';
+const canMorph = () => 'startViewTransition' in document && !reducedMotion();
+const visible = img => {
+  const r = img?.getBoundingClientRect();
+  return r && r.width > 0 && r.bottom > 0 && r.top < innerHeight;
+};
+
+function morph(from, update, to) {
+  from.style.viewTransitionName = BOTTLE_VT;
+  const vt = document.startViewTransition(async () => {
+    from.style.viewTransitionName = '';
+    update();
+    const target = to();
+    if (!target) return;
+    target.style.viewTransitionName = BOTTLE_VT;
+    // A freshly rendered <img> isn't decoded yet; without this the bottle
+    // vanishes mid-flight. Cached, so it's quick, but never wait long.
+    await Promise.race([target.decode().catch(() => {}), new Promise(r => setTimeout(r, 200))]);
+  });
+  vt.finished.finally(() => {
+    for (const img of document.querySelectorAll('img')) if (img.style.viewTransitionName) img.style.viewTransitionName = '';
+  });
+}
+
+function openDetail(sheet, trigger) {
+  // A pick's name button flies the bottle from the same card.
+  const from = trigger?.querySelector('img') ?? trigger?.closest('.pick')?.querySelector('.pick-bottle img');
+  if (!canMorph() || !visible(from)) return openSheet(sheet);
+  morph(from, () => openSheet(sheet, { instant: true }), () => $('#sheet .sheet-bottle img'));
+}
+
+// Closing by hand (the close button, the backdrop, Escape).
+function dismissSheet() {
+  const id = state.sheet?.kind === 'detail' ? state.sheet.id : null;
+  const from = $('#sheet .sheet-bottle img');
+  const back = id && [...document.querySelectorAll(`#app [data-open][data-id="${CSS.escape(id)}"] img`)].find(visible);
+  if (!canMorph() || !back || !from) return closeSheet();
+  morph(from, () => closeSheet({ instant: true }), () => back);
 }
 
 let toastTimer;
@@ -723,7 +772,7 @@ document.addEventListener('click', async e => {
     renderView();
     if (window.scrollY > $('#hero').offsetHeight) $('.tabs').scrollIntoView({ block: 'start' });
   } else if (d.close !== undefined) {
-    closeSheet();
+    dismissSheet();
   } else if (d.wear !== undefined) {
     const ctx = state.contexts[d.ctx];
     state.history = toggleWear(d.id, ctx.win.dateISO, ctx.win.slot, state.loc);
@@ -765,7 +814,7 @@ document.addEventListener('click', async e => {
     if (state.view !== 'today') { state.view = 'today'; savePrefs(); renderView(); }
     document.getElementById(`slot-${d.jump}`)?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' });
   } else if (d.open !== undefined) {
-    openSheet({ kind: 'detail', ctx: d.ctx, id: d.id });
+    openDetail({ kind: 'detail', ctx: d.ctx, id: d.id }, t);
   } else if (d.occasion) {
     state.occasion = d.occasion;
     state.occasionSlot = null;
@@ -872,7 +921,7 @@ window.addEventListener('resize', () => {
 });
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && state.sheet) closeSheet();
+  if (e.key === 'Escape' && state.sheet) dismissSheet();
   // Arrow keys move between tabs (roving tabindex).
   if (e.target.getAttribute?.('role') === 'tab' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
     const i = VIEWS.indexOf(e.target.dataset.view);
