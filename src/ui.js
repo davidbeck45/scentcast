@@ -1,8 +1,12 @@
 // HTML templates. Everything user-visible is built here; main.js owns state.
-import { ACCORDS, accordColor } from './accords.js';
+import { ACCORDS, accordColor as baseAccordColor } from './accords.js';
 import { renderScene } from './scene.js';
 import { calendarSeason, SEASONS } from './engine.js';
 import { OCCASIONS } from './occasions.js';
+import { paint, paintAccord, theme } from './theme.js';
+
+// Accord colors in the current theme (src/theme.js).
+const accordColor = name => paintAccord(name, baseAccordColor(name));
 
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const TIERS = ['S', 'A', 'B', 'C'];
@@ -154,6 +158,7 @@ export function heroHTML({ loc, wx, loading, error }, aspect, picks, collectionL
     cold: now ? now.feelsF < 50 : false,
     aspect,
     label: now ? `${now.label}, ${deg(now.tempF)}` : 'Weather scene',
+    theme: theme(),
   });
   const locBtn = `<button class="loc-btn" data-action="location" aria-label="Change location: ${esc(loc?.name ?? 'not set')}">${icon.pin}<span>${esc(loc?.name ?? 'Set location')}</span></button>`;
   let body;
@@ -219,6 +224,7 @@ export function slotHeaderHTML(win, nowHour) {
     cold: win.feelsF < 50,
     aspect: 78 / 54,
     label: `${win.label}: ${win.condition}`,
+    theme: theme(),
   });
   const line = [windowRange(win, nowHour), win.condition, `feels ${deg(win.feelsF)}`, ...feelWords(win)].join(' · ');
   return `
@@ -384,7 +390,7 @@ export function slotToggleHTML(slot, wx) {
 
 function bar(label, pct, color, value) {
   return `<div class="bar"><span class="bar-label">${esc(label)}</span>
-    <span class="bar-track"><span class="bar-fill" style="width:${Math.max(0, Math.min(100, pct)).toFixed(1)}%;--c:${color}"></span></span>
+    <span class="bar-track"><span class="bar-fill" style="width:${Math.max(0, Math.min(100, pct)).toFixed(1)}%;--c:${paint(color)}"></span></span>
     <span class="bar-value">${esc(value)}</span></div>`;
 }
 
@@ -685,6 +691,7 @@ export function locationSheetHTML(s = {}, recent = []) {
 
 export function footerHTML({ on, total, sources, updated, stale, units: u, hasHistory }) {
   const unitBtn = x => `<button data-units="${x}" aria-pressed="${u === x}">°${x}</button>`;
+  const themeBtn = (x, label) => `<button data-theme-choice="${x}" aria-pressed="${theme() === x}">${label}</button>`;
   return `
     <div class="foot-row">
       <span>${on} of ${total} bottles in rotation</span>
@@ -693,6 +700,7 @@ export function footerHTML({ on, total, sources, updated, stale, units: u, hasHi
     </div>
     <div class="foot-row">
       <div class="seg tiny" role="group" aria-label="Temperature units">${unitBtn('F')}${unitBtn('C')}</div>
+      <div class="seg tiny" role="group" aria-label="Theme">${themeBtn('default', 'Default')}${themeBtn('gruvbox', 'Gruvbox')}</div>
       ${updated ? `<span class="updated">${stale ? 'Offline · ' : ''}Updated ${esc(updated)}<button class="icon-btn small" data-action="refresh" aria-label="Refresh weather">${icon.refresh}</button></span>` : ''}
     </div>
     <div class="foot-row fine">

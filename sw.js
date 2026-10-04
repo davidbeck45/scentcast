@@ -4,7 +4,7 @@
 // App files always revalidate with the server: GitHub Pages lets browsers
 // keep files for 10 minutes, and a fresh main.js importing a stale module
 // fails to load at all.
-const CACHE = 'scentcast-v7';
+const CACHE = 'scentcast-v8';
 const SHELL = [
   './',
   'index.html',
@@ -28,6 +28,7 @@ const SHELL = [
   'src/fragella.js',
   'src/custom.js',
   'src/layering.js',
+  'src/theme.js',
   'icons/icon.svg',
 ];
 const CACHE_FIRST_HOSTS = ['fimgs.net', 'cdn.fragella.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];

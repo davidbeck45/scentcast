@@ -11,6 +11,7 @@ import { customRecord, isCustomId, fromShareToken, MAX_CUSTOM_ACCORDS } from './
 import { layerPicks } from './layering.js';
 import { sceneTint } from './scene.js';
 import * as ui from './ui.js';
+import { setTheme, theme } from './theme.js';
 
 const PREFS_KEY = 'scentcast.prefs';
 const REFRESH_AFTER = 20 * 60 * 1000;
@@ -26,7 +27,7 @@ function loadPrefs() {
   try { return JSON.parse(localStorage.getItem(PREFS_KEY)) ?? {}; } catch { return {}; }
 }
 function savePrefs() {
-  try { localStorage.setItem(PREFS_KEY, JSON.stringify({ view: state.view, occasion: state.occasion, units: state.units })); } catch {}
+  try { localStorage.setItem(PREFS_KEY, JSON.stringify({ view: state.view, occasion: state.occasion, units: state.units, theme: theme() })); } catch {}
 }
 
 function defaultUnits() {
@@ -61,6 +62,7 @@ const state = {
   lastRemoved: null, // { record, index } for undo
 };
 ui.setUnits(state.units);
+setTheme(prefs.theme);
 
 // ---------- Collections ----------
 
@@ -140,7 +142,7 @@ function renderHero() {
   state.heroAspect = heroAspect();
   $('#hero').innerHTML = ui.heroHTML(state, state.heroAspect, heroPicks(), collectionLabel());
   const now = state.wx?.now;
-  const [top, mid] = sceneTint(now?.phase ?? 'night', now?.category ?? 'clear');
+  const [top, mid] = sceneTint(now?.phase ?? 'night', now?.category ?? 'clear', theme());
   document.documentElement.style.setProperty('--tint-top', top);
   document.documentElement.style.setProperty('--tint-mid', mid);
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', top);
@@ -783,6 +785,10 @@ document.addEventListener('click', async e => {
     renderView();
     renderFooter();
     if (state.sheet) renderSheet({ keepScroll: true });
+  } else if (d.themeChoice) {
+    setTheme(d.themeChoice);
+    savePrefs();
+    render();
   } else if (d.units) {
     state.units = d.units;
     ui.setUnits(state.units);
@@ -984,6 +990,7 @@ async function boot() {
   if (pinned) state.loc = pinned;
   // ?view=week etc., used by the home-screen shortcuts.
   if (VIEWS.includes(params.get('view'))) state.view = params.get('view');
+  if (params.get('theme')) setTheme(params.get('theme'));
   render();
   try {
     const [demo, catalog] = await Promise.all([
