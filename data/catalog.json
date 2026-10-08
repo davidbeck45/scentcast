@@ -1,6 +1,6 @@
 {
   "source": "fragrantica.com, bottles added for other people's collections",
-  "fetched": "2026-09-29",
+  "fetched": "2026-10-08",
   "fragrances": [
     {
       "id": 88207,
@@ -67,6 +67,23 @@
           "Sandalwood",
           "Amber"
         ]
+      },
+      "noteVotes": {
+        "Dust": 146,
+        "Steam Accord": 131,
+        "Vanilla": 119,
+        "Paper": 93,
+        "Black Pepper": 68,
+        "Immortelle": 56,
+        "Sandalwood": 56,
+        "Amber": 37,
+        "Tobacco": 33
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/clue-perfumery/warm-bulb",
+        "longevity": 6.8,
+        "sillage": 6.1,
+        "votes": 108
       }
     },
     {
@@ -125,6 +142,17 @@
         "base": [
           "Coconut Milk"
         ]
+      },
+      "noteVotes": {
+        "Mango": 86,
+        "Rice": 67,
+        "Coconut Milk": 36
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/d-annam/mango-sticky-rice",
+        "longevity": 6.3,
+        "sillage": 6,
+        "votes": 95
       }
     },
     {
@@ -180,6 +208,20 @@
           "Vanilla",
           "Lotus Seed"
         ]
+      },
+      "noteVotes": {
+        "Honey": 132,
+        "Syrup": 105,
+        "Salted Egg Yolk": 77,
+        "Mung Bean": 61,
+        "Vanilla": 61,
+        "Lotus Seed": 35
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/d-annam/mooncake",
+        "longevity": 7.1,
+        "sillage": 6.5,
+        "votes": 108
       }
     },
     {
@@ -239,6 +281,21 @@
           "Ambroxan",
           "Patchouli"
         ]
+      },
+      "noteVotes": {
+        "Akigalawood": 2168,
+        "Woodsy Notes": 1985,
+        "Basil": 1860,
+        "Vetiver": 1642,
+        "Timur": 1421,
+        "Ambroxan": 1353,
+        "Patchouli": 839
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Essential_Parfums/bois-imperial-eau-de-parfum-1",
+        "longevity": 8.5,
+        "sillage": 8.1,
+        "votes": 4288
       }
     },
     {
@@ -292,6 +349,17 @@
           "Musk",
           "Meringue"
         ]
+      },
+      "noteVotes": {
+        "Pear": 115,
+        "Musk": 100,
+        "Meringue": 54
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/french-cowboy/pear-pavlova",
+        "longevity": 7.9,
+        "sillage": 7.4,
+        "votes": 146
       }
     },
     {
@@ -347,6 +415,18 @@
           "Vanilla",
           "Benzoin"
         ]
+      },
+      "noteVotes": {
+        "Almond Milk": 29,
+        "Tonka Bean": 28,
+        "Vanilla": 21,
+        "Benzoin": 10
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/french-cowboy/vanilla-for-breakfast",
+        "longevity": 7.3,
+        "sillage": 7.2,
+        "votes": 32
       }
     },
     {
@@ -407,6 +487,21 @@
           "Guaiac Wood",
           "Vanilla"
         ]
+      },
+      "noteVotes": {
+        "Cedar": 198,
+        "Guaiac Wood": 131,
+        "Vanilla": 131,
+        "Kyara Incense": 105,
+        "Sequoia": 104,
+        "Elemi resin": 95,
+        "Tobacco": 55
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/liis/bo",
+        "longevity": 7.2,
+        "sillage": 6.4,
+        "votes": 274
       }
     },
     {
@@ -466,6 +561,20 @@
           "Styrax",
           "Amber"
         ]
+      },
+      "noteVotes": {
+        "Styrax": 35,
+        "Vanilla": 34,
+        "Waffle": 32,
+        "Amber": 22,
+        "Ylang Ylang": 7,
+        "Bergamot": -3
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/scout-dixon-west/coney-island-baby",
+        "longevity": 5.9,
+        "sillage": 5.8,
+        "votes": 22
       }
     },
     {
@@ -528,6 +637,21 @@
           "Benzoin",
           "Oakmoss"
         ]
+      },
+      "noteVotes": {
+        "Guaiac Wood": 36,
+        "Black Pepper": 28,
+        "Vetiver": 26,
+        "Hinoki": 22,
+        "Mushroom": 19,
+        "Benzoin": 18,
+        "Oakmoss": 12
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/universal-flowering/daddy",
+        "longevity": 7.2,
+        "sillage": 5.8,
+        "votes": 14
       }
     }
   ]

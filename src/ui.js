@@ -467,7 +467,13 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears 
   const ratingLine = f.source === 'custom'
     ? '<span>Entered by hand</span>'
     : `${f.rating ? `★ ${f.rating.toFixed(2)}` : 'Unrated'} <span>${esc(f.source === 'fragella' ? 'Fragella rating' : `${f.ratingVotes.toLocaleString()} votes`)}</span>`;
-  const performance = [f.longevity, f.sillage && `${f.sillage} sillage`].filter(Boolean).map(esc).join(' · ');
+  // Parfumo's 0–10 ratings when we have them, else Fragella's words.
+  const pf = f.parfumo;
+  const performance = pf
+    ? `Longevity ${pf.longevity.toFixed(1)} · Sillage ${pf.sillage.toFixed(1)} <span>of 10 on <a href="${esc(pf.url)}" target="_blank" rel="noopener">Parfumo</a></span>`
+    : [f.longevity, f.sillage && `${f.sillage} sillage`].filter(Boolean).map(esc).join(' · ');
+  const o = f.original;
+  const inspired = o ? `<div class="inspired">Inspired by ${o.url ? `<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.name)}</a>` : esc(o.name)} · ${esc(o.brand)}</div>` : '';
   const altRow = alts.length
     ? `<section><h4>Also good for ${esc(ctxLabel.toLowerCase())}</h4><div class="alts">${alts.map(a => `
         <button class="alt" data-open data-ctx="${esc(ctx)}" data-id="${esc(a.fragrance.id)}">
@@ -481,6 +487,7 @@ export function sheetHTML(entry, ctxLabel, ctx, wornId, { canWear = true, wears 
           <div class="kicker"><span class="tier-chip" data-tier="${entry.tier}">${entry.tier}</span>${esc(ctxLabel)}</div>
           <h2 id="sheet-title">${esc(f.name)}</h2>
           <div class="brand">${meta}</div>
+          ${inspired}
           <div class="rating">${ratingLine}</div>
           ${performance ? `<div class="performance">${performance}</div>` : ''}
         </div>

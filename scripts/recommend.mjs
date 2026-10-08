@@ -43,6 +43,9 @@ async function resolvePlace() {
   return { name: `${hit.name}, ${hit.region}`, lat: hit.lat, lon: hit.lon };
 }
 
+// "Althaïr (Parfums de Marly)" for a dupe; undefined drops out of the JSON.
+const inspiredBy = f => f.original ? `${f.original.name} (${f.original.brand})` : undefined;
+
 const findBottle = name => {
   const q = name.toLowerCase();
   const hit = fragrances.find(f => f.name.toLowerCase() === q) ?? fragrances.find(f => f.name.toLowerCase().includes(q));
@@ -80,6 +83,7 @@ if (args.layer) {
       bottle: base.name,
       partner: pair.fragrance.name,
       brand: pair.fragrance.brand,
+      inspiredBy: inspiredBy(pair.fragrance),
       score: +pair.score.toFixed(3),
       sprayFirst: pair.first.name,
       reasons: pair.reasons.map(x => `${x.tone === 'good' ? '+' : '-'} ${x.text}`),
@@ -116,7 +120,7 @@ if (args.ideal) {
   }
   const range = comfortRange(f, { date, lat });
   if (args.json) {
-    console.log(JSON.stringify({ name: f.name, brand: f.brand, range, topPick }, null, 2));
+    console.log(JSON.stringify({ name: f.name, brand: f.brand, inspiredBy: inspiredBy(f), range, topPick }, null, 2));
   } else {
     const span = ({ lowF, highF }) => lowF === null && highF === null ? 'any temperature'
       : lowF === null ? `${highF}°F and colder` : highF === null ? `${lowF}°F and warmer` : `${lowF}–${highF}°F`;
@@ -164,6 +168,7 @@ if (args.week) {
           tier: pick.tier,
           name: pick.fragrance.name,
           brand: pick.fragrance.brand,
+          inspiredBy: inspiredBy(pick.fragrance),
           reasons: pick.reasons.map(x => `${x.tone === 'good' ? '+' : '-'} ${x.text}`),
           runnerUp: ranked.find(r => r !== pick)?.fragrance.name ?? null,
         })),
@@ -196,7 +201,7 @@ if (args.json) {
     slots: result.map(({ slot, win, ranked }) => ({
       slot,
       window: { label: win.label, feelsF: Math.round(win.feelsF), humidity: Math.round(win.humidity), condition: win.condition, rainChance: win.pop },
-      ranked: ranked.map(r => ({ tier: r.tier, name: r.fragrance.name, brand: r.fragrance.brand, score: +r.score.toFixed(3), reasons: r.reasons.map(x => `${x.tone === 'good' ? '+' : '-'} ${x.text}`) })),
+      ranked: ranked.map(r => ({ tier: r.tier, name: r.fragrance.name, brand: r.fragrance.brand, inspiredBy: inspiredBy(r.fragrance), score: +r.score.toFixed(3), reasons: r.reasons.map(x => `${x.tone === 'good' ? '+' : '-'} ${x.text}`) })),
     })),
   }, null, 2));
 } else {

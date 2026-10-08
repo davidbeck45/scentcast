@@ -7,7 +7,7 @@ import { fitAccordWeights, votedBottles } from '../scripts/fit-accords.mjs';
 const load = f => JSON.parse(readFileSync(new URL(`../data/${f}.json`, import.meta.url))).fragrances;
 
 test('every accord in the data has a weight and color', () => {
-  const unknown = [...new Set([...load('collection'), ...load('catalog'), ...load('calibration')].flatMap(f => Object.keys(f.accords)))]
+  const unknown = [...new Set(votedBottles().flatMap(f => Object.keys(f.accords)))]
     .filter(a => !ACCORDS[a]);
   assert.deepEqual(unknown, [], 'add these to src/accords.js (the engine ignores unknown accords)');
 });

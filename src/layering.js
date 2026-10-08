@@ -2,7 +2,8 @@
 //
 // Each bottle becomes a profile over accord families, from its accords
 // (strength-weighted votes) and its notes (mapped to families by name, heart
-// and base weighted over top since they last on skin). A pair scores on
+// and base weighted over top since they last on skin, and each by how
+// strongly voters smell it when the page has note votes). A pair scores on
 // - complement: families that are known to work together (vanilla + woody,
 //   rose + oud, citrus + amber), or clash (aquatic + caramel);
 // - bridge: some overlap ties them together, but near-duplicates add little;
@@ -242,9 +243,14 @@ const EFFECT = {
 const SWEET = ['vanilla', 'sweet', 'caramel', 'honey', 'cacao', 'almond', 'nutty'];
 const MARINE = ['aquatic', 'ozonic'];
 const LAYER_WEIGHT = { top: 0.6, mid: 1, base: 1.2, all: 1 };
+// Fragrantica's note votes ("Main Notes According to Your Votes") scale each
+// note by its votes over the bottle's average, within these bounds. A listed
+// note nobody votes for (or votes down) sits at the floor.
+const NOTE_VOTE_FLOOR = 0.25;
+const NOTE_VOTE_CAP = 2;
 const NOTES_SHARE = 0.4; // of a profile, the rest from accords
-const COMPLEMENT_FLOOR = 0.34;
-const COMPLEMENT_SPAN = 0.17;
+const COMPLEMENT_FLOOR = 0.33;
+const COMPLEMENT_SPAN = 0.18;
 const MIN_SCORE = 0.4;
 const GENERALIST_DAMPING = 1;
 const GENERIC_NOTE = /notes?$|accord$|^(citruses|white flowers|flowers|spices|woods)$/;
@@ -271,8 +277,20 @@ export function noteFamilies(note) {
 export const noteFamily = note => noteFamilies(note)[0]?.[0] ?? null;
 
 // { family: share } summing to 1, plus the notes behind each family.
+// How strongly each listed note comes through, relative to the bottle's
+// average note; 1 for every note when the record has no note votes.
+function noteStrength(frag) {
+  const votes = frag.noteVotes;
+  const listed = [...new Set(Object.values(frag.notes ?? {}).flat())];
+  if (!votes || !listed.length) return () => 1;
+  const count = n => Math.max(0, votes[n] ?? 0);
+  const mean = listed.reduce((sum, n) => sum + count(n), 0) / listed.length;
+  return note => (mean ? clamp(count(note) / mean, NOTE_VOTE_FLOOR, NOTE_VOTE_CAP) : 1);
+}
+
 export function layerProfile(frag) {
-  const acc = {}, fromNotes = {}, notesBy = {};
+  const acc = {}, fromNotes = {}, notesBy = {}, noteWeight = {}, faint = new Set();
+  const strength = noteStrength(frag);
   let accTotal = 0, noteTotal = 0;
   for (const [a, s] of Object.entries(frag.accords)) {
     const f = family(a);
@@ -281,8 +299,11 @@ export function layerProfile(frag) {
   }
   for (const [layer, list] of Object.entries(frag.notes ?? {})) {
     for (const note of list) {
-      const w = LAYER_WEIGHT[layer] ?? 1;
-      noteFamilies(note).forEach(([f, share], i) => {
+      const w = (LAYER_WEIGHT[layer] ?? 1) * strength(note);
+      const families = noteFamilies(note);
+      if (families.length) noteWeight[cleanNote(note)] = Math.max(noteWeight[cleanNote(note)] ?? 0, w);
+      if (strength(note) <= NOTE_VOTE_FLOOR) faint.add(cleanNote(note));
+      families.forEach(([f, share], i) => {
         fromNotes[f] = (fromNotes[f] ?? 0) + w * share;
         noteTotal += w * share;
         // For naming a family, a note it's the main family of comes first.
@@ -297,7 +318,7 @@ export function layerProfile(frag) {
   // Named notes before generic ones ("sandalwood" over "woody notes"), then heart and base.
   const rank = x => x.w - (GENERIC_NOTE.test(x.note) ? 1 : 0);
   for (const list of Object.values(notesBy)) list.sort((a, b) => rank(b) - rank(a));
-  return { profile, notesBy };
+  return { profile, notesBy, noteWeight, faint };
 }
 
 const profiles = new WeakMap();
@@ -356,8 +377,12 @@ export function layerPair(frag, other, conditions = null) {
   // Bridge: overlap in families, and notes both actually list.
   let bridge = 0;
   for (const [f, pa] of Object.entries(a.profile)) bridge += Math.min(pa, b.profile[f] ?? 0);
-  const notesB = new Set(Object.values(b.notesBy).flat().map(x => x.note));
-  const sharedNotes = [...new Set(Object.values(a.notesBy).flat().map(x => x.note))].filter(n => notesB.has(n) && !GENERIC_NOTE.test(n));
+  // Shared notes, the ones both bottles carry most strongly first; a note
+  // voters barely smell in either one doesn't tie them together.
+  const shared = n => Math.min(a.noteWeight[n], b.noteWeight[n]);
+  const sharedNotes = Object.keys(a.noteWeight)
+    .filter(n => b.noteWeight[n] && !GENERIC_NOTE.test(n) && !a.faint.has(n) && !b.faint.has(n))
+    .sort((x, y) => shared(y) - shared(x));
 
   const similarity = cosine(a.profile, b.profile);
   const [ha, hb] = [heaviness(frag.accords), heaviness(other.accords)];
@@ -366,7 +391,7 @@ export function layerPair(frag, other, conditions = null) {
   const marineA = MARINE.reduce((s, f) => s + (a.profile[f] ?? 0), 0);
   const marineB = MARINE.reduce((s, f) => s + (b.profile[f] ?? 0), 0);
 
-  // Across the demo and catalog, complement runs about 0.34 (10th percentile) to 0.51 (90th).
+  // Across the demo and catalog, complement runs about 0.33 (10th percentile) to 0.51 (90th).
   const complementScore = clamp((complement - COMPLEMENT_FLOOR) / COMPLEMENT_SPAN, 0, 1);
   const bridgeScore = bridge < 0.15 ? bridge / 0.15 : bridge <= 0.45 ? 1 : clamp(1 - (bridge - 0.45) / 0.4, 0, 1);
   const contrastScore = clamp(Math.abs(ha - hb) / 0.4, 0, 1);

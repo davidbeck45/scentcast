@@ -19,8 +19,8 @@ const LAMBDA = 0.3;
 const SEASONS = ['winter', 'spring', 'summer', 'fall'];
 
 const load = stem => JSON.parse(readFileSync(new URL(`../data/${stem}.json`, import.meta.url))).fragrances;
-/** Every bottle in data/ with Fragrantica season votes, calibration set included. */
-export const votedBottles = () => [...load('collection'), ...load('catalog'), ...load('calibration')].filter(f => f.seasonVotes);
+/** Every bottle in data/ with Fragrantica season votes, calibration set and dupes' originals included. */
+export const votedBottles = () => [...load('collection'), ...load('catalog'), ...load('calibration'), ...load('originals')].filter(f => f.seasonVotes);
 const names = Object.keys(ACCORDS);
 const prior = names.map(n => ACCORDS[n].prior);
 

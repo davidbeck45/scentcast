@@ -20,9 +20,27 @@ box?.querySelectorAll('[style*="width"]').forEach(b => {
 });
 
 const pt = [...document.querySelectorAll('*')].find(e => e.children.length === 0 && /^(Perfume Pyramid|Fragrance Notes)$/i.test(e.textContent.trim()));
-let pl = []; if (pt) { let p = pt; for (let i = 0; i < 4; i++) p = p.parentElement; pl = leaf(p); }
+const pyramid = () => { let p = pt; for (let i = 0; i < 4; i++) p = p.parentElement; return leaf(p); };
+const toggle = re => [...document.querySelectorAll('span')].find(e => e.children.length === 0 && re.test(e.textContent.trim()));
+
+// "Show votes" adds how strongly voters smell each note ("2776 Bourbon
+// Vanilla, 2063 Cinnamon..."), loaded on click. Read it, then switch it back
+// off, which leaves the pyramid as it was.
+const noteVotes = {};
+const show = toggle(/^Show votes$/i);
+if (show) {
+  (show.closest('button') || show).click();
+  for (let i = 0; i < 40 && !pyramid().some(t => /According to Your Votes/i.test(t)); i++) await sleep(250);
+}
+const pl = pt ? pyramid() : [];
+const vi = pl.findIndex(t => /According to Your Votes/i.test(t));
+// A note can be voted down below zero ("-3").
+if (vi >= 0) for (let i = vi + 1; i < pl.length - 1 && /^-?[\d.,]+k?$/i.test(pl[i]); i += 2) noteVotes[pl[i + 1]] = num(pl[i]);
+const hide = toggle(/^Hide votes$/i);
+if (show && hide) (hide.closest('button') || hide).click();
+
 const notes = {}; let cur = 'all';
-for (const t of pl) {
+for (const t of pl.slice(vi >= 0 ? vi + 1 + 2 * Object.keys(noteVotes).length : 0)) {
   if (/^(Perfume Pyramid|Fragrance Notes|Show votes|Hide Labels|Show Labels|Hide votes)$/i.test(t)) continue;
   if (/^Top Notes$/i.test(t)) { cur = 'top'; continue; }
   if (/^(Middle|Heart) Notes$/i.test(t)) { cur = 'mid'; continue; }
@@ -41,4 +59,5 @@ JSON.stringify({
   wear: card(/When To Wear/) ? pairs(leaf(card(/When To Wear/)).slice(1)) : null,
   likes: card(/^Rating/) ? pairs(leaf(card(/^Rating/)).slice(1)) : null,
   notes,
+  noteVotes,
 });

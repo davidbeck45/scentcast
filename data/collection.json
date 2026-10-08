@@ -1,6 +1,6 @@
 {
   "source": "fragrantica.com/@doeszen wardrobe (Have)",
-  "fetched": "2026-10-03",
+  "fetched": "2026-10-08",
   "fragrances": [
     {
       "id": 98689,
@@ -68,6 +68,53 @@
           "Musk",
           "Ambergris"
         ]
+      },
+      "noteVotes": {
+        "Pineapple": 1854,
+        "Bergamot": 1144,
+        "oak moss": 1045,
+        "Orange Blossom": 837,
+        "White Flowers": 791,
+        "Musk": 767,
+        "Birch": 734,
+        "Amber": 607,
+        "Ambergris": 597,
+        "Apple": 496
+      },
+      "original": {
+        "id": 84112,
+        "name": "Absolu Aventus 2023",
+        "brand": "Creed",
+        "url": "https://www.fragrantica.com/perfume/Creed/Absolu-Aventus-2023-84112.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.84112.2x.webp",
+        "rating": 4.42,
+        "ratingVotes": 3394,
+        "seasonVotes": {
+          "winter": 1700,
+          "spring": 1800,
+          "summer": 1400,
+          "fall": 1800
+        },
+        "timeVotes": {
+          "day": 1600,
+          "night": 1700
+        },
+        "season": {
+          "winter": 0.254,
+          "spring": 0.269,
+          "summer": 0.209,
+          "fall": 0.269
+        },
+        "dayNight": {
+          "day": 0.485,
+          "night": 0.515
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Afnan_Perfumes/supremacy-collector-s-edition",
+        "longevity": 8.4,
+        "sillage": 8.2,
+        "votes": 1254
       }
     },
     {
@@ -139,6 +186,56 @@
           "Guaiac Wood",
           "Geranium"
         ]
+      },
+      "noteVotes": {
+        "Vanilla": 760,
+        "Apple": 479,
+        "Sandalwood": 421,
+        "Lavender": 302,
+        "Cardamom": 295,
+        "Jasmine": 218,
+        "Pepper": 208,
+        "Guaiac Wood": 184,
+        "Patchouli": 154,
+        "Bergamot": 146,
+        "Geranium": 132,
+        "Violet": 109,
+        "Mandarin Orange": 96
+      },
+      "original": {
+        "id": 39314,
+        "name": "Layton",
+        "brand": "Parfums de Marly",
+        "url": "https://www.fragrantica.com/perfume/Parfums-de-Marly/Layton-39314.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.39314.2x.webp",
+        "rating": 4.44,
+        "ratingVotes": 19333,
+        "seasonVotes": {
+          "winter": 11000,
+          "spring": 9100,
+          "summer": 3700,
+          "fall": 10900
+        },
+        "timeVotes": {
+          "day": 8600,
+          "night": 10100
+        },
+        "season": {
+          "winter": 0.317,
+          "spring": 0.262,
+          "summer": 0.107,
+          "fall": 0.314
+        },
+        "dayNight": {
+          "day": 0.46,
+          "night": 0.54
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Al_Haramain/Detour_Noir",
+        "longevity": 7.9,
+        "sillage": 7.6,
+        "votes": 2706
       }
     },
     {
@@ -205,6 +302,53 @@
           "Musk",
           "Sandalwood"
         ]
+      },
+      "noteVotes": {
+        "Ginger flower": 66,
+        "Vanilla": 59,
+        "Mandarin": 41,
+        "Musk": 36,
+        "Lemon": 33,
+        "Sandalwood": 31,
+        "Orange": 29,
+        "Patchouli": 13,
+        "Jasmine": 12,
+        "Magnolia": 8
+      },
+      "original": {
+        "id": 81895,
+        "name": "Ingenious Ginger",
+        "brand": "Goldfield & Banks Australia",
+        "url": "https://www.fragrantica.com/perfume/Goldfield-Banks-Australia/Ingenious-Ginger-81895.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.81895.2x.webp",
+        "rating": 4.38,
+        "ratingVotes": 4759,
+        "seasonVotes": {
+          "winter": 522,
+          "spring": 2600,
+          "summer": 2800,
+          "fall": 1600
+        },
+        "timeVotes": {
+          "day": 2500,
+          "night": 895
+        },
+        "season": {
+          "winter": 0.069,
+          "spring": 0.346,
+          "summer": 0.372,
+          "fall": 0.213
+        },
+        "dayNight": {
+          "day": 0.736,
+          "night": 0.264
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/arabiyat-prestige/aristo",
+        "longevity": 7.3,
+        "sillage": 7.1,
+        "votes": 79
       }
     },
     {
@@ -270,6 +414,21 @@
           "Sandalwood",
           "Cedarwood"
         ]
+      },
+      "noteVotes": {
+        "Musk": 28,
+        "Lilac": 25,
+        "Orris Root": 24,
+        "Amber": 15,
+        "Bergamot": 14,
+        "Sandalwood": 12,
+        "Cedarwood": 7
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Banana_Republic/sandalwood-musk",
+        "longevity": 7.2,
+        "sillage": 6.7,
+        "votes": 11
       }
     },
     {
@@ -339,6 +498,25 @@
           "Woody Notes",
           "Benzoin"
         ]
+      },
+      "noteVotes": {
+        "Leather": 1433,
+        "Whiskey": 1351,
+        "Tonka Bean": 1027,
+        "Cardamom": 803,
+        "Lavender": 537,
+        "Woody Notes": 483,
+        "Benzoin": 478,
+        "Grapefruit": 334,
+        "Pomelo": 269,
+        "Sage": 245,
+        "Red Thyme": 192
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Carolina_Herrera/CH_Men_Prive",
+        "longevity": 6.8,
+        "sillage": 6.7,
+        "votes": 960
       }
     },
     {
@@ -408,6 +586,26 @@
           "Cedar",
           "Labdanum"
         ]
+      },
+      "noteVotes": {
+        "Ambroxan": 5132,
+        "Calabrian bergamot": 4127,
+        "Pepper": 3642,
+        "Sichuan Pepper": 2784,
+        "Lavender": 2369,
+        "Pink Pepper": 1842,
+        "Cedar": 1479,
+        "Vetiver": 1114,
+        "Patchouli": 1016,
+        "Geranium": 864,
+        "elemi": 759,
+        "Labdanum": 662
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Dior/Sauvage_Eau_de_Toilette",
+        "longevity": 7.8,
+        "sillage": 7.7,
+        "votes": 6277
       }
     },
     {
@@ -473,6 +671,25 @@
           "Heliotrope",
           "Coriander"
         ]
+      },
+      "noteVotes": {
+        "Patchouli": 601,
+        "Tobacco": 367,
+        "Orris": 361,
+        "Leather": 291,
+        "Castoreum": 278,
+        "Tonka Bean": 240,
+        "Sandalwood": 175,
+        "Musk": 169,
+        "Cinnamon": 158,
+        "Heliotrope": 150,
+        "Coriander": 93
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Francesca_Bianchi/sticky-fingers-extrait-de-parfum",
+        "longevity": 8.5,
+        "sillage": 7.9,
+        "votes": 401
       }
     },
     {
@@ -539,6 +756,54 @@
           "Musk",
           "Labdanum"
         ]
+      },
+      "noteVotes": {
+        "Amber": 273,
+        "Oriental notes": 203,
+        "Liquor": 177,
+        "Vanilla Pod": 172,
+        "Tonka": 153,
+        "Cashmere Wood": 100,
+        "Sandalwood": 98,
+        "Sugar Cane": 82,
+        "Cedarwood": 73,
+        "Musk": 65,
+        "Labdanum": 61
+      },
+      "original": {
+        "id": 73595,
+        "name": "Blonde Amber",
+        "brand": "Clive Christian",
+        "url": "https://www.fragrantica.com/perfume/Clive-Christian/Blonde-Amber-73595.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.73595.2x.webp",
+        "rating": 4.51,
+        "ratingVotes": 3089,
+        "seasonVotes": {
+          "winter": 1600,
+          "spring": 613,
+          "summer": 248,
+          "fall": 1400
+        },
+        "timeVotes": {
+          "day": 548,
+          "night": 1500
+        },
+        "season": {
+          "winter": 0.414,
+          "spring": 0.159,
+          "summer": 0.064,
+          "fall": 0.363
+        },
+        "dayNight": {
+          "day": 0.268,
+          "night": 0.732
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/french-avenue/amber-empire",
+        "longevity": 7.9,
+        "sillage": 7.7,
+        "votes": 503
       }
     },
     {
@@ -605,6 +870,51 @@
           "Cacao",
           "Amberwood"
         ]
+      },
+      "noteVotes": {
+        "Watermelon": 667,
+        "Coconut": 433,
+        "Orange": 205,
+        "Mandarin Orange": 166,
+        "Ambergris": 161,
+        "Cacao": 160,
+        "Amberwood": 146,
+        "Lemon": 131
+      },
+      "original": {
+        "id": 91364,
+        "name": "Wavechild",
+        "brand": "Room 1015",
+        "url": "https://www.fragrantica.com/perfume/Room-1015/Wavechild-91364.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.91364.2x.webp",
+        "rating": 4.04,
+        "ratingVotes": 2118,
+        "seasonVotes": {
+          "winter": 47,
+          "spring": 656,
+          "summer": 1200,
+          "fall": 98
+        },
+        "timeVotes": {
+          "day": 943,
+          "night": 176
+        },
+        "season": {
+          "winter": 0.023,
+          "spring": 0.328,
+          "summer": 0.6,
+          "fall": 0.049
+        },
+        "dayNight": {
+          "day": 0.843,
+          "night": 0.157
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/french-avenue/atlantis",
+        "longevity": 8,
+        "sillage": 7.8,
+        "votes": 158
       }
     },
     {
@@ -669,6 +979,53 @@
           "Aquatic notes",
           "Ambergris"
         ]
+      },
+      "noteVotes": {
+        "Ginger": 126,
+        "Bergamot": 104,
+        "Citrus": 104,
+        "Petitgrain": 100,
+        "Mint": 93,
+        "Orange": 74,
+        "Spicy Notes": 71,
+        "Transparent Flowers": 71,
+        "Aquatic notes": 64,
+        "Ambergris": 52
+      },
+      "original": {
+        "id": 67370,
+        "name": "Imagination",
+        "brand": "Louis Vuitton",
+        "url": "https://www.fragrantica.com/perfume/Louis-Vuitton/Imagination-67370.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.67370.2x.webp",
+        "rating": 4.52,
+        "ratingVotes": 14043,
+        "seasonVotes": {
+          "winter": 1800,
+          "spring": 7700,
+          "summer": 9600,
+          "fall": 3500
+        },
+        "timeVotes": {
+          "day": 8000,
+          "night": 3100
+        },
+        "season": {
+          "winter": 0.08,
+          "spring": 0.341,
+          "summer": 0.425,
+          "fall": 0.155
+        },
+        "dayNight": {
+          "day": 0.721,
+          "night": 0.279
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/french-avenue/essence-de-blanc",
+        "longevity": 7.6,
+        "sillage": 7.4,
+        "votes": 246
       }
     },
     {
@@ -731,6 +1088,49 @@
         "base": [
           "White Sandalwood"
         ]
+      },
+      "noteVotes": {
+        "Bergamot": 71,
+        "Magnolia": 67,
+        "White Sandalwood": 56,
+        "Mandarin Orange": 50,
+        "Black Currant": 41,
+        "Moss": 31
+      },
+      "original": {
+        "id": 66097,
+        "name": "Musk Therapy",
+        "brand": "Initio Parfums Prives",
+        "url": "https://www.fragrantica.com/perfume/Initio-Parfums-Prives/Musk-Therapy-66097.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.66097.2x.webp",
+        "rating": 4.21,
+        "ratingVotes": 7850,
+        "seasonVotes": {
+          "winter": 1300,
+          "spring": 3300,
+          "summer": 3200,
+          "fall": 2200
+        },
+        "timeVotes": {
+          "day": 3200,
+          "night": 1300
+        },
+        "season": {
+          "winter": 0.13,
+          "spring": 0.33,
+          "summer": 0.32,
+          "fall": 0.22
+        },
+        "dayNight": {
+          "day": 0.711,
+          "night": 0.289
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/french-avenue/glorious-oud-royal-blanc",
+        "longevity": 7.4,
+        "sillage": 7,
+        "votes": 41
       }
     },
     {
@@ -799,6 +1199,53 @@
           "Musk",
           "Guaiac Wood"
         ]
+      },
+      "noteVotes": {
+        "Bourbon Vanilla": 2776,
+        "Cinnamon": 2063,
+        "Praline": 1913,
+        "Orange Blossom": 1297,
+        "Cardamom": 1217,
+        "Ambroxan": 740,
+        "Musk": 677,
+        "Guaiac Wood": 656,
+        "elemi": 517,
+        "Bergamot": 452
+      },
+      "original": {
+        "id": 84109,
+        "name": "Althaïr",
+        "brand": "Parfums de Marly",
+        "url": "https://www.fragrantica.com/perfume/Parfums-de-Marly/Althair-84109.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.84109.2x.webp",
+        "rating": 4.39,
+        "ratingVotes": 11972,
+        "seasonVotes": {
+          "winter": 7300,
+          "spring": 2000,
+          "summer": 893,
+          "fall": 6400
+        },
+        "timeVotes": {
+          "day": 3600,
+          "night": 5900
+        },
+        "season": {
+          "winter": 0.44,
+          "spring": 0.121,
+          "summer": 0.054,
+          "fall": 0.386
+        },
+        "dayNight": {
+          "day": 0.379,
+          "night": 0.621
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/french-avenue/liquid-brun",
+        "longevity": 8.4,
+        "sillage": 8.1,
+        "votes": 2405
       }
     },
     {
@@ -850,6 +1297,16 @@
           "Citruses",
           "Woodsy Notes"
         ]
+      },
+      "noteVotes": {
+        "Citruses": 48,
+        "Woodsy Notes": 48
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Hollister/Jake_Eau_de_Cologne",
+        "longevity": 4.8,
+        "sillage": 5.1,
+        "votes": 45
       }
     },
     {
@@ -915,6 +1372,51 @@
           "Musk",
           "Amber"
         ]
+      },
+      "noteVotes": {
+        "Vanilla": 295,
+        "Caramel": 262,
+        "Butter": 250,
+        "Tonka": 139,
+        "Honey": 138,
+        "Musk": 112,
+        "Amber": 106,
+        "Jasmine": 52
+      },
+      "original": {
+        "id": 64757,
+        "name": "Bianco Latte",
+        "brand": "Giardini Di Toscana",
+        "url": "https://www.fragrantica.com/perfume/Giardini-Di-Toscana/Bianco-Latte-64757.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.64757.2x.webp",
+        "rating": 4.07,
+        "ratingVotes": 11548,
+        "seasonVotes": {
+          "winter": 5700,
+          "spring": 2000,
+          "summer": 1100,
+          "fall": 5100
+        },
+        "timeVotes": {
+          "day": 4000,
+          "night": 3600
+        },
+        "season": {
+          "winter": 0.41,
+          "spring": 0.144,
+          "summer": 0.079,
+          "fall": 0.367
+        },
+        "dayNight": {
+          "day": 0.526,
+          "night": 0.474
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Khadlaj/cream-velvet",
+        "longevity": 7.7,
+        "sillage": 7.2,
+        "votes": 104
       }
     },
     {
@@ -982,6 +1484,54 @@
           "Vetiver",
           "Sandalwood"
         ]
+      },
+      "noteVotes": {
+        "Green Accord": 54,
+        "Musk": 48,
+        "Neroli": 41,
+        "Bergamot": 39,
+        "Verbena": 36,
+        "Orange Blossom": 29,
+        "Ambroxan": 26,
+        "Mandarin": 20,
+        "Geranium": 16,
+        "Vetiver": 15,
+        "Sandalwood": 9
+      },
+      "original": {
+        "id": 69275,
+        "name": "Herbes Troublantes",
+        "brand": "Guerlain",
+        "url": "https://www.fragrantica.com/perfume/Guerlain/Herbes-Troublantes-69275.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.69275.2x.webp",
+        "rating": 4.33,
+        "ratingVotes": 1402,
+        "seasonVotes": {
+          "winter": 71,
+          "spring": 647,
+          "summer": 675,
+          "fall": 127
+        },
+        "timeVotes": {
+          "day": 612,
+          "night": 131
+        },
+        "season": {
+          "winter": 0.047,
+          "spring": 0.426,
+          "summer": 0.444,
+          "fall": 0.084
+        },
+        "dayNight": {
+          "day": 0.824,
+          "night": 0.176
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Khadlaj/shiyaaka-sky",
+        "longevity": 6.3,
+        "sillage": 6.4,
+        "votes": 86
       }
     },
     {
@@ -1050,6 +1600,53 @@
           "Tonka",
           "Patchouli"
         ]
+      },
+      "noteVotes": {
+        "Cardamom": 999,
+        "Black Tea": 857,
+        "Sandalwood": 841,
+        "Fig": 837,
+        "Vanilla": 815,
+        "Iris": 601,
+        "Tonka": 497,
+        "Vetiver": 324,
+        "Labdanum": 256,
+        "Patchouli": 213
+      },
+      "original": {
+        "id": 57038,
+        "name": "Gris Charnel",
+        "brand": "BDK Parfums",
+        "url": "https://www.fragrantica.com/perfume/BDK-Parfums/Gris-Charnel-57038.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.57038.2x.webp",
+        "rating": 4.2,
+        "ratingVotes": 9708,
+        "seasonVotes": {
+          "winter": 4000,
+          "spring": 2800,
+          "summer": 1100,
+          "fall": 4600
+        },
+        "timeVotes": {
+          "day": 3500,
+          "night": 3400
+        },
+        "season": {
+          "winter": 0.32,
+          "spring": 0.224,
+          "summer": 0.088,
+          "fall": 0.368
+        },
+        "dayNight": {
+          "day": 0.507,
+          "night": 0.493
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Lattafa/liam",
+        "longevity": 7.7,
+        "sillage": 7.3,
+        "votes": 2366
       }
     },
     {
@@ -1116,6 +1713,51 @@
           "Sandalwood",
           "Oud"
         ]
+      },
+      "noteVotes": {
+        "Plum": 910,
+        "Palo Santo": 649,
+        "Sandalwood": 521,
+        "Lavender": 515,
+        "Sage": 341,
+        "Bergamot": 250,
+        "Black Pepper": 228,
+        "Oud": 162
+      },
+      "original": {
+        "id": 76580,
+        "name": "Paragon",
+        "brand": "Initio Parfums Prives",
+        "url": "https://www.fragrantica.com/perfume/Initio-Parfums-Prives/Paragon-76580.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.76580.2x.webp",
+        "rating": 4.24,
+        "ratingVotes": 4251,
+        "seasonVotes": {
+          "winter": 1600,
+          "spring": 1600,
+          "summer": 940,
+          "fall": 1800
+        },
+        "timeVotes": {
+          "day": 1600,
+          "night": 1500
+        },
+        "season": {
+          "winter": 0.269,
+          "spring": 0.269,
+          "summer": 0.158,
+          "fall": 0.303
+        },
+        "dayNight": {
+          "day": 0.516,
+          "night": 0.484
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/lattafa-pride/vintage-radio",
+        "longevity": 7.8,
+        "sillage": 7.6,
+        "votes": 1121
       }
     },
     {
@@ -1182,6 +1824,50 @@
           "Amber",
           "Madagascar Vanilla"
         ]
+      },
+      "noteVotes": {
+        "Turkish Rose": 185,
+        "Pink Pepper": 102,
+        "Amber": 96,
+        "Madagascar Vanilla": 85,
+        "Bergamot": 82,
+        "Hedione": 55,
+        "Egyptian Jasmine": 46
+      },
+      "original": {
+        "id": 57587,
+        "name": "Atomic Rose",
+        "brand": "Initio Parfums Prives",
+        "url": "https://www.fragrantica.com/perfume/Initio-Parfums-Prives/Atomic-Rose-57587.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.57587.2x.webp",
+        "rating": 4.27,
+        "ratingVotes": 4493,
+        "seasonVotes": {
+          "winter": 1700,
+          "spring": 1600,
+          "summer": 1100,
+          "fall": 1700
+        },
+        "timeVotes": {
+          "day": 1500,
+          "night": 1700
+        },
+        "season": {
+          "winter": 0.279,
+          "spring": 0.262,
+          "summer": 0.18,
+          "fall": 0.279
+        },
+        "dayNight": {
+          "day": 0.469,
+          "night": 0.531
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/maison-alhambra/infini-rose",
+        "longevity": 8.1,
+        "sillage": 7.5,
+        "votes": 38
       }
     },
     {
@@ -1249,6 +1935,52 @@
           "Amber",
           "Vanilla"
         ]
+      },
+      "noteVotes": {
+        "Pear": 160,
+        "Musk": 119,
+        "Orange Blossom": 101,
+        "Ginger": 92,
+        "Jasmine": 92,
+        "Amber": 69,
+        "Bergamot": 62,
+        "Woody Notes": 55,
+        "Vanilla": 39
+      },
+      "original": {
+        "id": 84224,
+        "name": "Blue Talisman",
+        "brand": "Ex Nihilo",
+        "url": "https://www.fragrantica.com/perfume/Ex-Nihilo/Blue-Talisman-84224.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.84224.2x.webp",
+        "rating": 4.16,
+        "ratingVotes": 6350,
+        "seasonVotes": {
+          "winter": 764,
+          "spring": 2900,
+          "summer": 3000,
+          "fall": 1600
+        },
+        "timeVotes": {
+          "day": 2800,
+          "night": 1200
+        },
+        "season": {
+          "winter": 0.092,
+          "spring": 0.351,
+          "summer": 0.363,
+          "fall": 0.194
+        },
+        "dayNight": {
+          "day": 0.7,
+          "night": 0.3
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/maison-asrar/legacy",
+        "longevity": 7.4,
+        "sillage": 7.3,
+        "votes": 424
       }
     },
     {
@@ -1316,6 +2048,23 @@
           "Ambrettolide",
           "Sandalwood"
         ]
+      },
+      "noteVotes": {
+        "Orris Root": 220,
+        "Violet": 155,
+        "Moxalone": 129,
+        "Akigalawood": 119,
+        "Civettone": 99,
+        "Sesame": 85,
+        "Sandalwood": 69,
+        "Ambrettolide": 69,
+        "Bergamot": 67
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Nishane/meant-to-be-seen-1",
+        "longevity": 7.8,
+        "sillage": 7.3,
+        "votes": 286
       }
     },
     {
@@ -1381,6 +2130,50 @@
           "Vanilla",
           "Cedarwood"
         ]
+      },
+      "noteVotes": {
+        "Vanilla": 1014,
+        "Olibanum": 660,
+        "Black Pepper": 614,
+        "elemi": 492,
+        "Pink Pepper": 425,
+        "Saffron": 361,
+        "Cedarwood": 347
+      },
+      "original": {
+        "id": 73149,
+        "name": "Babycat",
+        "brand": "Yves Saint Laurent",
+        "url": "https://www.fragrantica.com/perfume/Yves-Saint-Laurent/Babycat-73149.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.73149.2x.webp",
+        "rating": 4.21,
+        "ratingVotes": 5338,
+        "seasonVotes": {
+          "winter": 2600,
+          "spring": 673,
+          "summer": 307,
+          "fall": 2400
+        },
+        "timeVotes": {
+          "day": 1000,
+          "night": 2300
+        },
+        "season": {
+          "winter": 0.435,
+          "spring": 0.113,
+          "summer": 0.051,
+          "fall": 0.401
+        },
+        "dayNight": {
+          "day": 0.303,
+          "night": 0.697
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/paris-corner/rifaaqat",
+        "longevity": 8.2,
+        "sillage": 7.9,
+        "votes": 579
       }
     },
     {
@@ -1448,6 +2241,52 @@
           "Cedar",
           "Cashmeran"
         ]
+      },
+      "noteVotes": {
+        "Blackcurrant": 25,
+        "Green Tea": 22,
+        "Rice": 21,
+        "Peony": 19,
+        "Raspberry": 16,
+        "Cyclamen": 14,
+        "Musk": 14,
+        "Cedar": 12,
+        "Cashmeran": 7
+      },
+      "original": {
+        "id": 46165,
+        "name": "One Umbrella for Two Floraïku",
+        "brand": "Floraiku",
+        "url": "https://www.fragrantica.com/perfume/Floraiku/One-Umbrella-for-Two-46165.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.46165.2x.webp",
+        "rating": 3.98,
+        "ratingVotes": 3509,
+        "seasonVotes": {
+          "winter": 783,
+          "spring": 1000,
+          "summer": 597,
+          "fall": 1100
+        },
+        "timeVotes": {
+          "day": 1000,
+          "night": 534
+        },
+        "season": {
+          "winter": 0.225,
+          "spring": 0.287,
+          "summer": 0.172,
+          "fall": 0.316
+        },
+        "dayNight": {
+          "day": 0.652,
+          "night": 0.348
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/paris-corner/zahri-amara",
+        "longevity": 7.4,
+        "sillage": 7.2,
+        "votes": 19
       }
     },
     {
@@ -1515,6 +2354,52 @@
           "Tonka Bean",
           "White Musk"
         ]
+      },
+      "noteVotes": {
+        "Vanilla": 352,
+        "Mint": 295,
+        "Dark Chocolate": 249,
+        "Tonka Bean": 198,
+        "Lavender": 184,
+        "Benzoin": 120,
+        "White Musk": 98,
+        "Bergamot": 79,
+        "Artemisia": 48
+      },
+      "original": {
+        "id": 81642,
+        "name": "Le Male Elixir",
+        "brand": "Jean Paul Gaultier",
+        "url": "https://www.fragrantica.com/perfume/Jean-Paul-Gaultier/Le-Male-Elixir-81642.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.81642.2x.webp",
+        "rating": 4.5,
+        "ratingVotes": 26370,
+        "seasonVotes": {
+          "winter": 19900,
+          "spring": 5200,
+          "summer": 2500,
+          "fall": 15300
+        },
+        "timeVotes": {
+          "day": 7000,
+          "night": 16500
+        },
+        "season": {
+          "winter": 0.464,
+          "spring": 0.121,
+          "summer": 0.058,
+          "fall": 0.357
+        },
+        "dayNight": {
+          "day": 0.298,
+          "night": 0.702
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/Rasasi/hawas-elixir",
+        "longevity": 8.4,
+        "sillage": 8.1,
+        "votes": 156
       }
     },
     {
@@ -1597,6 +2482,68 @@
           "Ambergris",
           "Maltol"
         ]
+      },
+      "noteVotes": {
+        "Cardamom": 295,
+        "Frankincense": 278,
+        "Vanilla": 262,
+        "Amber": 255,
+        "Benzoin": 221,
+        "elemi": 187,
+        "Patchouli": 133,
+        "Sichuan Pepper": 126,
+        "Opoponax": 120,
+        "Cumin": 119,
+        "Coriander": 113,
+        "Bergamot": 103,
+        "Lemon": 103,
+        "Anise": 102,
+        "Saffron": 92,
+        "Oud": 87,
+        "Labdanum": 71,
+        "Birch": 63,
+        "Musk": 61,
+        "Ambergris": 58,
+        "Maltol": 50,
+        "Wormwood": 46,
+        "Orange Blossom": 35,
+        "Rose": 32,
+        "Geranium": 30
+      },
+      "original": {
+        "id": 97924,
+        "name": "Outlands",
+        "brand": "Amouage",
+        "url": "https://www.fragrantica.com/perfume/Amouage/Outlands-97924.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.97924.2x.webp",
+        "rating": 4.33,
+        "ratingVotes": 3242,
+        "seasonVotes": {
+          "winter": 1800,
+          "spring": 882,
+          "summer": 272,
+          "fall": 1500
+        },
+        "timeVotes": {
+          "day": 906,
+          "night": 1500
+        },
+        "season": {
+          "winter": 0.404,
+          "spring": 0.198,
+          "summer": 0.061,
+          "fall": 0.337
+        },
+        "dayNight": {
+          "day": 0.377,
+          "night": 0.623
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/rayhaan/terra",
+        "longevity": 8.6,
+        "sillage": 8.4,
+        "votes": 530
       }
     }
   ]

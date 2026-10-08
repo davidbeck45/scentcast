@@ -64,21 +64,27 @@ export function targetSeasonWeights(feelsF, date, lat) {
 // A split from few votes is noisy, so voted shares lean toward what the
 // accords predict (src/custom.js), with the estimate counting as this many
 // votes: about how far well-voted bottles stray from it, out of sample.
+// A dupe's original (`original`, from data/dupes.json) predicts its split
+// better: across the wardrobe's 18 dupes it strays about as far as 120 votes
+// would, for seasons and day/night alike. Both count toward the prior.
 // Fragella and hand-entered bottles are estimates already and pass through.
 const SEASON_PRIOR_VOTES = 60;
 const NIGHT_PRIOR_VOTES = 15;
+const ORIGINAL_PRIOR_VOTES = 120;
 const steadied = new WeakMap();
 
 export function steadyShares(frag) {
   if (!frag.seasonVotes || !frag.timeVotes) return frag;
   if (steadied.has(frag)) return steadied.get(frag);
+  const orig = frag.original;
+  const ko = orig ? ORIGINAL_PRIOR_VOTES : 0;
   const n = SEASONS.reduce((sum, s) => sum + frag.seasonVotes[s], 0);
-  const w = n / (n + SEASON_PRIOR_VOTES);
   const est = estimateSeason(frag.accords);
-  const season = Object.fromEntries(SEASONS.map(s => [s, w * frag.season[s] + (1 - w) * est[s]]));
+  const season = Object.fromEntries(SEASONS.map(s => [s,
+    (n * frag.season[s] + SEASON_PRIOR_VOTES * est[s] + ko * (orig?.season[s] ?? 0)) / (n + SEASON_PRIOR_VOTES + ko)]));
   const tn = frag.timeVotes.day + frag.timeVotes.night;
-  const wn = tn / (tn + NIGHT_PRIOR_VOTES);
-  const night = wn * frag.dayNight.night + (1 - wn) * estimateNight(frag.accords);
+  const night = (tn * frag.dayNight.night + NIGHT_PRIOR_VOTES * estimateNight(frag.accords) + ko * (orig?.dayNight.night ?? 0))
+    / (tn + NIGHT_PRIOR_VOTES + ko);
   const shares = { season, dayNight: { day: 1 - night, night } };
   steadied.set(frag, shares);
   return shares;
@@ -177,13 +183,43 @@ export function quality(frag) {
   return clamp((frag.rating - 3.5) / 1.0, 0, 1) * confidence + 0.5 * (1 - confidence);
 }
 
-export function occasionRaw(frag, profile) {
+// Parfumo's longevity and sillage ratings (0–10 averages, `parfumo` from
+// data/parfumo.jsonl; Fragrantica no longer shows them) as -1 (fades fast,
+// stays close) .. +1 (lasts, projects) around the middle of the bottles in
+// data/. A rating from few votes leans toward the middle, and a bottle
+// without one sits there.
+const PERFORMANCE_MID = { longevity: 7.8, sillage: 7.4 };
+const PERFORMANCE_SPAN = 1.2;
+const PERFORMANCE_PRIOR_VOTES = 10;
+// How much an occasion's wish for longevity or sillage counts against its accords.
+const PERFORMANCE_WEIGHT = 0.4;
+// The share of an occasion's fit that earns a reason ("Stays close to the skin").
+const PERFORMANCE_REASON = 0.1;
+
+export function performanceLevel(frag, key) {
+  const p = frag.parfumo;
+  if (!p || p[key] == null) return 0;
+  const steady = (p.votes * p[key] + PERFORMANCE_PRIOR_VOTES * PERFORMANCE_MID[key]) / (p.votes + PERFORMANCE_PRIOR_VOTES);
+  return clamp((steady - PERFORMANCE_MID[key]) / PERFORMANCE_SPAN, -1, 1);
+}
+
+// What longevity and sillage add to a bottle's fit for the occasion: its
+// wish for each (`performance`, -1 quiet or fleeting .. +1 loud or lasting)
+// times the bottle's level.
+export function performanceFit(frag, occasion) {
+  const wish = occasion.performance ?? {};
+  const part = key => PERFORMANCE_WEIGHT * (wish[key] ?? 0) * performanceLevel(frag, key);
+  return { longevity: part('longevity'), sillage: part('sillage') };
+}
+
+export function occasionRaw(frag, occasion) {
   let sum = 0, total = 0;
   for (const [a, s] of Object.entries(frag.accords)) {
     total += s;
-    sum += s * (profile[a] ?? 0);
+    sum += s * (occasion.profile[a] ?? 0);
   }
-  return total ? sum / total : 0;
+  const perf = performanceFit(frag, occasion);
+  return (total ? sum / total : 0) + perf.longevity + perf.sillage;
 }
 
 export function daysBetween(fromISO, toISO) {
@@ -261,6 +297,15 @@ function reasonsFor(frag, parts, ctx) {
     const label = occasion.label.toLowerCase();
     if (fits.length) good(`${fits.join(' & ')} suit${fits.length === 1 ? 's' : ''} ${label}`, W.occasion * (0.5 + parts.occasion));
     if (clash) bad(`${clash} is off for ${label}`, W.occasion * (1.5 - parts.occasion) * 0.5);
+
+    // Longevity and sillage, where the occasion cares about them.
+    const perf = performanceFit(frag, occasion);
+    const wish = occasion.performance ?? {};
+    const [loud, quiet] = wish.sillage > 0 ? ['Projects across a room', `Too quiet for ${label}`] : ['Stays close to the skin', `Projects a lot for ${label}`];
+    if (perf.sillage >= PERFORMANCE_REASON) good(loud, W.occasion * perf.sillage * 2);
+    else if (perf.sillage <= -PERFORMANCE_REASON) bad(quiet, W.occasion * -perf.sillage * 2);
+    if (perf.longevity >= PERFORMANCE_REASON) good(`Lasts the whole ${slot === 'night' ? 'night' : 'day'}`, W.occasion * perf.longevity * 2);
+    else if (perf.longevity <= -PERFORMANCE_REASON) bad('Fades early', W.occasion * -perf.longevity * 2);
   }
 
   if (frag.rating >= 4.35 && frag.ratingVotes >= 1000) good(`Crowd favorite · ${frag.rating.toFixed(1)}★`, 0.03);
@@ -285,7 +330,7 @@ export function rank(fragrances, conditions, slot, opts = {}) {
   const { occasion = null, history = [], todayISO = new Date().toISOString().slice(0, 10) } = opts;
   const weights = targetSeasonWeights(conditions.feelsF, conditions.date, conditions.lat);
 
-  const raws = occasion ? fragrances.map(f => occasionRaw(f, occasion.profile)) : [];
+  const raws = occasion ? fragrances.map(f => occasionRaw(f, occasion)) : [];
   const lo = Math.min(...raws), hi = Math.max(...raws);
 
   const scored = fragrances.map((frag, i) => {

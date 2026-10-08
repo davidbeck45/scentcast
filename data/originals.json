@@ -1,0 +1,1457 @@
+{
+  "source": "fragrantica.com, the originals that dupes in data/ are inspired by",
+  "fetched": "2026-10-08",
+  "fragrances": [
+    {
+      "id": 97924,
+      "name": "Outlands",
+      "brand": "Amouage",
+      "year": 2024,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Amouage/Outlands-97924.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.97924.2x.webp",
+      "rating": 4.33,
+      "ratingVotes": 3242,
+      "accords": {
+        "amber": 100,
+        "warm spicy": 75,
+        "aromatic": 72,
+        "fresh spicy": 68,
+        "balsamic": 59,
+        "citrus": 58,
+        "vanilla": 55,
+        "woody": 50,
+        "sweet": 49,
+        "patchouli": 45
+      },
+      "seasonVotes": {
+        "winter": 1800,
+        "spring": 882,
+        "summer": 272,
+        "fall": 1500
+      },
+      "timeVotes": {
+        "day": 906,
+        "night": 1500
+      },
+      "season": {
+        "winter": 0.404,
+        "spring": 0.198,
+        "summer": 0.061,
+        "fall": 0.337
+      },
+      "dayNight": {
+        "day": 0.377,
+        "night": 0.623
+      },
+      "sentiment": {
+        "love": 2000,
+        "like": 608,
+        "ok": 340,
+        "dislike": 154,
+        "hate": 103
+      },
+      "notes": {
+        "top": [
+          "Frankincense",
+          "Cardamom",
+          "elemi",
+          "Lemon",
+          "Bergamot",
+          "Sichuan Pepper"
+        ],
+        "mid": [
+          "Patchouli",
+          "Anise",
+          "Coriander",
+          "Saffron",
+          "Cumin",
+          "Orange Blossom",
+          "Wormwood",
+          "Geranium",
+          "Rose"
+        ],
+        "base": [
+          "Frankincense",
+          "Vanilla",
+          "Amber",
+          "Benzoin",
+          "Oud",
+          "Opoponax",
+          "Birch",
+          "Ambergris",
+          "Labdanum",
+          "Maltol",
+          "Musk"
+        ]
+      },
+      "noteVotes": {
+        "Frankincense": 386,
+        "Vanilla": 376,
+        "Cardamom": 355,
+        "Amber": 335,
+        "elemi": 283,
+        "Patchouli": 282,
+        "Benzoin": 248,
+        "Oud": 216,
+        "Lemon": 199,
+        "Bergamot": 187,
+        "Opoponax": 167,
+        "Sichuan Pepper": 162,
+        "Anise": 145,
+        "Coriander": 137,
+        "Birch": 127,
+        "Saffron": 119,
+        "Cumin": 114,
+        "Ambergris": 104,
+        "Labdanum": 99,
+        "Maltol": 95,
+        "Orange Blossom": 91,
+        "Wormwood": 89,
+        "Musk": 72,
+        "Geranium": 66,
+        "Rose": 58
+      }
+    },
+    {
+      "id": 57038,
+      "name": "Gris Charnel",
+      "brand": "BDK Parfums",
+      "year": 2019,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/BDK-Parfums/Gris-Charnel-57038.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.57038.2x.webp",
+      "rating": 4.2,
+      "ratingVotes": 9708,
+      "accords": {
+        "woody": 100,
+        "warm spicy": 88,
+        "aromatic": 71,
+        "powdery": 67,
+        "fruity": 57,
+        "iris": 56,
+        "sweet": 56,
+        "green": 51,
+        "earthy": 50,
+        "vanilla": 46
+      },
+      "seasonVotes": {
+        "winter": 4000,
+        "spring": 2800,
+        "summer": 1100,
+        "fall": 4600
+      },
+      "timeVotes": {
+        "day": 3500,
+        "night": 3400
+      },
+      "season": {
+        "winter": 0.32,
+        "spring": 0.224,
+        "summer": 0.088,
+        "fall": 0.368
+      },
+      "dayNight": {
+        "day": 0.507,
+        "night": 0.493
+      },
+      "sentiment": {
+        "love": 5100,
+        "like": 2600,
+        "ok": 1200,
+        "dislike": 658,
+        "hate": 204
+      },
+      "notes": {
+        "top": [
+          "Cardamom",
+          "Fig",
+          "Black Tea"
+        ],
+        "mid": [
+          "Iris",
+          "Bourbon Vetiver"
+        ],
+        "base": [
+          "Sandalwood",
+          "Tonka Bean"
+        ]
+      },
+      "noteVotes": {
+        "Sandalwood": 1748,
+        "Cardamom": 1478,
+        "Fig": 1364,
+        "Black Tea": 1162,
+        "Iris": 1052,
+        "Tonka Bean": 901,
+        "Bourbon Vetiver": 651
+      }
+    },
+    {
+      "id": 73595,
+      "name": "Blonde Amber",
+      "brand": "Clive Christian",
+      "year": 2022,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Clive-Christian/Blonde-Amber-73595.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.73595.2x.webp",
+      "rating": 4.51,
+      "ratingVotes": 3089,
+      "accords": {
+        "woody": 100,
+        "amber": 97,
+        "warm spicy": 94,
+        "vanilla": 76,
+        "sweet": 75,
+        "white floral": 71,
+        "fruity": 65,
+        "aromatic": 63,
+        "powdery": 61,
+        "balsamic": 58
+      },
+      "seasonVotes": {
+        "winter": 1600,
+        "spring": 613,
+        "summer": 248,
+        "fall": 1400
+      },
+      "timeVotes": {
+        "day": 548,
+        "night": 1500
+      },
+      "season": {
+        "winter": 0.414,
+        "spring": 0.159,
+        "summer": 0.064,
+        "fall": 0.363
+      },
+      "dayNight": {
+        "day": 0.268,
+        "night": 0.732
+      },
+      "sentiment": {
+        "love": 2200,
+        "like": 522,
+        "ok": 230,
+        "dislike": 105,
+        "hate": 52
+      },
+      "notes": {
+        "top": [
+          "Rum",
+          "Olibanum",
+          "Bitter Orange",
+          "Cardamom",
+          "Pink Pepper",
+          "Ginger",
+          "Bergamot",
+          "Grapefruit"
+        ],
+        "mid": [
+          "Dried Fruits",
+          "White Tobacco",
+          "Sandalwood",
+          "Saffron",
+          "Tuberose",
+          "Osmanthus",
+          "Jasmine",
+          "Orris"
+        ],
+        "base": [
+          "Tonka Bean",
+          "Vanilla",
+          "Myrrh",
+          "Labdanum",
+          "Patchouli",
+          "Cedar",
+          "Musk",
+          "Vetiver"
+        ]
+      },
+      "noteVotes": {
+        "Dried Fruits": 318,
+        "Rum": 287,
+        "Tonka Bean": 272,
+        "White Tobacco": 235,
+        "Vanilla": 230,
+        "Myrrh": 199,
+        "Olibanum": 178,
+        "Sandalwood": 171,
+        "Bitter Orange": 151,
+        "Cardamom": 132,
+        "Labdanum": 124,
+        "Saffron": 105,
+        "Patchouli": 104,
+        "Tuberose": 91,
+        "Cedar": 89,
+        "Musk": 86,
+        "Pink Pepper": 78,
+        "Osmanthus": 78,
+        "Jasmine": 63,
+        "Orris": 59,
+        "Vetiver": 57,
+        "Ginger": 52,
+        "Bergamot": 44,
+        "Grapefruit": 30
+      }
+    },
+    {
+      "id": 84112,
+      "name": "Absolu Aventus 2023",
+      "brand": "Creed",
+      "year": 2023,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Creed/Absolu-Aventus-2023-84112.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.84112.2x.webp",
+      "rating": 4.42,
+      "ratingVotes": 3394,
+      "accords": {
+        "citrus": 100,
+        "warm spicy": 75,
+        "fresh spicy": 73,
+        "woody": 69,
+        "fruity": 67,
+        "aromatic": 67,
+        "earthy": 53,
+        "sweet": 52,
+        "soft spicy": 52,
+        "patchouli": 49
+      },
+      "seasonVotes": {
+        "winter": 1700,
+        "spring": 1800,
+        "summer": 1400,
+        "fall": 1800
+      },
+      "timeVotes": {
+        "day": 1600,
+        "night": 1700
+      },
+      "season": {
+        "winter": 0.254,
+        "spring": 0.269,
+        "summer": 0.209,
+        "fall": 0.269
+      },
+      "dayNight": {
+        "day": 0.485,
+        "night": 0.515
+      },
+      "sentiment": {
+        "love": 2300,
+        "like": 637,
+        "ok": 269,
+        "dislike": 104,
+        "hate": 122
+      },
+      "notes": {
+        "top": [
+          "Grapefruit",
+          "Bergamot",
+          "Pink Pepper",
+          "Black Currant",
+          "Pineapple",
+          "Nutmeg",
+          "Cloves"
+        ],
+        "mid": [
+          "Ginger",
+          "Cinnamon",
+          "Citron",
+          "Cardamom",
+          "Rose"
+        ],
+        "base": [
+          "Patchouli",
+          "Vetiver",
+          "Oakmoss",
+          "Ambroxan",
+          "Sandalwood",
+          "Musk",
+          "Tonka",
+          "Evernyl"
+        ]
+      },
+      "noteVotes": {
+        "Grapefruit": 388,
+        "Bergamot": 327,
+        "Pink Pepper": 280,
+        "Black Currant": 271,
+        "Patchouli": 264,
+        "Ginger": 249,
+        "Cinnamon": 240,
+        "Pineapple": 231,
+        "Vetiver": 214,
+        "Citron": 200,
+        "Cardamom": 196,
+        "Oakmoss": 126,
+        "Ambroxan": 105,
+        "Nutmeg": 88,
+        "Sandalwood": 83,
+        "Musk": 76,
+        "Tonka": 72,
+        "Cloves": 59,
+        "Evernyl": 46,
+        "Rose": 41
+      }
+    },
+    {
+      "id": 84224,
+      "name": "Blue Talisman",
+      "brand": "Ex Nihilo",
+      "year": 2023,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Ex-Nihilo/Blue-Talisman-84224.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.84224.2x.webp",
+      "rating": 4.16,
+      "ratingVotes": 6350,
+      "accords": {
+        "citrus": 100,
+        "fruity": 73,
+        "sweet": 68,
+        "musky": 67,
+        "woody": 64,
+        "fresh spicy": 60,
+        "white floral": 57,
+        "fresh": 54,
+        "powdery": 54,
+        "oud": 52
+      },
+      "seasonVotes": {
+        "winter": 764,
+        "spring": 2900,
+        "summer": 3000,
+        "fall": 1600
+      },
+      "timeVotes": {
+        "day": 2800,
+        "night": 1200
+      },
+      "season": {
+        "winter": 0.092,
+        "spring": 0.351,
+        "summer": 0.363,
+        "fall": 0.194
+      },
+      "dayNight": {
+        "day": 0.7,
+        "night": 0.3
+      },
+      "sentiment": {
+        "love": 3200,
+        "like": 1700,
+        "ok": 869,
+        "dislike": 418,
+        "hate": 149
+      },
+      "notes": {
+        "top": [
+          "Pear",
+          "Bergamot",
+          "Mandarin Orange",
+          "Ginger"
+        ],
+        "mid": [
+          "Orange Blossom",
+          "Georgywood"
+        ],
+        "base": [
+          "Musk",
+          "Ambrofix™",
+          "Akigalawood",
+          "Cedar"
+        ]
+      },
+      "noteVotes": {
+        "Pear": 820,
+        "Musk": 649,
+        "Ambrofix™": 560,
+        "Bergamot": 504,
+        "Orange Blossom": 466,
+        "Akigalawood": 432,
+        "Mandarin Orange": 419,
+        "Ginger": 349,
+        "Georgywood": 232,
+        "Cedar": 192
+      }
+    },
+    {
+      "id": 46165,
+      "name": "One Umbrella for Two Floraïku",
+      "brand": "Floraiku",
+      "year": 2017,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Floraiku/One-Umbrella-for-Two-46165.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.46165.2x.webp",
+      "rating": 3.98,
+      "ratingVotes": 3509,
+      "accords": {
+        "fruity": 100,
+        "woody": 72,
+        "green": 66,
+        "floral": 58,
+        "soft spicy": 53,
+        "musky": 52,
+        "savory": 51,
+        "fresh": 50,
+        "powdery": 47,
+        "aromatic": 46
+      },
+      "seasonVotes": {
+        "winter": 783,
+        "spring": 1000,
+        "summer": 597,
+        "fall": 1100
+      },
+      "timeVotes": {
+        "day": 1000,
+        "night": 534
+      },
+      "season": {
+        "winter": 0.225,
+        "spring": 0.287,
+        "summer": 0.172,
+        "fall": 0.316
+      },
+      "dayNight": {
+        "day": 0.652,
+        "night": 0.348
+      },
+      "sentiment": {
+        "love": 1500,
+        "like": 1000,
+        "ok": 406,
+        "dislike": 417,
+        "hate": 122
+      },
+      "notes": {
+        "top": [
+          "Black Currant",
+          "Cyclamen"
+        ],
+        "mid": [
+          "Tea",
+          "Rice"
+        ],
+        "base": [
+          "Cedar",
+          "White Musk"
+        ]
+      },
+      "noteVotes": {
+        "Black Currant": 853,
+        "Tea": 550,
+        "Rice": 447,
+        "Cedar": 285,
+        "White Musk": 282,
+        "Cyclamen": 179
+      }
+    },
+    {
+      "id": 64757,
+      "name": "Bianco Latte",
+      "brand": "Giardini Di Toscana",
+      "year": 2014,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Giardini-Di-Toscana/Bianco-Latte-64757.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.64757.2x.webp",
+      "rating": 4.07,
+      "ratingVotes": 11548,
+      "accords": {
+        "vanilla": 100,
+        "sweet": 89,
+        "caramel": 79,
+        "honey": 56,
+        "balsamic": 56,
+        "powdery": 56,
+        "musky": 48,
+        "aromatic": 46,
+        "woody": 45
+      },
+      "seasonVotes": {
+        "winter": 5700,
+        "spring": 2000,
+        "summer": 1100,
+        "fall": 5100
+      },
+      "timeVotes": {
+        "day": 4000,
+        "night": 3600
+      },
+      "season": {
+        "winter": 0.41,
+        "spring": 0.144,
+        "summer": 0.079,
+        "fall": 0.367
+      },
+      "dayNight": {
+        "day": 0.526,
+        "night": 0.474
+      },
+      "sentiment": {
+        "love": 5900,
+        "like": 2600,
+        "ok": 1400,
+        "dislike": 1100,
+        "hate": 517
+      },
+      "notes": {
+        "top": [
+          "Caramel"
+        ],
+        "mid": [
+          "Coumarin",
+          "Honey"
+        ],
+        "base": [
+          "Vanilla",
+          "White Musk"
+        ]
+      },
+      "noteVotes": {
+        "Vanilla": 2361,
+        "Caramel": 2269,
+        "Coumarin": 1249,
+        "Honey": 1213,
+        "White Musk": 854
+      }
+    },
+    {
+      "id": 81895,
+      "name": "Ingenious Ginger",
+      "brand": "Goldfield & Banks Australia",
+      "year": 2023,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Goldfield-Banks-Australia/Ingenious-Ginger-81895.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.81895.2x.webp",
+      "rating": 4.38,
+      "ratingVotes": 4759,
+      "accords": {
+        "citrus": 100,
+        "fresh spicy": 68,
+        "powdery": 59,
+        "vanilla": 58,
+        "woody": 55,
+        "fresh": 54,
+        "musky": 48,
+        "amber": 47
+      },
+      "seasonVotes": {
+        "winter": 522,
+        "spring": 2600,
+        "summer": 2800,
+        "fall": 1600
+      },
+      "timeVotes": {
+        "day": 2500,
+        "night": 895
+      },
+      "season": {
+        "winter": 0.069,
+        "spring": 0.346,
+        "summer": 0.372,
+        "fall": 0.213
+      },
+      "dayNight": {
+        "day": 0.736,
+        "night": 0.264
+      },
+      "sentiment": {
+        "love": 2800,
+        "like": 1200,
+        "ok": 455,
+        "dislike": 181,
+        "hate": 73
+      },
+      "notes": {
+        "top": [
+          "Ginger flower",
+          "Lemon",
+          "Bergamot"
+        ],
+        "mid": [
+          "Mandarin Orange",
+          "Magnolia",
+          "Jasmine",
+          "Rose"
+        ],
+        "base": [
+          "Vanilla",
+          "Amber",
+          "Sandalwood",
+          "Musk",
+          "Cashmeran",
+          "Patchouli"
+        ]
+      },
+      "noteVotes": {
+        "Ginger flower": 885,
+        "Vanilla": 663,
+        "Lemon": 581,
+        "Mandarin Orange": 458,
+        "Bergamot": 366,
+        "Amber": 310,
+        "Sandalwood": 282,
+        "Musk": 258,
+        "Cashmeran": 221,
+        "Magnolia": 153,
+        "Patchouli": 139,
+        "Jasmine": 133,
+        "Rose": 67
+      }
+    },
+    {
+      "id": 69275,
+      "name": "Herbes Troublantes",
+      "brand": "Guerlain",
+      "year": 2021,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Guerlain/Herbes-Troublantes-69275.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.69275.2x.webp",
+      "rating": 4.33,
+      "ratingVotes": 1402,
+      "accords": {
+        "green": 100,
+        "citrus": 96,
+        "musky": 76,
+        "white floral": 75,
+        "powdery": 57,
+        "fresh spicy": 52,
+        "sweet": 48,
+        "animalic": 46
+      },
+      "seasonVotes": {
+        "winter": 71,
+        "spring": 647,
+        "summer": 675,
+        "fall": 127
+      },
+      "timeVotes": {
+        "day": 612,
+        "night": 131
+      },
+      "season": {
+        "winter": 0.047,
+        "spring": 0.426,
+        "summer": 0.444,
+        "fall": 0.084
+      },
+      "dayNight": {
+        "day": 0.824,
+        "night": 0.176
+      },
+      "sentiment": {
+        "love": 759,
+        "like": 429,
+        "ok": 152,
+        "dislike": 38,
+        "hate": 24
+      },
+      "notes": {
+        "all": [
+          "Herbal Notes",
+          "White Musk",
+          "Orange Blossom",
+          "Bergamot"
+        ]
+      },
+      "noteVotes": {
+        "Herbal Notes": 242,
+        "White Musk": 168,
+        "Orange Blossom": 165,
+        "Bergamot": 159
+      }
+    },
+    {
+      "id": 57587,
+      "name": "Atomic Rose",
+      "brand": "Initio Parfums Prives",
+      "year": 2019,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Initio-Parfums-Prives/Atomic-Rose-57587.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.57587.2x.webp",
+      "rating": 4.27,
+      "ratingVotes": 4493,
+      "accords": {
+        "rose": 100,
+        "vanilla": 60,
+        "soft spicy": 57,
+        "citrus": 57,
+        "floral": 56,
+        "amber": 55,
+        "powdery": 45
+      },
+      "seasonVotes": {
+        "winter": 1700,
+        "spring": 1600,
+        "summer": 1100,
+        "fall": 1700
+      },
+      "timeVotes": {
+        "day": 1500,
+        "night": 1700
+      },
+      "season": {
+        "winter": 0.279,
+        "spring": 0.262,
+        "summer": 0.18,
+        "fall": 0.279
+      },
+      "dayNight": {
+        "day": 0.469,
+        "night": 0.531
+      },
+      "sentiment": {
+        "love": 2500,
+        "like": 1100,
+        "ok": 451,
+        "dislike": 295,
+        "hate": 94
+      },
+      "notes": {
+        "top": [
+          "Pink Pepper",
+          "Bergamot"
+        ],
+        "mid": [
+          "Bulgarian Rose",
+          "Turkish Rose",
+          "Egyptian Jasmine"
+        ],
+        "base": [
+          "Madagascar Vanilla",
+          "Amber"
+        ]
+      },
+      "noteVotes": {
+        "Turkish Rose": 1070,
+        "Pink Pepper": 489,
+        "Madagascar Vanilla": 479,
+        "Amber": 397,
+        "Bergamot": 376,
+        "Egyptian Jasmine": 221
+      }
+    },
+    {
+      "id": 66097,
+      "name": "Musk Therapy",
+      "brand": "Initio Parfums Prives",
+      "year": 2021,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Initio-Parfums-Prives/Musk-Therapy-66097.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.66097.2x.webp",
+      "rating": 4.21,
+      "ratingVotes": 7850,
+      "accords": {
+        "citrus": 100,
+        "musky": 90,
+        "floral": 86,
+        "powdery": 75,
+        "fruity": 70,
+        "woody": 67,
+        "fresh spicy": 50,
+        "green": 50,
+        "aromatic": 49,
+        "animalic": 44
+      },
+      "seasonVotes": {
+        "winter": 1300,
+        "spring": 3300,
+        "summer": 3200,
+        "fall": 2200
+      },
+      "timeVotes": {
+        "day": 3200,
+        "night": 1300
+      },
+      "season": {
+        "winter": 0.13,
+        "spring": 0.33,
+        "summer": 0.32,
+        "fall": 0.22
+      },
+      "dayNight": {
+        "day": 0.711,
+        "night": 0.289
+      },
+      "sentiment": {
+        "love": 4000,
+        "like": 2200,
+        "ok": 1000,
+        "dislike": 483,
+        "hate": 122
+      },
+      "notes": {
+        "all": [
+          "White Musk",
+          "Musk",
+          "Black Currant",
+          "Bergamot",
+          "Mandarin Orange",
+          "Magnolia",
+          "White Sandalwood",
+          "Hedione"
+        ]
+      },
+      "noteVotes": {
+        "Musk": 1548,
+        "Black Currant": 866,
+        "Bergamot": 861,
+        "Mandarin Orange": 677,
+        "Magnolia": 664,
+        "White Sandalwood": 617,
+        "Hedione": 547
+      }
+    },
+    {
+      "id": 76580,
+      "name": "Paragon",
+      "brand": "Initio Parfums Prives",
+      "year": 2022,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Initio-Parfums-Prives/Paragon-76580.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.76580.2x.webp",
+      "rating": 4.24,
+      "ratingVotes": 4251,
+      "accords": {
+        "woody": 100,
+        "aromatic": 91,
+        "fruity": 80,
+        "fresh spicy": 71,
+        "citrus": 65,
+        "lavender": 64,
+        "herbal": 59,
+        "sweet": 56,
+        "warm spicy": 51,
+        "powdery": 48
+      },
+      "seasonVotes": {
+        "winter": 1600,
+        "spring": 1600,
+        "summer": 940,
+        "fall": 1800
+      },
+      "timeVotes": {
+        "day": 1600,
+        "night": 1500
+      },
+      "season": {
+        "winter": 0.269,
+        "spring": 0.269,
+        "summer": 0.158,
+        "fall": 0.303
+      },
+      "dayNight": {
+        "day": 0.516,
+        "night": 0.484
+      },
+      "sentiment": {
+        "love": 2300,
+        "like": 1100,
+        "ok": 526,
+        "dislike": 240,
+        "hate": 84
+      },
+      "notes": {
+        "top": [
+          "Lavender",
+          "Sage",
+          "Bergamot"
+        ],
+        "mid": [
+          "Plum",
+          "Palo Santo",
+          "Black Pepper"
+        ],
+        "base": [
+          "Sandalwood",
+          "Agarwood (Oud)"
+        ]
+      },
+      "noteVotes": {
+        "Plum": 789,
+        "Palo Santo": 722,
+        "Lavender": 546,
+        "Sandalwood": 511,
+        "Sage": 475,
+        "Black Pepper": 313,
+        "Bergamot": 265,
+        "Agarwood (Oud)": 254
+      }
+    },
+    {
+      "id": 81642,
+      "name": "Le Male Elixir",
+      "brand": "Jean Paul Gaultier",
+      "year": 2023,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Jean-Paul-Gaultier/Le-Male-Elixir-81642.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.81642.2x.webp",
+      "rating": 4.5,
+      "ratingVotes": 26370,
+      "accords": {
+        "vanilla": 100,
+        "sweet": 81,
+        "honey": 71,
+        "aromatic": 60,
+        "amber": 59,
+        "lavender": 54,
+        "tobacco": 50,
+        "green": 48,
+        "fresh spicy": 47,
+        "powdery": 46
+      },
+      "seasonVotes": {
+        "winter": 19900,
+        "spring": 5200,
+        "summer": 2500,
+        "fall": 15300
+      },
+      "timeVotes": {
+        "day": 7000,
+        "night": 16500
+      },
+      "season": {
+        "winter": 0.464,
+        "spring": 0.121,
+        "summer": 0.058,
+        "fall": 0.357
+      },
+      "dayNight": {
+        "day": 0.298,
+        "night": 0.702
+      },
+      "sentiment": {
+        "love": 18500,
+        "like": 4800,
+        "ok": 1600,
+        "dislike": 867,
+        "hate": 653
+      },
+      "notes": {
+        "top": [
+          "Lavender",
+          "Mint"
+        ],
+        "mid": [
+          "Vanilla",
+          "Benzoin"
+        ],
+        "base": [
+          "Honey",
+          "Tonka Bean",
+          "Tobacco"
+        ]
+      },
+      "noteVotes": {
+        "Vanilla": 6510,
+        "Honey": 5733,
+        "Tonka Bean": 3648,
+        "Lavender": 3446,
+        "Tobacco": 2874,
+        "Mint": 2592,
+        "Benzoin": 2289
+      }
+    },
+    {
+      "id": 67370,
+      "name": "Imagination",
+      "brand": "Louis Vuitton",
+      "year": 2021,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Louis-Vuitton/Imagination-67370.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.67370.2x.webp",
+      "rating": 4.52,
+      "ratingVotes": 14043,
+      "accords": {
+        "citrus": 100,
+        "fresh spicy": 61,
+        "fresh": 54,
+        "green": 51,
+        "amber": 46
+      },
+      "seasonVotes": {
+        "winter": 1800,
+        "spring": 7700,
+        "summer": 9600,
+        "fall": 3500
+      },
+      "timeVotes": {
+        "day": 8000,
+        "night": 3100
+      },
+      "season": {
+        "winter": 0.08,
+        "spring": 0.341,
+        "summer": 0.425,
+        "fall": 0.155
+      },
+      "dayNight": {
+        "day": 0.721,
+        "night": 0.279
+      },
+      "sentiment": {
+        "love": 9900,
+        "like": 2500,
+        "ok": 1000,
+        "dislike": 395,
+        "hate": 258
+      },
+      "notes": {
+        "top": [
+          "Citron",
+          "Calabrian bergamot",
+          "Sicilian Orange"
+        ],
+        "mid": [
+          "Tunisian Neroli",
+          "Nigerian Ginger",
+          "Ceylon Cinnamon"
+        ],
+        "base": [
+          "Chinese Black Tea",
+          "Ambroxan",
+          "Guaiac Wood",
+          "Olibanum"
+        ]
+      },
+      "noteVotes": {
+        "Chinese Black Tea": 1947,
+        "Citron": 1766,
+        "Calabrian bergamot": 1552,
+        "Tunisian Neroli": 1151,
+        "Sicilian Orange": 1127,
+        "Nigerian Ginger": 976,
+        "Ambroxan": 955,
+        "Ceylon Cinnamon": 332,
+        "Guaiac Wood": 306,
+        "Olibanum": 251
+      }
+    },
+    {
+      "id": 84109,
+      "name": "Althaïr",
+      "brand": "Parfums de Marly",
+      "year": 2023,
+      "gender": "men",
+      "url": "https://www.fragrantica.com/perfume/Parfums-de-Marly/Althair-84109.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.84109.2x.webp",
+      "rating": 4.39,
+      "ratingVotes": 11972,
+      "accords": {
+        "sweet": 100,
+        "vanilla": 97,
+        "warm spicy": 86,
+        "cinnamon": 65,
+        "aromatic": 61,
+        "powdery": 60,
+        "musky": 59,
+        "citrus": 57,
+        "amber": 57,
+        "white floral": 56
+      },
+      "seasonVotes": {
+        "winter": 7300,
+        "spring": 2000,
+        "summer": 893,
+        "fall": 6400
+      },
+      "timeVotes": {
+        "day": 3600,
+        "night": 5900
+      },
+      "season": {
+        "winter": 0.44,
+        "spring": 0.121,
+        "summer": 0.054,
+        "fall": 0.386
+      },
+      "dayNight": {
+        "day": 0.379,
+        "night": 0.621
+      },
+      "sentiment": {
+        "love": 7800,
+        "like": 2300,
+        "ok": 965,
+        "dislike": 485,
+        "hate": 391
+      },
+      "notes": {
+        "top": [
+          "Cinnamon",
+          "Orange Blossom",
+          "Cardamom",
+          "Bergamot"
+        ],
+        "mid": [
+          "Bourbon Vanilla",
+          "elemi"
+        ],
+        "base": [
+          "Praline",
+          "Musk",
+          "Ambroxan",
+          "Tonka",
+          "Guaiac Wood",
+          "Candied Almond"
+        ]
+      },
+      "noteVotes": {
+        "Bourbon Vanilla": 2282,
+        "Praline": 1568,
+        "Cinnamon": 1400,
+        "Orange Blossom": 1031,
+        "Cardamom": 991,
+        "Musk": 773,
+        "Ambroxan": 653,
+        "elemi": 540,
+        "Tonka": 528,
+        "Guaiac Wood": 514,
+        "Bergamot": 505,
+        "Candied Almond": 409
+      }
+    },
+    {
+      "id": 39314,
+      "name": "Layton",
+      "brand": "Parfums de Marly",
+      "year": 2016,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Parfums-de-Marly/Layton-39314.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.39314.2x.webp",
+      "rating": 4.44,
+      "ratingVotes": 19333,
+      "accords": {
+        "warm spicy": 100,
+        "fresh spicy": 90,
+        "woody": 88,
+        "vanilla": 87,
+        "aromatic": 82,
+        "fruity": 73,
+        "powdery": 70,
+        "lavender": 63,
+        "fresh": 58,
+        "citrus": 58
+      },
+      "seasonVotes": {
+        "winter": 11000,
+        "spring": 9100,
+        "summer": 3700,
+        "fall": 10900
+      },
+      "timeVotes": {
+        "day": 8600,
+        "night": 10100
+      },
+      "season": {
+        "winter": 0.317,
+        "spring": 0.262,
+        "summer": 0.107,
+        "fall": 0.314
+      },
+      "dayNight": {
+        "day": 0.46,
+        "night": 0.54
+      },
+      "sentiment": {
+        "love": 12700,
+        "like": 4000,
+        "ok": 1500,
+        "dislike": 851,
+        "hate": 309
+      },
+      "notes": {
+        "top": [
+          "Apple",
+          "Lavender",
+          "Bergamot",
+          "Mandarin Orange"
+        ],
+        "mid": [
+          "Geranium",
+          "Violet",
+          "Jasmine"
+        ],
+        "base": [
+          "Vanilla",
+          "Cardamom",
+          "Sandalwood",
+          "Pepper",
+          "Guaiac Wood",
+          "Patchouli",
+          "Ambermax™",
+          "Coumarin"
+        ]
+      },
+      "noteVotes": {
+        "Vanilla": 3256,
+        "Apple": 2986,
+        "Cardamom": 2263,
+        "Lavender": 1961,
+        "Sandalwood": 1504,
+        "Pepper": 1357,
+        "Guaiac Wood": 1039,
+        "Patchouli": 1012,
+        "Bergamot": 918,
+        "Mandarin Orange": 743,
+        "Geranium": 658,
+        "Violet": 592,
+        "Jasmine": 519,
+        "Ambermax™": 91,
+        "Coumarin": 88
+      }
+    },
+    {
+      "id": 91364,
+      "name": "Wavechild",
+      "brand": "Room 1015",
+      "year": 2024,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Room-1015/Wavechild-91364.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.91364.2x.webp",
+      "rating": 4.04,
+      "ratingVotes": 2118,
+      "accords": {
+        "ozonic": 100,
+        "aquatic": 93,
+        "citrus": 79,
+        "amber": 72,
+        "coconut": 69,
+        "sweet": 55,
+        "fruity": 48,
+        "animalic": 47
+      },
+      "seasonVotes": {
+        "winter": 47,
+        "spring": 656,
+        "summer": 1200,
+        "fall": 98
+      },
+      "timeVotes": {
+        "day": 943,
+        "night": 176
+      },
+      "season": {
+        "winter": 0.023,
+        "spring": 0.328,
+        "summer": 0.6,
+        "fall": 0.049
+      },
+      "dayNight": {
+        "day": 0.843,
+        "night": 0.157
+      },
+      "sentiment": {
+        "love": 882,
+        "like": 701,
+        "ok": 318,
+        "dislike": 163,
+        "hate": 54
+      },
+      "notes": {
+        "top": [
+          "Mandarin Orange",
+          "Orange",
+          "Lemon"
+        ],
+        "mid": [
+          "Watermelon",
+          "Coconut"
+        ],
+        "base": [
+          "Ambergris",
+          "Amberwood",
+          "Cacao"
+        ]
+      },
+      "noteVotes": {
+        "Watermelon": 629,
+        "Coconut": 348,
+        "Ambergris": 248,
+        "Mandarin Orange": 175,
+        "Orange": 149,
+        "Amberwood": 128,
+        "Lemon": 116,
+        "Cacao": 108
+      }
+    },
+    {
+      "id": 73149,
+      "name": "Babycat",
+      "brand": "Yves Saint Laurent",
+      "year": 2022,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Yves-Saint-Laurent/Babycat-73149.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.73149.2x.webp",
+      "rating": 4.21,
+      "ratingVotes": 5338,
+      "accords": {
+        "vanilla": 100,
+        "fresh spicy": 93,
+        "leather": 80,
+        "warm spicy": 79,
+        "powdery": 72,
+        "amber": 69,
+        "musky": 66,
+        "aromatic": 64,
+        "balsamic": 62,
+        "woody": 56
+      },
+      "seasonVotes": {
+        "winter": 2600,
+        "spring": 673,
+        "summer": 307,
+        "fall": 2400
+      },
+      "timeVotes": {
+        "day": 1000,
+        "night": 2300
+      },
+      "season": {
+        "winter": 0.435,
+        "spring": 0.113,
+        "summer": 0.051,
+        "fall": 0.401
+      },
+      "dayNight": {
+        "day": 0.303,
+        "night": 0.697
+      },
+      "sentiment": {
+        "love": 3100,
+        "like": 1100,
+        "ok": 569,
+        "dislike": 398,
+        "hate": 184
+      },
+      "notes": {
+        "top": [
+          "Black and Pink Pepper",
+          "Black Pepper",
+          "elemi",
+          "Pink Pepper"
+        ],
+        "mid": [
+          "Olibanum",
+          "Saffron"
+        ],
+        "base": [
+          "Bourbon Vanilla",
+          "Suede",
+          "Cedar"
+        ]
+      },
+      "noteVotes": {
+        "Bourbon Vanilla": 1164,
+        "Suede": 941,
+        "Olibanum": 652,
+        "Black Pepper": 616,
+        "elemi": 480,
+        "Pink Pepper": 446,
+        "Saffron": 437,
+        "Cedar": 309
+      }
+    }
+  ]
+}

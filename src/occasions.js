@@ -1,5 +1,8 @@
 // Occasion presets. `profile` maps accords to how well they suit the occasion
-// (-1 wrong for it .. +1 made for it). `slot` is the default time of day.
+// (-1 wrong for it .. +1 made for it). `performance`, where the occasion cares,
+// says how loud and lasting it wants a bottle (sillage, longevity: -1 quiet or
+// fleeting .. +1 loud or lasting; Parfumo ratings, see src/engine.js).
+// `slot` is the default time of day.
 export const OCCASIONS = [
   {
     id: 'casual',
@@ -19,6 +22,7 @@ export const OCCASIONS = [
     icon: '💼',
     blurb: 'Close quarters, nothing loud',
     slot: 'day',
+    performance: { sillage: -0.7, longevity: 0.3 },
     profile: {
       citrus: 0.6, fresh: 0.6, iris: 0.6, aromatic: 0.5, powdery: 0.5, musky: 0.5, green: 0.5,
       'fresh spicy': 0.4, lavender: 0.4, woody: 0.4, violet: 0.3, herbal: 0.3, 'white floral': 0.2,
@@ -33,6 +37,7 @@ export const OCCASIONS = [
     icon: '🕯️',
     blurb: 'Warm, close, a little sweet',
     slot: 'night',
+    performance: { longevity: 0.3 },
     profile: {
       vanilla: 0.7, amber: 0.6, 'warm spicy': 0.5, leather: 0.5, musky: 0.5, whiskey: 0.5,
       sweet: 0.4, rose: 0.4, powdery: 0.4, lactonic: 0.4, cinnamon: 0.4, 'soft spicy': 0.4, balsamic: 0.4,
@@ -46,6 +51,7 @@ export const OCCASIONS = [
     icon: '🍸',
     blurb: 'Bars, parties, crowds, projection',
     slot: 'night',
+    performance: { sillage: 0.5, longevity: 0.2 },
     profile: {
       sweet: 0.7, vanilla: 0.6, fruity: 0.5, 'warm spicy': 0.5, cinnamon: 0.5, amber: 0.5,
       whiskey: 0.4, caramel: 0.4, tropical: 0.3, 'fresh spicy': 0.2, aromatic: 0.1, lavender: 0.1,
@@ -58,6 +64,7 @@ export const OCCASIONS = [
     icon: '🎩',
     blurb: 'Weddings, suits, fancy dinners',
     slot: 'night',
+    performance: { sillage: -0.3, longevity: 0.5 },
     profile: {
       iris: 0.7, powdery: 0.6, leather: 0.6, woody: 0.5, amber: 0.4, rose: 0.4, violet: 0.4,
       lavender: 0.4, aromatic: 0.4, oud: 0.3, musky: 0.3, 'warm spicy': 0.3, citrus: 0.1,

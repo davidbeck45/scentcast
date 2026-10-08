@@ -56,6 +56,19 @@ test('notes between families count toward each, the main one most', () => {
   assert.ok(layerProfile(resin).profile.amber > 0);
 });
 
+test('notes count by how strongly voters smell them', () => {
+  const notes = { top: ['Bergamot'], base: ['Vanilla', 'Cedar'] };
+  const plain = bottle('plain', { vanilla: 100 }, notes);
+  const voted = { ...plain, noteVotes: { Vanilla: 900, Cedar: 300, Bergamot: 30 } };
+  assert.ok(layerProfile(voted).profile.citrus < layerProfile(plain).profile.citrus / 2, 'bergamot barely comes through');
+  assert.ok(layerProfile(voted).profile.vanilla > layerProfile(plain).profile.vanilla);
+  // A note nobody smells in one bottle doesn't tie it to another.
+  const partner = bottle('partner', { citrus: 100 }, { top: ['Bergamot', 'Lemon'], base: ['Cedar'] });
+  const shared = b => layerPair(b, partner).reasons.find(r => r.text.startsWith('Shared'))?.text;
+  assert.equal(shared(plain), 'Shared cedar and bergamot tie them together');
+  assert.equal(shared(voted), 'Shared cedar ties them together');
+});
+
 test('pairing rules cover most of how real bottles meet', () => {
   // A family pair with no rule counts as neither good nor bad, which quietly
   // favors bottles whose families the table happens to know.

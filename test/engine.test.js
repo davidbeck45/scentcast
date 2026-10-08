@@ -72,6 +72,19 @@ test('a split from a few votes leans toward what the accords predict', () => {
   assert.equal(steadyShares(estimated).season, amber.season, 'unvoted records pass through');
 });
 
+test("a dupe with few votes leans toward its original's", () => {
+  const atlantis = fragrances.find(f => f.name === 'Atlantis Extrait');
+  assert.equal(atlantis.original.name, 'Wavechild');
+  const fallish = { winter: 0.2, spring: 0.2, summer: 0.2, fall: 0.4 };
+  const few = { ...atlantis, season: fallish, seasonVotes: { winter: 4, spring: 4, summer: 4, fall: 8 }, dayNight: { day: 0.3, night: 0.7 }, timeVotes: { day: 3, night: 7 } };
+  const alone = { ...few, original: undefined };
+  assert.ok(steadyShares(few).season.summer > steadyShares(alone).season.summer + 0.1, 'Wavechild is a summer scent');
+  assert.ok(steadyShares(few).dayNight.day > 0.7, 'and a day one');
+  // Well-voted dupes keep their own split.
+  const own = steadyShares(atlantis).season.summer;
+  assert.ok(Math.abs(own - atlantis.season.summer) < 0.03, `${own} vs ${atlantis.season.summer}`);
+});
+
 test('hot humid day: fresh scents on top, heavy ones at the bottom', () => {
   const tiers = groupTiers(rank(fragrances, hotHumidDay, 'day'));
   for (const n of names(tiers.S)) assert.ok(FRESH.includes(n), `${n} should not be S on a hot day`);
@@ -113,6 +126,24 @@ test('office avoids gourmands, date night prefers them', () => {
   const date = groupTiers(rank(fragrances, mildFallNight, 'night', { occasion: occasionById('date') }));
   for (const n of ['Cream Velvet', 'Liquid Brun']) assert.ok(names(office.C).includes(n), `${n} should be C for office`);
   assert.ok(names(date.S).some(n => ['Amber Empire', 'Cream Velvet', 'Liquid Brun'].includes(n)));
+});
+
+test('office wants a quiet bottle and a night out a loud one', () => {
+  const base = fragrances.find(f => f.name === 'Vintage Radio');
+  const quiet = { ...base, id: 'quiet', parfumo: { ...base.parfumo, sillage: 6.2, votes: 500 } };
+  const loud = { ...base, id: 'loud', parfumo: { ...base.parfumo, sillage: 8.6, votes: 500 } };
+  const rest = fragrances.filter(f => f !== base);
+  const place = (occasion, f) => rank([...rest, quiet, loud], mildFallNight, 'night', { occasion: occasionById(occasion) }).findIndex(r => r.fragrance === f);
+  assert.ok(place('office', quiet) < place('office', loud));
+  assert.ok(place('nightout', loud) < place('nightout', quiet));
+  const reasons = (occasion, f) => rank([...rest, f], mildFallNight, 'night', { occasion: occasionById(occasion) })
+    .find(r => r.fragrance === f).reasons.map(r => r.text);
+  assert.ok(reasons('office', quiet).includes('Stays close to the skin'));
+  assert.ok(reasons('office', loud).includes('Projects a lot for office'));
+  assert.ok(reasons('nightout', loud).includes('Projects across a room'));
+  // Without Parfumo ratings a bottle sits in the middle.
+  const unrated = { ...base, id: 'unrated', parfumo: undefined };
+  assert.ok(!reasons('office', unrated).some(t => /skin|Projects/.test(t)));
 });
 
 test('formal favors iris and powder', () => {
