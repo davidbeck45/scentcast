@@ -75,6 +75,8 @@ The key lives in `worker/.dev.vars` (ignored) and as the Worker secret `FRAGELLA
 
 Sticky heat is judged by dew point (`dewF` on forecast windows, from temperature and humidity), not relative humidity: 88°F at 55% is oppressive, 72°F at 85% is not.
 
+The forecast's temperature, feels-like and humidity are the mean of four global models (`BLEND_MODELS` in `src/weather.js`: GFS, ECMWF, ICON, GEM), averaged in `blendModels` as it's fetched; current conditions, weather codes and rain chances stay Open-Meteo's default. Open-Meteo's default alone (GFS in the US) ran warm and dry against airport readings. `python3 scripts/score-forecasts.py [START END]` rescores the models and blends on 14 US airports (past forecasts from Open-Meteo's Previous Runs API, readings from the Iowa Mesonet ASOS archive); rerun it before changing the blend.
+
 Which season the weather "is" comes from `SEASON_CLIMATE`: the mean and spread of each season's day and night feels-like over three years in ten temperate cities, fitted by `node scripts/fit-seasons.mjs --write` from Open-Meteo's archive (cached in `.cache/climate/`). Spring and fall weather overlap, so the calendar splits that share (`TRANSITION_SPLIT`).
 
 Season and day/night shares are read through `steadyShares`: a split from few votes leans toward what the bottle's accords predict, the estimate counting as 60 season votes and 15 day/night votes (about how far well-voted bottles stray from it out of sample), so a 100-vote indie bottle can't swing on a handful of votes. A dupe's original counts as another 120 votes for both: across the 18 dupes it predicts the dupe's split far better than the accords do (refit by comparing them again if the list grows). The detail sheet still shows the raw votes.

@@ -9,12 +9,53 @@ const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 export const WINDOWS = { day: [10, 17], night: [19, 23] };
 
 const CACHE_KEY = 'scentcast.weather';
-const CACHE_VERSION = 2; // bump when the request shape changes
+const CACHE_VERSION = 3; // bump when the request shape changes
 const CACHE_MAX_AGE = 20 * 60 * 1000;
 
 const wallMs = iso => Date.parse(`${iso}Z`);
 const avg = xs => xs.reduce((a, b) => a + b, 0) / xs.length;
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
+
+// Temperature, feels-like and humidity are the mean of four global models.
+// Open-Meteo's default ("best match", NOAA's GFS in the US) ran about a degree
+// warm and two dry on its own. Against airport readings in 14 US cities over
+// Sep 1 – Oct 6 2026, forecasts made 0–6 days ahead, the mean cut the error in
+// window temperature from 3.1°F to 2.4°F, in dew point from 4.1 to 2.4, and in
+// daily highs and lows from 2.9 to 2.1 and 2.0; it won or tied in 13 of the
+// 14 cities. Current conditions, weather codes and rain chances stay the
+// default model's.
+const DEFAULT_MODEL = 'best_match';
+const BLEND_MODELS = ['gfs_seamless', 'ecmwf_ifs', 'icon_seamless', 'gem_seamless'];
+const BLENDED = ['temperature_2m', 'apparent_temperature', 'relative_humidity_2m'];
+
+/**
+ * A multi-model Open-Meteo response (variables suffixed with the model name)
+ * -> the single-model shape the rest of this file reads. Blended hourly values
+ * average the models that have one for that hour, and daily highs and lows
+ * come from the blended hours, so they match the windows.
+ */
+export function blendModels(raw) {
+  const h = raw.hourly, d = raw.daily;
+  const own = (vars, key) => vars[`${key}_${DEFAULT_MODEL}`] ?? vars[key];
+  const hourly = { time: h.time };
+  for (const key of ['weather_code', 'precipitation_probability']) hourly[key] = own(h, key);
+  for (const key of BLENDED) {
+    const series = BLEND_MODELS.map(m => h[`${key}_${m}`]).filter(Boolean);
+    hourly[key] = h.time.map((_, i) => {
+      const vals = series.map(s => s[i]).filter(v => v != null);
+      return vals.length ? avg(vals) : own(h, key)?.[i] ?? null;
+    });
+  }
+  const temps = date => hourly.temperature_2m.filter((t, i) => t != null && h.time[i].startsWith(date));
+  const daily = {
+    time: d.time,
+    sunrise: own(d, 'sunrise'),
+    sunset: own(d, 'sunset'),
+    temperature_2m_max: d.time.map((date, i) => (temps(date).length ? Math.max(...temps(date)) : own(d, 'temperature_2m_max')[i])),
+    temperature_2m_min: d.time.map((date, i) => (temps(date).length ? Math.min(...temps(date)) : own(d, 'temperature_2m_min')[i])),
+  };
+  return { ...raw, hourly, daily };
+}
 
 export async function fetchForecast({ lat, lon }) {
   const params = new URLSearchParams({
@@ -26,10 +67,11 @@ export async function fetchForecast({ lat, lon }) {
     temperature_unit: 'fahrenheit',
     timezone: 'auto',
     forecast_days: 7,
+    models: [DEFAULT_MODEL, ...BLEND_MODELS].join(','),
   });
   const res = await fetch(`${FORECAST_URL}?${params}`);
   if (!res.ok) throw new Error(`Weather request failed (${res.status})`);
-  return { ...(await res.json()), fetchedAt: Date.now() };
+  return { ...blendModels(await res.json()), fetchedAt: Date.now() };
 }
 
 // Cached fetch: fresh cache wins, network next, stale cache if offline.
