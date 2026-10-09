@@ -1,6 +1,6 @@
 {
   "source": "fragrantica.com, the originals that dupes in data/ are inspired by",
-  "fetched": "2026-10-08",
+  "fetched": "2026-10-09",
   "fragrances": [
     {
       "id": 97924,
@@ -185,6 +185,69 @@
         "Iris": 1052,
         "Tonka Bean": 901,
         "Bourbon Vetiver": 651
+      }
+    },
+    {
+      "id": 109989,
+      "name": "Cedar Chic",
+      "brand": "Carolina Herrera",
+      "year": 2025,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/Cedar-Chic-109989.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.109989.2x.webp",
+      "rating": 4.19,
+      "ratingVotes": 776,
+      "accords": {
+        "aldehydic": 100,
+        "musky": 99,
+        "citrus": 82,
+        "white floral": 77,
+        "powdery": 75,
+        "fresh": 72,
+        "woody": 69,
+        "soapy": 63,
+        "sweet": 51,
+        "animalic": 50
+      },
+      "seasonVotes": {
+        "winter": 222,
+        "spring": 324,
+        "summer": 298,
+        "fall": 287
+      },
+      "timeVotes": {
+        "day": 332,
+        "night": 164
+      },
+      "season": {
+        "winter": 0.196,
+        "spring": 0.286,
+        "summer": 0.263,
+        "fall": 0.254
+      },
+      "dayNight": {
+        "day": 0.669,
+        "night": 0.331
+      },
+      "sentiment": {
+        "love": 436,
+        "like": 161,
+        "ok": 96,
+        "dislike": 56,
+        "hate": 27
+      },
+      "notes": {
+        "top": [
+          "Aldehydes",
+          "Bergamot"
+        ],
+        "mid": [
+          "Orange Blossom"
+        ],
+        "base": [
+          "White Musk",
+          "Cedarwood"
+        ]
       }
     },
     {

@@ -1,6 +1,6 @@
 {
   "source": "fragrantica.com/@doeszen wardrobe (Have)",
-  "fetched": "2026-10-08",
+  "fetched": "2026-10-09",
   "fragrances": [
     {
       "id": 98689,
@@ -2400,6 +2400,99 @@
         "longevity": 8.4,
         "sillage": 8.1,
         "votes": 156
+      }
+    },
+    {
+      "id": 138575,
+      "name": "Cedrus Blanc",
+      "brand": "Rayhaan",
+      "year": 2026,
+      "gender": "women and men",
+      "url": "https://www.fragrantica.com/perfume/Rayhaan/Cedrus-Blanc-138575.html",
+      "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.138575.2x.webp",
+      "rating": 4.22,
+      "ratingVotes": 496,
+      "accords": {
+        "aldehydic": 100,
+        "woody": 82,
+        "citrus": 71,
+        "fresh": 71,
+        "soapy": 50,
+        "fresh spicy": 44
+      },
+      "seasonVotes": {
+        "winter": 163,
+        "spring": 289,
+        "summer": 267,
+        "fall": 259
+      },
+      "timeVotes": {
+        "day": 293,
+        "night": 167
+      },
+      "season": {
+        "winter": 0.167,
+        "spring": 0.296,
+        "summer": 0.273,
+        "fall": 0.265
+      },
+      "dayNight": {
+        "day": 0.637,
+        "night": 0.363
+      },
+      "sentiment": {
+        "love": 290,
+        "like": 106,
+        "ok": 35,
+        "dislike": 48,
+        "hate": 17
+      },
+      "notes": {
+        "top": [
+          "Aldehydes",
+          "Bergamot"
+        ],
+        "mid": [
+          "Orange"
+        ],
+        "base": [
+          "Cedarwood"
+        ]
+      },
+      "original": {
+        "id": 109989,
+        "name": "Cedar Chic",
+        "brand": "Carolina Herrera",
+        "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/Cedar-Chic-109989.html",
+        "thumb": "https://fimgs.net/mdimg/perfume-thumbs/dark-m.109989.2x.webp",
+        "rating": 4.19,
+        "ratingVotes": 776,
+        "seasonVotes": {
+          "winter": 222,
+          "spring": 324,
+          "summer": 298,
+          "fall": 287
+        },
+        "timeVotes": {
+          "day": 332,
+          "night": 164
+        },
+        "season": {
+          "winter": 0.196,
+          "spring": 0.286,
+          "summer": 0.263,
+          "fall": 0.254
+        },
+        "dayNight": {
+          "day": 0.669,
+          "night": 0.331
+        }
+      },
+      "parfumo": {
+        "url": "https://www.parfumo.com/Perfumes/rayhaan/cedrus-blanc",
+        "longevity": 7.7,
+        "sillage": 7.4,
+        "votes": 69
       }
     },
     {
